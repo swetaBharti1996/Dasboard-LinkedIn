@@ -18,6 +18,9 @@ const MENU = [
         name: 'Insights', url: '/insight', icon: AreaChartOutlined
     },
     {
+        name: 'Post', url: '/post', icon: ProfileOutlined
+    },
+    {
         name: 'Comments', url: '/comment', icon: ProfileOutlined
     }
 ]
@@ -34,6 +37,7 @@ const LayoutCover = (props) => {
         let component = React.createElement(string);
         return component;
     }
+
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed} >
@@ -69,7 +73,7 @@ const LayoutCover = (props) => {
                     style={{
                         margin: '24px 16px',
                         padding: 24,
-                        height: '800px'
+                        height: '870px'
                     }}
                 >
                     <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>

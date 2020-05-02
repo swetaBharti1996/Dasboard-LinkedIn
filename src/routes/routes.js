@@ -6,6 +6,7 @@ import LoginPage from '../components/Login';
 import LayoutCover from '../layout/layout';
 import Insight from '../components/Insights';
 import Comment from '../components/Comment';
+import PostData from '../components/Post'
 import { connect } from 'react-redux'
 export const history = createHistory();
 
@@ -14,7 +15,8 @@ const AppRouter = (props) => {
         <Router history={history}>
             <div>
                 <Switch>
-                    {props.auth.isAuthenticated && props.auth.user._id ? <Route path="/" render={() => <LayoutCover><Route exact={true} path="/comment" component={Comment} /><Route exact={true} path="/insight" component={Insight} /></LayoutCover>} /> :
+                    {props.auth.isAuthenticated && props.auth.user._id ? <Route path="/" render={() => <LayoutCover><Route exact={true} path="/comment" component={Comment} /><Route exact={true} path="/insight" component={Insight} />
+                        <Route exact={true} path="/post" component={PostData} /></LayoutCover>} /> :
                         <>
                             <Route exact={true} path="/" component={LoginPage} />
                         </>

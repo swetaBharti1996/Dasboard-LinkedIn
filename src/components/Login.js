@@ -138,14 +138,6 @@ class LoginPage extends React.Component {
                 >
                     Login via Email
              </Button>
-                <Button
-                    type="primary"
-                    onClick={() => {
-                        this.props.history.push("/register")
-                    }}
-                >
-                    Sign Up
-             </Button>
                 <CollectionCreateForm
                     visible={this.state.visible}
                     onCreate={this.onCreate}
