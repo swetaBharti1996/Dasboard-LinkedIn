@@ -1,93 +1,133 @@
-import axios from 'axios';
+import axios from "axios";
 import {
-    USER_LOADED,
-    USER_LOADING,
-    AUTH_ERROR,
-    LOGIN_FAIL,
-    LOGIN_SUCCESS,
-    LOGOUT_SUCCESS,
-    REGISTER_SUCCESS,
-    REGISTER_FAIL
-} from './types'
-import { returnErrors, clearErrors } from './errorActions'
-
+  USER_LOADED,
+  USER_LOADING,
+  AUTH_ERROR,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+} from "./types";
+import { returnErrors, clearErrors } from "./errorActions";
 
 // Load user
 export const loadUser = () => (dispatch, getState) => {
-    dispatch({ type: USER_LOADING });
+  dispatch({ type: USER_LOADING });
 
-    axios.get('http://localhost:8888/website/scrapper/auth/user/me', tokenConfig(getState))
-        .then(res => {
-            dispatch({
-                type: USER_LOADED,
-                payload: res.data
-            })
-            console.log('log in')
-        })
-        .catch(err => {
-            dispatch(returnErrors(err.response.data.message, err.response.status, err.response.data.success))
-            dispatch({
-                type: AUTH_ERROR
-            })
-        })
-}
-
+  axios
+    .get(
+      `http://localhost:8080/website/scrapper/auth/user/me`,
+      tokenConfig(getState)
+    )
+    .then((res) => {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+      console.log("log in");
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data.message,
+          err.response.status,
+          err.response.data.success
+        )
+      );
+      dispatch({
+        type: AUTH_ERROR,
+      });
+    });
+};
 
 // Login user
-export const login = ({ email, password }) => dispatch => {
-    const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
-    }
 
-    const body = JSON.stringify({ email, password })
+export const login = ({ email, password }) => (dispatch) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+  dispatch({ type: USER_LOADING });
 
-    axios.post("http://localhost:8888/website/scrapper/auth/login", body, config)
-        .then(res => {
-            let token = res.headers['x-auth'];
-            console.log('Token', res)
-            let payload = {
-                ...res.data,
-                token
-            }
-            console.log(res)
+  const body = JSON.stringify({ email, password });
 
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: res.data
-            })
-        })
-        .catch(err => {
-            console.log('errrr', err)
-            dispatch(
-                returnErrors(err.response.data.message, err.response.status, err.response.data.success, 'LOGIN_ERROR')
-            )
-            dispatch({
-                type: LOGIN_FAIL
-            })
-        })
+  axios
+    .post(`http://localhost:8080/website/scrapper/auth/login`, body, config)
+    .then((res) => {
+      // let token = res.headers['x-auth'];
+      // console.log('Token', res)
+      // let payload = {
+      //   ...res.data,
+      //   token
+      // }
 
-}
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("errrr", err);
+      dispatch(
+        returnErrors(
+          err.response.data.message,
+          err.response.status,
+          err.response.data.success,
+          "LOGIN_ERROR"
+        )
+      );
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
 
-export const logout = () => {
-    return {
-        type: LOGOUT_SUCCESS
-    }
-}
+export const logout = () => (dispatch, getState) => {
+  axios
+    .delete(
+      `http://localhost:8080/website/scrapper/auth/logout`,
+      tokenConfig(getState)
+    )
+    .then((res) => {
+      // history.push('/')
+      dispatch({ type: LOGOUT_SUCCESS });
+    })
+    .catch((err) => {
+      if (err.response) {
+        dispatch(
+          returnErrors(
+            err.response.data.message,
+            err.response.status,
+            err.response.data.success
+          )
+        );
+        dispatch({
+          type: AUTH_ERROR,
+        });
+      }
+    });
+  // return dispatch => {
+  //   // Your code here...
+  //   history.push('/')
+  // };
+};
 
-export const tokenConfig = getState => {
-    const token = getState().auth.token;
+export const tokenConfig = (getState) => {
+  const token = getState().auth.token;
 
-    const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
-    }
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
 
-    if (token) {
-        config.headers['x-auth'] = token;
-    }
+  if (token) {
+    config.headers["x-auth"] = token;
+  }
 
-    return config
-}
+  return config;
+};

@@ -7,7 +7,10 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     AreaChartOutlined,
-    ProfileOutlined
+    ProfileOutlined,
+    UserAddOutlined,
+    CommentOutlined,
+    SolutionOutlined
 } from '@ant-design/icons';
 import _ from 'lodash';
 const { Header, Sider, Content, Footer } = Layout;
@@ -21,8 +24,17 @@ const MENU = [
         name: 'Post', url: '/post', icon: ProfileOutlined
     },
     {
-        name: 'Comments', url: '/comment', icon: ProfileOutlined
-    }
+        name: 'Comments', url: '/comment', icon: CommentOutlined 
+    },
+    {
+    name: 'Profiles', url: '/profiles', icon: UserAddOutlined 
+},
+{
+    name: 'Profiles Details', url: '/profiles-details', icon: SolutionOutlined 
+    
+
+}
+
 ]
 const LayoutCover = (props) => {
     const footer = 'Linked Dashboard @2020 Powered by Team A'
