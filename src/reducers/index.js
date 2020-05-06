@@ -4,6 +4,8 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import postReducer from './postReducer';
 import commentReducer from './commentReducer';
+import profilesReducer from './profilesReducer';
+import profilesDetailsReducer from './profilesDetailsReducer';
 import { DESTROY_SESSION } from '../actions/types'
 import { history } from '../routes/routes';
 import {
@@ -14,7 +16,9 @@ const appReducer = combineReducers({
  auth: authReducer,
  error: errorReducer,
  post: postReducer,
- comment: commentReducer
+ comment: commentReducer,
+ profiles: profilesReducer,
+ profilesDetails: profilesDetailsReducer
 })
 
 export const rootReducer = (state, action) => {
