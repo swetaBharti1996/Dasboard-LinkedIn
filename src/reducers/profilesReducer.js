@@ -1,8 +1,12 @@
-import { PROFILES_LOADED, PROFILES_LOADING, PROFILES_UNLOADED } from "../actions/types";
+import {
+  PROFILES_LOADED,
+  PROFILES_LOADING,
+  PROFILES_UNLOADED,
+} from "../actions/types";
 
 const initialState = {
   isLoading: false,
-  posts: [],
+  profiless: [],
 };
 
 export default function (state = initialState, action) {
@@ -16,12 +20,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        posts: [...action.payload],
+        profiless: [...action.payload],
       };
     case PROFILES_UNLOADED:
       return {
         isLoading: false,
-        posts: [],
+        profiless: [],
       };
     default:
       return state;

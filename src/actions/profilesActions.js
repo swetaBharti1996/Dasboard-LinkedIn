@@ -4,7 +4,7 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
-export const loadPosts = () => (dispatch, getState) => {
+export const loadProfiless = () => (dispatch, getState) => {
   dispatch({ type: PROFILES_LOADING });
 
   axios
@@ -15,7 +15,7 @@ export const loadPosts = () => (dispatch, getState) => {
     .then((res) => {
       dispatch({
         type: PROFILES_LOADED,
-        payload: res.data.posts,
+        payload: res.data.profiless,
       });
     })
     .catch((err) => {

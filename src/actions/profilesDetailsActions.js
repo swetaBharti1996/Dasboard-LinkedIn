@@ -1,11 +1,11 @@
 import axios from "axios";
-import { COMMENT_LOADED, COMMENT_LOADING } from "./types";
+import { PROFILESDETAILS_LOADED, PROFILESDETAILS_LOADING } from "./types";
 import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
-export const loadComments = (postUrl) => (dispatch, getState) => {
-  dispatch({ type: COMMENT_LOADING });
+export const loadProfilesDetailss = (postUrl) => (dispatch, getState) => {
+  dispatch({ type: PROFILESDETAILS_LOADING });
 
   const body = JSON.stringify({ postUrl });
 
@@ -17,8 +17,8 @@ export const loadComments = (postUrl) => (dispatch, getState) => {
     )
     .then((res) => {
       dispatch({
-        type: COMMENT_LOADED,
-        payload: res.data.comments,
+        type: PROFILESDETAILS_LOADED,
+        payload: res.data.profilesDetailss,
       });
     })
     .catch((err) => {
@@ -31,4 +31,3 @@ export const loadComments = (postUrl) => (dispatch, getState) => {
       );
     });
 };
-

@@ -1,30 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
-import { loadPosts } from '../actions/profilesActions'
-import { clearErrors } from '../actions/errorActions';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from "react";
+import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
+import { loadProfiless } from "../actions/profilesActions";
+import { clearErrors } from "../actions/errorActions";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { CSVLink, CSVDownload } from "react-csv";
 
 const Profiles = (props) => {
-
-  const { loadPosts, post, loadCSV, comment } = props;
-  const [csvDat, setCSV] = useState([])
-  const [pid, setPid] = useState('some');
+  const { loadProfiless, profiles, loadCSV, profilesDetails } = props;
+  const [csvDat, setCSV] = useState([]);
+  const [pid, setPid] = useState("some");
   // const [csvDat2, setCSV2] = useState([])
   const mounted = useRef();
-  let inputRef = React.createRef('csv');
+  let inputRef = React.createRef("csv");
 
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
-      loadPosts()
+      loadProfiless();
     } else {
     }
-  }, [loadPosts, loadCSV, comment, csvDat]);
-
-
-
+  }, [loadProfiless, loadCSV, profilesDetails, csvDat]);
 
   const EditableCell = ({
     editing,
@@ -36,7 +32,7 @@ const Profiles = (props) => {
     children,
     ...restProps
   }) => {
-    const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+    const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
     return (
       <td {...restProps}>
         {editing ? (
@@ -55,90 +51,91 @@ const Profiles = (props) => {
             {inputNode}
           </Form.Item>
         ) : (
-            children
-          )}
+          children
+        )}
       </td>
     );
   };
 
   const [form] = Form.useForm();
-  const [data, setData] = useState(post.posts);
-  const [editingKey, setEditingKey] = useState('');
+  const [data, setData] = useState(profiles.profiless);
+  const [editingKey, setEditingKey] = useState("");
 
+  const isEditing = (record) => record.key === editingKey;
 
-  const isEditing = record => record.key === editingKey;
-
-  const edit = record => {
+  const edit = (record) => {
     form.setFieldsValue({
-      name: '',
-      age: '',
-      address: '',
+      name: "",
+      age: "",
+      address: "",
       ...record,
     });
     setEditingKey(record.key);
   };
 
   const cancel = () => {
-    setEditingKey('');
+    setEditingKey("");
   };
 
   const handleLink = (postUrl) => {
-    props.history.push('comment', { postUrl });
-  }
-
-
+    props.history.push("profilesDetails", { postUrl });
+  };
 
   // const csvButton = () => {
   // }
 
-  const save = async key => {
+  const save = async (key) => {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex(item => key === item.key);
+      const index = newData.findIndex((item) => key === item.key);
 
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
         setData(newData);
-        setEditingKey('');
+        setEditingKey("");
       } else {
         newData.push(row);
         setData(newData);
-        setEditingKey('');
+        setEditingKey("");
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.log("Validate Failed:", errInfo);
     }
   };
   const getPosition = (string, subString, index) => {
     return string.split(subString, index).join(subString).length;
-  }
+  };
 
   const columns = [
     {
-      title: 'Post URL',
-      dataIndex: 'postUrl',
-      width: '25%',
+      title: "Post URL",
+      dataIndex: "postUrl",
+      width: "25%",
       editable: true,
       render: (_, rec) => {
-        return (<a onClick={() => handleLink(rec.postUrl)}>{rec.postUrl.slice(0, getPosition(rec.postUrl, '/', 4))}</a >)
-      }
+        return (
+          <a onClick={() => handleLink(rec.postUrl)}>
+            {rec.postUrl.slice(0, getPosition(rec.postUrl, "/", 4))}
+          </a>
+        );
+      },
     },
     {
-      title: 'PostedBy',
-      dataIndex: 'postedBy',
-      width: '25%',
+      title: "PostedBy",
+      dataIndex: "postedBy",
+      width: "25%",
     },
     {
-      title: 'CreatedAt',
-      dataIndex: 'createdAt',
-      width: '25%',
+      title: "CreatedAt",
+      dataIndex: "createdAt",
+      width: "25%",
     },
 
     {
-      title: 'Operation',
-      dataIndex: 'operation',
+      title: "Operation",
+      dataIndex: "operation",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -156,33 +153,31 @@ const Profiles = (props) => {
             </Popconfirm>
           </span>
         ) : (
-            <div className="flex">
-
-              <a disabled={editingKey !== ''} onClick={() => edit(record)} >
-                Edit
+          <div className="flex">
+            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+              Edit
             </a>
-            </div>
-          );
+          </div>
+        );
       },
-    }
+    },
   ];
-  const mergedColumns = columns.map(col => {
+  const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
     }
 
     return {
       ...col,
-      onCell: record => ({
+      onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
+        inputType: col.dataIndex === "age" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
       }),
     };
   });
-
 
   return (
     <Form form={form} component={false}>
@@ -193,7 +188,7 @@ const Profiles = (props) => {
           },
         }}
         bordered
-        dataSource={post.posts}
+        dataSource={profiles.profiless}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
@@ -201,24 +196,23 @@ const Profiles = (props) => {
         }}
       />
     </Form>
-  )
-
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
-    post: state.post,
-    comment: state.comment,
-    error: state.error
-  }
-}
+    profiles: state.profiles,
+    profilesDetails: state.profilesDetails,
+    error: state.error,
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadPosts: () => {
-      dispatch(loadPosts())
-    }
-  }
-}
+    loadProfiless: () => {
+      dispatch(loadProfiless());
+    },
+  };
+};
 
-export default connect(mapStateToProps, { loadPosts })(Profiles);
+export default connect(mapStateToProps, { loadProfiless })(Profiles);

@@ -1,3 +1,5 @@
+import React, { Fragment } from "react";
+
 import React, { useState } from "react";
 import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
 
@@ -89,32 +91,16 @@ const Comment = () => {
     }
   };
 
-  const handleLink = () => {};
-
-  const getPosition = () => {};
   const columns = [
     {
-      title: "Username",
-      dataIndex: "username",
+      title: "name",
+      dataIndex: "name",
       width: "25%",
       editable: true,
     },
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
-    },
-    {
-      title: "ProfileUrl",
-      dataIndex: "url",
-      width: "25%",
-      editable: true,
-      render: (_, record) => {
-        return (
-          <a onClick={() => handleLink(record.url)}>
-            {record.url.slice(0, getPosition(record.url, "/", 4))}
-          </a>
-        );
-      },
     },
     {
       title: "operation",
@@ -144,6 +130,7 @@ const Comment = () => {
       },
     },
   ];
+
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
@@ -160,7 +147,6 @@ const Comment = () => {
       }),
     };
   });
-
   return (
     <Form form={form} component={false}>
       <Table
@@ -180,4 +166,3 @@ const Comment = () => {
     </Form>
   );
 };
-export default Comment;
