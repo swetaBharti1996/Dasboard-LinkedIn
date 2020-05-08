@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
-import { loadProfiless } from "../actions/profilesActions";
+import { loadProfiles } from "../actions/profileActions";
 import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CSVLink, CSVDownload } from "react-csv";
 
-const Profiles = (props) => {
-  const { loadProfiless, profiles, loadCSV, profilesDetails } = props;
+const Profile = (props) => {
+  const { loadProfiles, profile, loadCSV, comment } = props;
   const [csvDat, setCSV] = useState([]);
   const [pid, setPid] = useState("some");
   // const [csvDat2, setCSV2] = useState([])
@@ -17,10 +17,10 @@ const Profiles = (props) => {
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
-      loadProfiless();
+      loadProfiles();
     } else {
     }
-  }, [loadProfiless, loadCSV, profilesDetails, csvDat]);
+  }, [loadProfiles, loadCSV, comment, csvDat]);
 
   const EditableCell = ({
     editing,
@@ -58,7 +58,7 @@ const Profiles = (props) => {
   };
 
   const [form] = Form.useForm();
-  const [data, setData] = useState(profiles.profiless);
+  const [data, setData] = useState(profile.profiles);
   const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record) => record.key === editingKey;
@@ -78,7 +78,7 @@ const Profiles = (props) => {
   };
 
   const handleLink = (postUrl) => {
-    props.history.push("profilesDetails", { postUrl });
+    props.history.push("comment", { postUrl });
   };
 
   // const csvButton = () => {
@@ -188,7 +188,7 @@ const Profiles = (props) => {
           },
         }}
         bordered
-        dataSource={profiles.profiless}
+        dataSource={profile.profiles}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
@@ -201,18 +201,18 @@ const Profiles = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    profiles: state.profiles,
-    profilesDetails: state.profilesDetails,
+    profile: state.profile,
+    comment: state.comment,
     error: state.error,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadProfiless: () => {
-      dispatch(loadProfiless());
+    loadProfiles: () => {
+      dispatch(loadProfiles());
     },
   };
 };
 
-export default connect(mapStateToProps, { loadProfiless })(Profiles);
+export default connect(mapStateToProps, { loadProfiles })(Profile);

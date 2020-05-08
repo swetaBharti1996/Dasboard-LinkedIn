@@ -1,31 +1,31 @@
 import {
-  PROFILES_LOADED,
-  PROFILES_LOADING,
-  PROFILES_UNLOADED,
+  PROFILE_LOADED,
+  PROFILE_LOADING,
+  PROFILE_UNLOADED,
 } from "../actions/types";
 
 const initialState = {
   isLoading: false,
-  profiless: [],
+  profiles: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case PROFILES_LOADING:
+    case PROFILE_LOADING:
       return {
         ...state,
         isLoading: true,
       };
-    case PROFILES_LOADED:
+    case PROFILE_LOADED:
       return {
         ...state,
         isLoading: false,
-        profiless: [...action.payload],
+        profiles: [...action.payload],
       };
-    case PROFILES_UNLOADED:
+    case PROFILE_UNLOADED:
       return {
         isLoading: false,
-        profiless: [],
+        profiles: [],
       };
     default:
       return state;

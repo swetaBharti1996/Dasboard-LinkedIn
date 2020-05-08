@@ -25,9 +25,9 @@ export const DESTROY_SESSION = "DESTROY_SESSION";
 
 // profiles
 
-export const PROFILES_LOADING = "PROFILES_LOADING";
-export const PROFILES_LOADED = "PROFILES_LOADED";
-export const PROFILES_UNLOADED = "PROFILES_UNLOADED";
+export const PROFILE_LOADING = "PROFILE_LOADING";
+export const PROFILE_LOADED = "PROFILE_LOADED";
+export const PROFILE_UNLOADED = "PROFILE_UNLOADED";
 
 // profiles details
 

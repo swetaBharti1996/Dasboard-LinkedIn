@@ -54,6 +54,7 @@ export const login = ({ email, password }) => (dispatch) => {
   axios
     .post(`http://localhost:8080/website/scrapper/auth/login`, body, config)
     .then((res) => {
+      console.log(res.data);
       // let token = res.headers['x-auth'];
       // console.log('Token', res)
       // let payload = {
