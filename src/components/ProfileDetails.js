@@ -1,26 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
-import { loadProfiles } from "../actions/profileActions";
+import {
+    Table,
+    Input,
+    InputNumber,
+    Popconfirm,
+    Form,
+    Button,
+    Spin,
+} from "antd";
+import { loadProfilesDetailss } from "../actions/profilesDetailsActions";
 import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { DownloadOutlined } from "@ant-design/icons";
 import { CSVLink, CSVDownload } from "react-csv";
+import { LoadingOutlined } from "@ant-design/icons";
 
-const Profile = (props) => {
-    const { loadProfiles, profile, loadCSV, comment } = props;
-    const [csvDat, setCSV] = useState([]);
-    const [pid, setPid] = useState("some");
-    // const [csvDat2, setCSV2] = useState([])
-    const mounted = useRef();
-    let inputRef = React.createRef("csv");
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+const ProfilesDetails = (props) => {
+    const { loadProfilesDetailss, profilesDetails } = props;
 
     useEffect(() => {
-        if (!mounted.current) {
-            mounted.current = true;
-            loadProfiles();
-        } else {
+        let postUrl =
+            props.location.state && props.location.state.postUrl
+                ? props.location.state.postUrl
+                : null;
+        if (postUrl) {
+            loadProfilesDetailss(postUrl);
         }
-    }, [loadProfiles, loadCSV, comment, csvDat]);
+    }, [loadProfilesDetailss]);
 
     const EditableCell = ({
         editing,
@@ -58,7 +67,7 @@ const Profile = (props) => {
     };
 
     const [form] = Form.useForm();
-    const [data, setData] = useState(profile.profiles);
+    const [data, setData] = useState(ProfilesDetails.ProfilesDetailss);
     const [editingKey, setEditingKey] = useState("");
 
     const isEditing = (record) => record.key === editingKey;
@@ -76,13 +85,6 @@ const Profile = (props) => {
     const cancel = () => {
         setEditingKey("");
     };
-
-    const handleLink = (postUrl) => {
-        props.history.push("comment", { postUrl });
-    };
-
-    // const csvButton = () => {
-    // }
 
     const save = async (key) => {
         try {
@@ -104,32 +106,44 @@ const Profile = (props) => {
             console.log("Validate Failed:", errInfo);
         }
     };
-    const getPosition = (string, subString, index) => {
-        return string.split(subString, index).join(subString).length;
-    };
 
     const columns = [
         {
-            title: "Post URL",
-            dataIndex: "postUrl",
+            title: "Username",
+            dataIndex: "username",
             width: "25%",
             editable: true,
             render: (_, rec) => {
-                return (
-                    <a onClick={() => handleLink(rec.postUrl)}>
-                        {rec.postUrl.slice(0, getPosition(rec.postUrl, "/", 4))}
-                    </a>
-                );
+                return <a>{rec.username}</a>;
             },
         },
         {
-            title: "PostedBy",
-            dataIndex: "postedBy",
+            title: "Profile URL",
+            dataIndex: "profileUrl",
+            width: "25%",
+            render: (_, rec) => {
+                return <p>{rec.profileUrl.slice(0, rec.profileUrl.indexOf("?"))}</p>;
+            },
+        },
+        {
+            title: "College",
+            dataIndex: "collegeText",
             width: "25%",
         },
         {
-            title: "CreatedAt",
-            dataIndex: "createdAt",
+            title: "Company",
+            dataIndex: "companyText",
+            width: "25%",
+        },
+
+        {
+            title: "email",
+            dataIndex: "emailText",
+            width: "25%",
+        },
+        {
+            title: "Facebook",
+            dataIndex: "facebookText",
             width: "25%",
         },
 
@@ -153,7 +167,7 @@ const Profile = (props) => {
                         </Popconfirm>
                     </span>
                 ) : (
-                        <div className="flex">
+                        <div>
                             <a disabled={editingKey !== ""} onClick={() => edit(record)}>
                                 Edit
             </a>
@@ -180,39 +194,59 @@ const Profile = (props) => {
     });
 
     return (
-        <Form form={form} component={false}>
-            <Table
-                components={{
-                    body: {
-                        cell: EditableCell,
-                    },
-                }}
-                bordered
-                dataSource={profile.profiles}
-                columns={mergedColumns}
-                rowClassName="editable-row"
-                pagination={{
-                    onChange: cancel,
-                }}
-            />
-        </Form>
+        <div>
+            <div className="flex-between">
+                {/* <div className="table-operations">
+          <Button >Sort age</Button>
+          <Button >Clear filters</Button>
+          <Button>Clear filters and sorters</Button>
+        </div> */}
+                <div>
+                    <CSVLink
+                        className="csv-download"
+                        data={ProfilesDetails.ProfilesDetailss}
+                    >
+                        <Button type="primary" icon={<DownloadOutlined />} size="medium">
+                            Download CSV
+            </Button>
+                    </CSVLink>
+                </div>
+            </div>
+
+            <Form form={form} component={false}>
+                <Spin spinning={ProfilesDetails.isLoading}>
+                    <Table
+                        components={{
+                            body: {
+                                cell: EditableCell,
+                            },
+                        }}
+                        bordered
+                        dataSource={ProfilesDetails.ProfilesDetailss}
+                        columns={mergedColumns}
+                        rowClassName="editable-row"
+                        pagination={{
+                            onChange: cancel,
+                        }}
+                    />
+                </Spin>
+            </Form>
+        </div>
     );
 };
 
 const mapStateToProps = (state) => {
     return {
-        profile: state.profile,
-        comment: state.comment,
-        error: state.error,
+        ProfilesDetails: state.ProfilesDetails,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        loadProfiles: () => {
-            dispatch(loadProfiles());
+        loadProfilesDetailss: () => {
+            dispatch(loadProfilesDetailss());
         },
     };
 };
 
-export default connect(mapStateToProps, { loadProfiles })(Profile);
+export default connect(mapStateToProps, { loadProfilesDetailss })(ProfilesDetails);

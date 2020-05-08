@@ -1,28 +1,31 @@
 import {
-    COMMENT_LOADED,
-    COMMENT_LOADING,
-    CSV_LOADED,
-    CSV_LOADING,
+    PROFILE_LOADED,
+    PROFILE_LOADING,
+    PROFILE_UNLOADED,
 } from "../actions/types";
 
 const initialState = {
     isLoading: false,
-    comments: [],
-    csvData: [],
+    profiles: [],
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case COMMENT_LOADING:
+        case PROFILE_LOADING:
             return {
                 ...state,
                 isLoading: true,
             };
-        case COMMENT_LOADED:
+        case PROFILE_LOADED:
             return {
                 ...state,
                 isLoading: false,
-                comments: [...action.payload],
+                profiles: [...action.payload],
+            };
+        case PROFILE_UNLOADED:
+            return {
+                isLoading: false,
+                profiles: [],
             };
         default:
             return state;
