@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
-import { loadPosts } from "../actions/profileActions";
+import {
+  Table,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Form,
+  Button,
+  Spin,
+} from "antd";
+import { loadComments } from "../actions/profileDetailActions";
 import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { DownloadOutlined } from "@ant-design/icons";
+import { CSVLink, CSVDownload } from "react-csv";
+import { LoadingOutlined } from "@ant-design/icons";
 
-const Profile = (props) => {
-  const { loadPosts, loadCSV, profile, profileDetail } = props;
-  const [csvDat] = useState([]);
-  const [pid] = useState("some");
-  // const [csvDat2, setCSV2] = useState([])
-  const mounted = useRef();
-  let inputRef = React.createRef("csv");
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+const ProfileDetail = (props) => {
+  const { loadComments, ProfileDetail } = props;
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      loadPosts();
-    } else {
+    let profileurl =
+      props.location.state && props.location.state.postUrl
+        ? props.location.state.profileurl
+        : null;
+    if (ProfileDetail) {
+      loadComments(profileurl);
     }
-  }, [loadPosts, loadCSV, profileDetail, csvDat]);
+  }, [loadComments]);
 
   const EditableCell = ({
     editing,
@@ -57,7 +67,7 @@ const Profile = (props) => {
   };
 
   const [form] = Form.useForm();
-  const [data, setData] = useState(profile.info);
+  const [data, setData] = useState(profileDetail.datas);
   const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record) => record.key === editingKey;
@@ -75,13 +85,6 @@ const Profile = (props) => {
   const cancel = () => {
     setEditingKey("");
   };
-
-  const handleLink = (profileurl) => {
-    props.history.push("profileDetail", { profileurl });
-  };
-
-  // const csvButton = () => {
-  // }
 
   const save = async (key) => {
     try {
@@ -103,32 +106,53 @@ const Profile = (props) => {
       console.log("Validate Failed:", errInfo);
     }
   };
-  const getPosition = (string, subString, index) => {
-    return string.split(subString, index).join(subString).length;
-  };
 
   const columns = [
     {
-      title: "Profile url",
-      dataIndex: "profileurl",
+      title: "name",
+      dataIndex: "name",
       width: "25%",
       editable: true,
       render: (_, rec) => {
-        return (
-          <a onClick={() => handleLink(rec.profileurl)}>
-            {rec.profileurl.slice(0, getPosition(rec.profileurl, "/", 4))}
-          </a>
-        );
+        return <a>{rec.name}</a>;
       },
     },
     {
-      title: "Scrapedtime",
+      title: "Profile URL",
+      dataIndex: "profileurl",
+      width: "25%",
+      render: (_, rec) => {
+        return <p>{rec.profileUrl.slice(0, rec.profileUrl.indexOf("?"))}</p>;
+      },
+    },
+    {
+      title: "college",
+      dataIndex: "college",
+      width: "25%",
+    },
+    {
+      title: "Email",
+      dataIndex: "Email",
+      width: "25%",
+    },
+    {
+      title: "facebook",
+      dataIndex: "college",
+      width: "25%",
+    },
+    {
+      title: "twitter",
+      dataIndex: "twitter",
+      width: "25%",
+    },
+    {
+      title: "scrapedtime",
       dataIndex: "scrapedtime",
       width: "25%",
     },
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "phonenumber",
+      dataIndex: "phonenumber",
       width: "25%",
     },
 
@@ -152,7 +176,7 @@ const Profile = (props) => {
             </Popconfirm>
           </span>
         ) : (
-          <div className="flex">
+          <div>
             <a disabled={editingKey !== ""} onClick={() => edit(record)}>
               Edit
             </a>
@@ -179,40 +203,59 @@ const Profile = (props) => {
   });
 
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={profile.info}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
+    <div>
+      <div className="flex-between">
+        {/* <div className="table-operations">
+          <Button >Sort age</Button>
+          <Button >Clear filters</Button>
+          <Button>Clear filters and sorters</Button>
+        </div> */}
+        {/* <div>
+          <CSVLink
+            className="csv-download"
+            data={comment.comments}
+          >
+            <Button type="primary" icon={<DownloadOutlined />} size='medium'>
+              Download CSV
+      </Button>
+          </CSVLink>
+        </div> */}
+      </div>
+
+      <Form form={form} component={false}>
+        <Spin spinning={profileDetail.isLoading}>
+          <Table
+            components={{
+              body: {
+                cell: EditableCell,
+              },
+            }}
+            bordered
+            dataSource={profileDetail.datas}
+            columns={mergedColumns}
+            rowClassName="editable-row"
+            pagination={{
+              onChange: cancel,
+            }}
+          />
+        </Spin>
+      </Form>
+    </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.profile,
     profileDetail: state.profileDetail,
-    error: state.error,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadPosts: () => {
-      dispatch(loadPosts());
+    loadComments: () => {
+      dispatch(loadComments());
     },
   };
 };
 
-export default connect(mapStateToProps, { loadPosts })(Profile);
-
+export default connect(mapStateToProps, { loadComments })(ProfileDetail);
