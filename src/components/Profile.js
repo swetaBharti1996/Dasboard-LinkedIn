@@ -5,7 +5,7 @@ import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const Profile = (props) => {
+const Profile = props => {
   const { loadPosts, loadCSV, profile, profileDetail } = props;
   const [csvDat] = useState([]);
   const [pid] = useState("some");
@@ -38,13 +38,13 @@ const Profile = (props) => {
           <Form.Item
             name={dataIndex}
             style={{
-              margin: 0,
+              margin: 0
             }}
             rules={[
               {
                 required: true,
-                message: `Please Input ${title}!`,
-              },
+                message: `Please Input ${title}!`
+              }
             ]}
           >
             {inputNode}
@@ -60,14 +60,14 @@ const Profile = (props) => {
   const [data, setData] = useState(profile.info);
   const [editingKey, setEditingKey] = useState("");
 
-  const isEditing = (record) => record.key === editingKey;
+  const isEditing = record => record.key === editingKey;
 
-  const edit = (record) => {
+  const edit = record => {
     form.setFieldsValue({
       name: "",
       age: "",
       address: "",
-      ...record,
+      ...record
     });
     setEditingKey(record.key);
   };
@@ -76,18 +76,18 @@ const Profile = (props) => {
     setEditingKey("");
   };
 
-  const handleLink = (profileurl) => {
+  const handleLink = profileurl => {
     props.history.push("profileDetail", { profileurl });
   };
 
   // const csvButton = () => {
   // }
 
-  const save = async (key) => {
+  const save = async key => {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
+      const index = newData.findIndex(item => key === item.key);
 
       if (index > -1) {
         const item = newData[index];
@@ -104,6 +104,7 @@ const Profile = (props) => {
     }
   };
   const getPosition = (string, subString, index) => {
+    console.log();
     return string.split(subString, index).join(subString).length;
   };
 
@@ -114,22 +115,23 @@ const Profile = (props) => {
       width: "25%",
       editable: true,
       render: (_, rec) => {
+        console.log("rec", rec);
         return (
-          <a onClick={() => handleLink(rec.profileurl)}>
-            {rec.profileurl.slice(0, getPosition(rec.profileurl, "/", 4))}
+          <a onClick={() => handleLink(rec.url)}>
+            {rec.url.slice(0, getPosition(rec.url, "/", 4))}
           </a>
         );
-      },
+      }
     },
     {
       title: "Scrapedtime",
       dataIndex: "scrapedtime",
-      width: "25%",
+      width: "25%"
     },
     {
       title: "Name",
       dataIndex: "name",
-      width: "25%",
+      width: "25%"
     },
 
     {
@@ -142,7 +144,7 @@ const Profile = (props) => {
             <a
               onClick={() => save(record.key)}
               style={{
-                marginRight: 8,
+                marginRight: 8
               }}
             >
               Save
@@ -158,23 +160,23 @@ const Profile = (props) => {
             </a>
           </div>
         );
-      },
-    },
+      }
+    }
   ];
-  const mergedColumns = columns.map((col) => {
+  const mergedColumns = columns.map(col => {
     if (!col.editable) {
       return col;
     }
 
     return {
       ...col,
-      onCell: (record) => ({
+      onCell: record => ({
         record,
         inputType: col.dataIndex === "age" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record),
-      }),
+        editing: isEditing(record)
+      })
     };
   });
 
@@ -183,26 +185,27 @@ const Profile = (props) => {
       <Table
         components={{
           body: {
-            cell: EditableCell,
-          },
+            cell: EditableCell
+          }
         }}
         bordered
         dataSource={profile.info}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
-          onChange: cancel,
+          onChange: cancel
         }}
       />
     </Form>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
+  console.log("state on page", state);
   return {
     profile: state.profile,
     profileDetail: state.profileDetail,
-    error: state.error,
+    error: state.error
   };
 };
 
@@ -210,9 +213,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadPosts: () => {
       dispatch(loadPosts());
-    },
+    }
   };
 };
 
 export default connect(mapStateToProps, { loadPosts })(Profile);
-

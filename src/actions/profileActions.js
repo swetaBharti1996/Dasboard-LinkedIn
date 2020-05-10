@@ -12,15 +12,15 @@ export const loadPosts = () => (dispatch, getState) => {
       `http://localhost:8090/website/scrapper/profile/getprofiles`,
       tokenConfig(getState)
     )
-    .then((res) => {
-      console.log("responseeeeeeeeeeeeeeeeee", res.data);
+    .then(res => {
+      // console.log("response in profile action", res.data);
       dispatch({
         type: PROFILE_LOADED,
-        payload: res.data.info,
+        payload: res.data
       });
     })
-    .catch((err) => {
-      console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", err);
+    .catch(err => {
+      // console.log(" load post erorr in", err);
       if (err.data) {
         dispatch(
           returnErrors(
@@ -32,4 +32,3 @@ export const loadPosts = () => (dispatch, getState) => {
       }
     });
 };
-

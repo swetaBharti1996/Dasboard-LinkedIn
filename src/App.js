@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import Store from "./store/store";
+// import Store from "./store/store";
+
 import AppRouter from "./routes/routes";
 
 import { loadUser } from "./actions/authActions";
