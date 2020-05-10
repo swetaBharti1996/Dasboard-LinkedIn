@@ -4,24 +4,23 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
-export const loadProfiles = () => (dispatch, getState) => {
+export const loadPosts = () => (dispatch, getState) => {
   dispatch({ type: PROFILE_LOADING });
 
   axios
     .get(
-      `http://localhost:8090/website/scrapper/linkuser/getlinkedindata`,
+      `http://localhost:8090/website/scrapper/profile/getprofiles`,
       tokenConfig(getState)
     )
-
-    .then(res => {
-      console.log("response ", res);
+    .then((res) => {
+      console.log("responseeeeeeeeeeeeeeeeee", res.data);
       dispatch({
         type: PROFILE_LOADED,
-        payload: res.data.profiles
+        payload: res.data.info,
       });
     })
-
-    .catch(err => {
+    .catch((err) => {
+      console.log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", err);
       if (err.data) {
         dispatch(
           returnErrors(
@@ -33,3 +32,4 @@ export const loadProfiles = () => (dispatch, getState) => {
       }
     });
 };
+
