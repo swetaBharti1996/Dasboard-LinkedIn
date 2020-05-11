@@ -23,8 +23,7 @@ const ProfileDetail = (props) => {
   const { loadComment, profileDetail } = props;
 
   useEffect(() => {
-    let profileurl =
-      props.location.state && props.location.state.profileurl
+    let profileurl = props.location.state && props.location.state.profileurl
         ? props.location.state.profileurl
         : null;
     if (ProfileDetail) {
@@ -69,7 +68,7 @@ const ProfileDetail = (props) => {
 
   const [form] = Form.useForm();
   const [data, setData] = useState(profileDetail.datas);
-  const [editingKey, setEditingKey] = useState("");
+  const [editingKey, setEditingKey] = useState('');
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -103,8 +102,8 @@ const ProfileDetail = (props) => {
         setData(newData);
         setEditingKey("");
       }
-    } catch (err) {
-      console.log("Validate Failed:", err);
+    } catch (errDatas) {
+      console.log("Validate Failed:", errDatas);
     }
   };
 
