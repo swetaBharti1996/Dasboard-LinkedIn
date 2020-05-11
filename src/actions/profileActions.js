@@ -9,17 +9,17 @@ export const loadPosts = () => (dispatch, getState) => {
 
   axios
     .get(
-      `http://localhost:8090/website/scrapper/profile/getprofiles`,
+      `http://localhost:8080/website/scrapper/profile/getprofiles`,
       tokenConfig(getState)
     )
-    .then(res => {
-      // console.log("response in profile action", res.data);
+    .then((res) => {
+      console.log("response in profile action", res.data);
       dispatch({
         type: PROFILE_LOADED,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       // console.log(" load post erorr in", err);
       if (err.data) {
         dispatch(

@@ -32,7 +32,7 @@ const MENU = [
         name: 'Profile', url: '/profile', icon: UserAddOutlined
     },
     {
-        name: 'Profile Detail', url: '/profileDetail', icon: SolutionOutlined
+        name: 'ProfileDetail', url: '/profileDetail', icon: SolutionOutlined
     }
 
 ]

@@ -6,9 +6,9 @@ import {
   Popconfirm,
   Form,
   Button,
-  Spin
+  Spin,
 } from "antd";
-import { loadComments } from "../actions/profilesDetailAction";
+import { loadComment } from "../actions/profileDetailActions";
 import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -18,19 +18,19 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const ProfileDetail = props => {
+const ProfileDetail = (props) => {
   console.log("props ", props);
-  const { loadComments, profileDetail } = props;
+  const { loadComment, profileDetail } = props;
 
   useEffect(() => {
     let profileurl =
-      props.location.state && props.location.state.postUrl
+      props.location.state && props.location.state.profileurl
         ? props.location.state.profileurl
         : null;
     if (ProfileDetail) {
-      loadComments(profileurl);
+      loadComment(profileurl);
     }
-  }, [loadComments]);
+  }, [loadComment]);
 
   const EditableCell = ({
     editing,
@@ -49,13 +49,13 @@ const ProfileDetail = props => {
           <Form.Item
             name={dataIndex}
             style={{
-              margin: 0
+              margin: 0,
             }}
             rules={[
               {
                 required: true,
-                message: `Please Input ${title}!`
-              }
+                message: `Please Input ${title}!`,
+              },
             ]}
           >
             {inputNode}
@@ -71,14 +71,14 @@ const ProfileDetail = props => {
   const [data, setData] = useState(profileDetail.datas);
   const [editingKey, setEditingKey] = useState("");
 
-  const isEditing = record => record.key === editingKey;
+  const isEditing = (record) => record.key === editingKey;
 
-  const edit = record => {
+  const edit = (record) => {
     form.setFieldsValue({
       name: "",
       age: "",
       address: "",
-      ...record
+      ...record,
     });
     setEditingKey(record.key);
   };
@@ -87,11 +87,11 @@ const ProfileDetail = props => {
     setEditingKey("");
   };
 
-  const save = async key => {
+  const save = async (key) => {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex(item => key === item.key);
+      const index = newData.findIndex((item) => key === item.key);
 
       if (index > -1) {
         const item = newData[index];
@@ -103,8 +103,8 @@ const ProfileDetail = props => {
         setData(newData);
         setEditingKey("");
       }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
+    } catch (err) {
+      console.log("Validate Failed:", err);
     }
   };
 
@@ -115,46 +115,51 @@ const ProfileDetail = props => {
       width: "25%",
       editable: true,
       render: (_, rec) => {
+        console.log("rec", rec);
+
         return <a>{rec.name}</a>;
-      }
+      },
     },
     {
       title: "Profile URL",
       dataIndex: "profileurl",
       width: "25%",
+
       render: (_, rec) => {
-        return <p>{rec.profileUrl.slice(0, rec.profileUrl.indexOf("?"))}</p>;
-      }
+        console.log("rec", rec);
+
+        return <p>{rec.profileurl.slice(0, rec.profileurl.indexOf("?"))}</p>;
+      },
     },
     {
       title: "college",
       dataIndex: "college",
-      width: "25%"
+      width: "25%",
     },
     {
       title: "Email",
       dataIndex: "Email",
-      width: "25%"
+      width: "25%",
     },
     {
       title: "facebook",
       dataIndex: "college",
-      width: "25%"
+      width: "25%",
     },
     {
       title: "twitter",
       dataIndex: "twitter",
-      width: "25%"
+      width: "25%",
     },
     {
       title: "scrapedtime",
       dataIndex: "scrapedtime",
-      width: "25%"
+      width: "25%",
     },
     {
       title: "phonenumber",
       dataIndex: "phonenumber",
-      width: "25%"
+      width: "25%",
     },
 
     {
@@ -167,7 +172,7 @@ const ProfileDetail = props => {
             <a
               onClick={() => save(record.key)}
               style={{
-                marginRight: 8
+                marginRight: 8,
               }}
             >
               Save
@@ -183,23 +188,23 @@ const ProfileDetail = props => {
             </a>
           </div>
         );
-      }
-    }
+      },
+    },
   ];
-  const mergedColumns = columns.map(col => {
+  const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
     }
 
     return {
       ...col,
-      onCell: record => ({
+      onCell: (record) => ({
         record,
         inputType: col.dataIndex === "age" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record)
-      })
+        editing: isEditing(record),
+      }),
     };
   });
   console.log("thisprops", props);
@@ -228,15 +233,15 @@ const ProfileDetail = props => {
           <Table
             components={{
               body: {
-                cell: EditableCell
-              }
+                cell: EditableCell,
+              },
             }}
             bordered
             dataSource={profileDetail.datas}
             columns={mergedColumns}
             rowClassName="editable-row"
             pagination={{
-              onChange: cancel
+              onChange: cancel,
             }}
           />
         </Spin>
@@ -245,18 +250,18 @@ const ProfileDetail = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    profileDetail: state.profileDetail
+    profileDetail: state.profileDetail,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadComments: () => {
-      dispatch(loadComments());
-    }
+    loadComment: () => {
+      dispatch(loadComment());
+    },
   };
 };
 
-export default connect(mapStateToProps, { loadComments })(ProfileDetail);
+export default connect(mapStateToProps, { loadComment })(ProfileDetail);

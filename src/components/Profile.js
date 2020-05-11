@@ -64,9 +64,9 @@ const Profile = props => {
 
   const edit = record => {
     form.setFieldsValue({
+      profileurl: "",
+      scrapedtime: "",
       name: "",
-      age: "",
-      address: "",
       ...record
     });
     setEditingKey(record.key);
@@ -117,8 +117,8 @@ const Profile = props => {
       render: (_, rec) => {
         console.log("rec", rec);
         return (
-          <a onClick={() => handleLink(rec.url)}>
-            {rec.url.slice(0, getPosition(rec.url, "/", 4))}
+          <a onClick={() => handleLink(rec.profileurl)}>
+            {rec.profileurl.slice(0, getPosition(rec.profileurl, "/", 4))}
           </a>
         );
       }
