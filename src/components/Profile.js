@@ -5,7 +5,7 @@ import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const Profile = props => {
+const Profile = (props) => {
   const { loadPosts, loadCSV, profile, profileDetail } = props;
   const [csvDat] = useState([]);
   const [pid] = useState("some");
@@ -38,20 +38,20 @@ const Profile = props => {
           <Form.Item
             name={dataIndex}
             style={{
-              margin: 0
+              margin: 0,
             }}
             rules={[
               {
                 required: true,
-                message: `Please Input ${title}!`
-              }
+                message: `Please Input ${title}!`,
+              },
             ]}
           >
             {inputNode}
           </Form.Item>
         ) : (
-          children
-        )}
+            children
+          )}
       </td>
     );
   };
@@ -60,14 +60,14 @@ const Profile = props => {
   const [data, setData] = useState(profile.info);
   const [editingKey, setEditingKey] = useState("");
 
-  const isEditing = record => record.key === editingKey;
+  const isEditing = (record) => record.key === editingKey;
 
-  const edit = record => {
+  const edit = (record) => {
     form.setFieldsValue({
       profileurl: "",
       scrapedtime: "",
       name: "",
-      ...record
+      ...record,
     });
     setEditingKey(record.key);
   };
@@ -76,18 +76,18 @@ const Profile = props => {
     setEditingKey("");
   };
 
-  const handleLink = profileurl => {
-    props.history.push("profileDetail", { profileurl });
+  const handleLink = (url) => {
+    props.history.push("profileDetail", { url });
   };
 
   // const csvButton = () => {
   // }
 
-  const save = async key => {
+  const save = async (key) => {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex(item => key === item.key);
+      const index = newData.findIndex((item) => key === item.key);
 
       if (index > -1) {
         const item = newData[index];
@@ -117,23 +117,33 @@ const Profile = props => {
       render: (_, rec) => {
         console.log("rec", rec);
         return (
-          <a onClick={() => handleLink(rec.profileurl)}>
-            {rec.profileurl.slice(0, getPosition(rec.profileurl, "/", 4))}
+          <a onClick={() => handleLink(rec.url)}>
+            {rec.url.slice(0, getPosition(rec.url, "/", 4))}
           </a>
         );
-      }
-    },
-    {
-      title: "Scrapedtime",
-      dataIndex: "scrapedtime",
-      width: "25%"
+      },
     },
     {
       title: "Name",
       dataIndex: "name",
-      width: "25%"
+      width: "25%",
     },
 
+    {
+      title: "Email",
+      dataIndex: "email",
+      width: "25%",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phonenumber",
+      width: "15%",
+    },
+    {
+      title: "Company",
+      dataIndex: "company",
+      width: "25%",
+    },
     {
       title: "Operation",
       dataIndex: "operation",
@@ -144,7 +154,7 @@ const Profile = props => {
             <a
               onClick={() => save(record.key)}
               style={{
-                marginRight: 8
+                marginRight: 8,
               }}
             >
               Save
@@ -154,29 +164,29 @@ const Profile = props => {
             </Popconfirm>
           </span>
         ) : (
-          <div className="flex">
-            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-              Edit
+            <div className="flex">
+              <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+                Edit
             </a>
-          </div>
-        );
-      }
-    }
+            </div>
+          );
+      },
+    },
   ];
-  const mergedColumns = columns.map(col => {
+  const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
     }
 
     return {
       ...col,
-      onCell: record => ({
+      onCell: (record) => ({
         record,
         inputType: col.dataIndex === "age" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record)
-      })
+        editing: isEditing(record),
+      }),
     };
   });
 
@@ -185,27 +195,27 @@ const Profile = props => {
       <Table
         components={{
           body: {
-            cell: EditableCell
-          }
+            cell: EditableCell,
+          },
         }}
         bordered
         dataSource={profile.info}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
-          onChange: cancel
+          onChange: cancel,
         }}
       />
     </Form>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log("state on page", state);
   return {
     profile: state.profile,
     profileDetail: state.profileDetail,
-    error: state.error
+    error: state.error,
   };
 };
 
@@ -213,7 +223,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadPosts: () => {
       dispatch(loadPosts());
-    }
+    },
   };
 };
 

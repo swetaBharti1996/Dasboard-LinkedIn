@@ -19,11 +19,11 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
       console.log("response deatilllllllllllllllllll", res.data);
       dispatch({
         type: PROFILEDETAIL_LOADED,
-        payload: res.data,
+        payload: res.data.linkdata,
       });
     })
     .catch((err) => {
-      // console.log(" load post erorr in", err);
+      console.log(" load  profileeeeeeeeeeee    detail  erorr in", err);
       if (err.data) {
         dispatch(
           returnErrors(
@@ -35,27 +35,3 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
       }
     });
 };
-
-// export const loadCSV = (postId) => (dispatch, getState) => {
-//   dispatch({ type: CSV_LOADING });
-
-//   const body = JSON.stringify({ postId })
-
-//   axios.post(
-//     'https://app.leadsharvester.com/backend/website/scrapper/facebook/getComments',
-//     body,
-//     tokenConfig(getState)
-//   )
-//     .then(res => {
-//       dispatch({
-//         type: CSV_LOADED,
-//         payload: res.data.comments
-//       })
-
-//     })
-//     .catch(err => {
-//       if (err.response.data) {
-//         dispatch(returnErrors(err.response.data.message, err.response.status, err.response.data.success))
-//       }
-//     })
-// }

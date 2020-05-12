@@ -4,12 +4,15 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
-export const loadPosts = () => (dispatch, getState) => {
+export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
+
+  const body = JSON.stringify({ posturl });
+  console.log(body)
 
   axios
     .get(
-      `http://localhost:8090/website/scrapper/getlinkedindata`,
+      `http://localhost:8080/website/scrapper/post/getComments`, body,
       tokenConfig(getState)
     )
     .then(res => {

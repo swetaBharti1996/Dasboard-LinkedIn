@@ -20,10 +20,13 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ProfileDetail = (props) => {
   console.log("props ", props);
+  console.log("mapateto propst", props.profileDetail);
+
   const { loadComment, profileDetail } = props;
 
   useEffect(() => {
-    let profileurl = props.location.state && props.location.state.profileurl
+    let profileurl =
+      props.location.state && props.location.state.profileurl
         ? props.location.state.profileurl
         : null;
     if (ProfileDetail) {
@@ -60,15 +63,15 @@ const ProfileDetail = (props) => {
             {inputNode}
           </Form.Item>
         ) : (
-          children
-        )}
+            children
+          )}
       </td>
     );
   };
 
   const [form] = Form.useForm();
   const [data, setData] = useState(profileDetail.datas);
-  const [editingKey, setEditingKey] = useState('');
+  const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -181,12 +184,12 @@ const ProfileDetail = (props) => {
             </Popconfirm>
           </span>
         ) : (
-          <div>
-            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-              Edit
+            <div>
+              <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+                Edit
             </a>
-          </div>
-        );
+            </div>
+          );
       },
     },
   ];
@@ -251,7 +254,7 @@ const ProfileDetail = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    profileDetail: state.profileDetail,
+    profileDetail: state.profileDetail.linkdata,
   };
 };
 
@@ -263,4 +266,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { loadComment })(ProfileDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileDetail);

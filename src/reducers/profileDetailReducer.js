@@ -9,6 +9,7 @@ const initialState = {
   isLoading: false,
   datas: [],
   csvData: [],
+  linkdata: {},
 };
 
 export default function (state = initialState, action) {
@@ -22,7 +23,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        datas: [...action.payload],
+        linkdata: { ...action.payload },
       };
     default:
       return state;

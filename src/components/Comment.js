@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import { connect } from 'react-redux'
+import { loadComments } from '../actions/commentActions'
 
 
-const Comment = () => {
-    const originData = [];
+const CommentData = (props) => {
 
-    for (let i = 0; i < 100; i++) {
-        originData.push({
-            key: i.toString(),
-            username: `Edrward ${i}`,
-            url: 'http://www.facebook.com',
-            createdAt: '12364667',
-            address: `London Park no. ${i}`,
-        });
-    }
+    const { loadComments, loadCSV, comments, commentsarray } = props;
+    console.log('hii', props.loadComments())
+
     const EditableCell = ({
         editing,
         dataIndex,
@@ -50,16 +45,15 @@ const Comment = () => {
     };
 
     const [form] = Form.useForm();
-    const [data, setData] = useState(originData);
+    const [data, setData] = useState(comments);
     const [editingKey, setEditingKey] = useState('');
 
     const isEditing = record => record.key === editingKey;
 
     const edit = record => {
         form.setFieldsValue({
-            username: '',
             url: '',
-            createdAt: '',
+
             ...record,
         });
         setEditingKey(record.key);
@@ -94,33 +88,43 @@ const Comment = () => {
 
     }
 
-    const getPosition = () => {
+    const getPosition = (string, subString, index) => {
+        return string.split(subString, index).join(subString).length;
+    };
 
-    }
     const columns = [
         {
-            title: 'Username',
-            dataIndex: 'username',
-            width: '25%',
+            title: "Profile Url",
+            dataIndex: "url",
+            width: "25%",
             editable: true,
-        },
-        {
-            title: 'CreatedAt',
-            dataIndex: 'createdAt'
-        },
-        {
-            title: 'ProfileUrl',
-            dataIndex: 'url',
-            width: '25%',
-            editable: true,
-            render: (_, record) => {
+            render: (_, rec) => {
+                console.log("rec", rec);
                 return (
-                    <a onClick={() => handleLink(record.url)}>{record.url.slice(0, getPosition(record.url, "/", 4))}</a>
-                )
+                    <a onClick={() => handleLink(rec.url)}>
+                        {rec.url.slice(0, getPosition(rec.url, "/", 4))}
+                    </a>
+                );
             }
         },
         {
-            title: 'operation',
+            title: "Name",
+            dataIndex: "name",
+            width: "25%"
+        },
+        // {
+        //     title: 'ProfileUrl',
+        //     dataIndex: 'url',
+        //     width: '25%',
+        //     editable: true,
+        //     render: (_, record) => {
+        //         return (
+        //             <a onClick={() => handleLink(record.url)}>{record.url.slice(0, getPosition(record.url, "/", 4))}</a>
+        //         )
+        //     }
+        // },
+        {
+            title: 'Operation',
             dataIndex: 'operation',
             render: (_, record) => {
                 const editable = isEditing(record);
@@ -173,7 +177,7 @@ const Comment = () => {
                     },
                 }}
                 bordered
-                dataSource={data}
+                dataSource={comments}
                 columns={mergedColumns}
                 rowClassName="editable-row"
                 pagination={{
@@ -184,4 +188,22 @@ const Comment = () => {
     )
 
 }
-export default Comment;
+
+const mapStateToProps = state => {
+    console.log("state on page", state);
+    return {
+        comments: state.comment.comments,
+        // postData: state.postData.,
+        error: state.error
+    };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        loadComments: () => {
+            dispatch(loadComments());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentData);

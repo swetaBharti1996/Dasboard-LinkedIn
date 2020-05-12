@@ -2,53 +2,40 @@ import axios from 'axios';
 import {
     COMMENT_LOADED,
     COMMENT_LOADING,
+    POST_LOADING,
+    POST_LOADED
 } from './types'
 import { tokenConfig } from './authActions'
 
 import { returnErrors } from './errorActions'
 
-export const loadComments = (postUrl) => (dispatch, getState) => {
+export const loadComments = () => (dispatch, getState) => {
     dispatch({ type: COMMENT_LOADING });
 
-    const body = JSON.stringify({ postUrl })
-
-    axios.post(
-        `https://app.leadsharvester.com/backend/website/scrapper/facebook/getComments`,
-        body,
-        tokenConfig(getState)
-    )
+    axios
+        .get(
+            `http://localhost:8080/website/scrapper/post/getAllComments`,
+            tokenConfig(getState)
+        )
         .then(res => {
+            console.log("response in comment action", res.data);
             dispatch({
                 type: COMMENT_LOADED,
-                payload: res.data.comments
-            })
+                payload: res.data
+            });
         })
         .catch(err => {
-            dispatch(returnErrors(err.response.data.message, err.response.status, err.response.data.success))
-        })
-}
+            // console.log(" load post erorr in", err);
+            if (err.data) {
+                dispatch(
+                    returnErrors(
+                        err.response.data.message,
+                        err.response.status,
+                        err.response.data.success
+                    )
+                );
+            }
+        });
+};
 
 
-// export const loadCSV = (postId) => (dispatch, getState) => {
-//   dispatch({ type: CSV_LOADING });
-
-//   const body = JSON.stringify({ postId })
-
-//   axios.post(
-//     'https://app.leadsharvester.com/backend/website/scrapper/facebook/getComments',
-//     body,
-//     tokenConfig(getState)
-//   )
-//     .then(res => {
-//       dispatch({
-//         type: CSV_LOADED,
-//         payload: res.data.comments
-//       })
-
-//     })
-//     .catch(err => {
-//       if (err.response.data) {
-//         dispatch(returnErrors(err.response.data.message, err.response.status, err.response.data.success))
-//       }
-//     })
-// }
