@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from 'react-router-dom'
 import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
 import { loadPosts } from "../actions/profileActions";
 import { clearErrors } from "../actions/errorActions";
@@ -117,27 +118,30 @@ const Profile = (props) => {
       render: (_, rec) => {
         console.log("rec", rec);
         return (
-          <a onClick={() => handleLink(rec.url)}>
-            {rec.url.slice(0, getPosition(rec.url, "/", 4))}
-          </a>
+          <Link to={{
+            pathname: '/profileDetail',
+            state: {
+              profileurl: rec.profileurl
+            }
+          }}>{rec.profileurl}</Link>
         );
-      },
+      }
     },
     {
       title: "Name",
       dataIndex: "name",
-      width: "25%",
+      width: "15%",
     },
 
     {
       title: "Email",
       dataIndex: "email",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "Phone Number",
       dataIndex: "phonenumber",
-      width: "15%",
+      width: "10%",
     },
     {
       title: "Company",

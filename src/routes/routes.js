@@ -25,8 +25,6 @@ const AppRouter = (props) => {
                   <Route exact={true} path="/insight" component={Insight} />
                   <Route exact={true} path="/post" component={PostData} />
                   <Route exact={true} path="/profile" component={Profile} />
-
-
                   <Route
                     exact={true}
                     path="/profileDetail"

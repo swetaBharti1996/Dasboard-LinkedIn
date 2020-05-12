@@ -9,7 +9,7 @@ const initialState = {
   info: []
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   // console.log("action in profile", action);
   switch (action.type) {
     case PROFILE_LOADING:

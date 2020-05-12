@@ -114,54 +114,46 @@ const ProfileDetail = (props) => {
     {
       title: "name",
       dataIndex: "name",
-      width: "25%",
-      editable: true,
-      render: (_, rec) => {
-        console.log("rec", rec);
-
-        return <a>{rec.name}</a>;
-      },
+      width: "15%",
     },
     {
-      title: "Profile URL",
-      dataIndex: "profileurl",
-      width: "25%",
-
-      render: (_, rec) => {
-        console.log("rec", rec);
-
-        return <p>{rec.profileurl.slice(0, rec.profileurl.indexOf("?"))}</p>;
-      },
+      title: "Profile Url",
+      dataIndex: 'profileurl',
+      width: '15%',
+      render: (_, record) => {
+        return <a>{record.profileurl}</a>
+      }
     },
+
     {
       title: "college",
       dataIndex: "college",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "Email",
       dataIndex: "Email",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "facebook",
-      dataIndex: "college",
-      width: "25%",
+      dataIndex: "facebook",
+      width: "15%",
     },
     {
       title: "twitter",
       dataIndex: "twitter",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "scrapedtime",
       dataIndex: "scrapedtime",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "phonenumber",
       dataIndex: "phonenumber",
-      width: "25%",
+      width: "20%",
     },
 
     {

@@ -21,7 +21,6 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const PostData = (props) => {
     const { loadPosts, PostData, isLoading } = props;
 
-
     useEffect(() => {
         let profileurl = props.location.state && props.location.state.postURL
             ? props.location.state.postURL
@@ -31,6 +30,7 @@ const PostData = (props) => {
             loadPosts(profileurl);
         }
     }, [loadPosts]);
+
 
     const EditableCell = ({
         editing,
