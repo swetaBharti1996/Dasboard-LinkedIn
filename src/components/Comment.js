@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 import { connect } from 'react-redux'
 import { loadComments } from '../actions/commentActions'
 
 
+
 const CommentData = (props) => {
 
     const { loadComments, loadCSV, comments, commentsarray } = props;
-    console.log('hii', props.loadComments())
+    console.log(props.loadComments())
 
     const EditableCell = ({
         editing,
@@ -84,14 +86,6 @@ const CommentData = (props) => {
         }
     };
 
-    const handleLink = () => {
-
-    }
-
-    const getPosition = (string, subString, index) => {
-        return string.split(subString, index).join(subString).length;
-    };
-
     const columns = [
         {
             title: "Profile Url",
@@ -101,9 +95,12 @@ const CommentData = (props) => {
             render: (_, rec) => {
                 console.log("rec", rec);
                 return (
-                    <a onClick={() => handleLink(rec.url)}>
-                        {rec.url.slice(0, getPosition(rec.url, "/", 4))}
-                    </a>
+                    <Link to={{
+                        pathname: '/post',
+                        state: {
+                            postURL: rec.url
+                        }
+                    }}>{rec.url}</Link>
                 );
             }
         },
@@ -112,17 +109,10 @@ const CommentData = (props) => {
             dataIndex: "name",
             width: "25%"
         },
-        // {
-        //     title: 'ProfileUrl',
-        //     dataIndex: 'url',
-        //     width: '25%',
-        //     editable: true,
-        //     render: (_, record) => {
-        //         return (
-        //             <a onClick={() => handleLink(record.url)}>{record.url.slice(0, getPosition(record.url, "/", 4))}</a>
-        //         )
-        //     }
-        // },
+        {
+            title: 'Scraped Time',
+            dataIndex: 'time'
+        },
         {
             title: 'Operation',
             dataIndex: 'operation',
@@ -193,7 +183,6 @@ const mapStateToProps = state => {
     console.log("state on page", state);
     return {
         comments: state.comment.comments,
-        // postData: state.postData.,
         error: state.error
     };
 };

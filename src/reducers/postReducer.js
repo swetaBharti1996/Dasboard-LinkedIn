@@ -1,11 +1,11 @@
 import { POST_LOADED, POST_LOADING, POST_UNLOADED } from "../actions/types";
 
 const initialState = {
-    isLoading: false,
-    posts: [],
+    isLoading: false
 };
 
 export default function (state = initialState, action) {
+    // console.log('called this', action.type, action.payload)
     switch (action.type) {
         case POST_LOADING:
             return {
@@ -13,10 +13,11 @@ export default function (state = initialState, action) {
                 isLoading: true,
             };
         case POST_LOADED:
+            // console.log('finally,', action.payload)
             return {
                 ...state,
                 isLoading: false,
-                posts: [...action.payload],
+                ...action.payload
             };
         case POST_UNLOADED:
             return {

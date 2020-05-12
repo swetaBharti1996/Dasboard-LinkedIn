@@ -8,17 +8,18 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
 
   const body = JSON.stringify({ posturl });
-  console.log(body)
+  console.log(dispatch, getState)
 
   axios
-    .get(
+    .post(
       `http://localhost:8080/website/scrapper/post/getComments`, body,
       tokenConfig(getState)
     )
     .then(res => {
+      console.log(res.data)
       dispatch({
         type: POST_LOADED,
-        payload: res.data.posts
+        payload: res.data
       });
     })
     .catch(err => {

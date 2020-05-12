@@ -13,14 +13,13 @@ export const loadPosts = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log("response in profile action", res.data);
+      console.log(res.data);
       dispatch({
         type: PROFILE_LOADED,
         payload: res.data,
       });
     })
     .catch((err) => {
-      // console.log(" load post erorr in", err);
       if (err.data) {
         dispatch(
           returnErrors(

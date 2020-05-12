@@ -2,8 +2,6 @@ import axios from 'axios';
 import {
     COMMENT_LOADED,
     COMMENT_LOADING,
-    POST_LOADING,
-    POST_LOADED
 } from './types'
 import { tokenConfig } from './authActions'
 
@@ -18,7 +16,7 @@ export const loadComments = () => (dispatch, getState) => {
             tokenConfig(getState)
         )
         .then(res => {
-            console.log("response in comment action", res.data);
+            // console.log("response in comment action", res.data);
             dispatch({
                 type: COMMENT_LOADED,
                 payload: res.data

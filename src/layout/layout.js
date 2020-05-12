@@ -9,35 +9,28 @@ import { logout } from '../actions/authActions';
 
 
 import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    AreaChartOutlined,
-    ProfileOutlined,
-    CommentOutlined,
-    UserAddOutlined,
-    SolutionOutlined
+     MenuUnfoldOutlined,
+     MenuFoldOutlined,
+     AreaChartOutlined,
+     ProfileOutlined,
+     CommentOutlined,
+     UserAddOutlined,
+     SolutionOutlined
 } from '@ant-design/icons';
 import _ from 'lodash';
 const { Header, Sider, Content, Footer } = Layout;
 
 
 const MENU = [
-    {
-        name: 'Insights', url: '/insight', icon: AreaChartOutlined
-    },
-    {
-        name: 'Post', url: '/post', icon: ProfileOutlined
-    },
-    {
-        name: 'Comments', url: '/comment', icon: CommentOutlined
-    },
-    {
-        name: 'Profile', url: '/profile', icon: UserAddOutlined
-    },
-    {
-        name: 'ProfileDetail', url: '/profileDetail', icon: SolutionOutlined
-    }
-
+     {
+          name: 'Insights', url: '/insight', icon: AreaChartOutlined
+     },
+     {
+          name: 'Comments', url: '/comment', icon: CommentOutlined
+     },
+     {
+          name: 'Profile', url: '/profile', icon: UserAddOutlined
+     }
 ]
 const LayoutCover = (props) => {
      const { children, logout } = props;

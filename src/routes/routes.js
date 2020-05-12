@@ -1,7 +1,6 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
-import NotFoundPage from "../components/NotFoundPage";
 import LoginPage from "../components/Login";
 import LayoutCover from "../layout/layout";
 import Insight from "../components/Insights";
@@ -26,6 +25,8 @@ const AppRouter = (props) => {
                   <Route exact={true} path="/insight" component={Insight} />
                   <Route exact={true} path="/post" component={PostData} />
                   <Route exact={true} path="/profile" component={Profile} />
+
+
                   <Route
                     exact={true}
                     path="/profileDetail"

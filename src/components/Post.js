@@ -8,30 +8,29 @@ import {
     Button,
     Spin,
 } from "antd";
-import { loadPosts } from "../actions/PostActions";
 import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { DownloadOutlined } from "@ant-design/icons";
 import { CSVLink, CSVDownload } from "react-csv";
+import { loadPosts } from '../actions/PostActions'
 import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const PostData = (props) => {
-    console.log("props ", props);
-    const { loadPosts, commentsarray, posts } = props;
+    const { loadPosts, PostData, isLoading } = props;
 
-    console.log(props.loadPosts(), 'loading profile')
 
-    // useEffect(() => {
-    //   let profileurl = props.location.state && props.location.state.profileurl
-    //     ? props.location.state.profileurl
-    //     : null;
-    //   if (ProfileDetail) {
-    //     loadComment(profileurl);
-    //   }
-    // }, [loadComment]);
+    useEffect(() => {
+        let profileurl = props.location.state && props.location.state.postURL
+            ? props.location.state.postURL
+            : null;
+        if (PostData) {
+            console.log('sala-1', profileurl)
+            loadPosts(profileurl);
+        }
+    }, [loadPosts]);
 
     const EditableCell = ({
         editing,
@@ -198,7 +197,7 @@ const PostData = (props) => {
             </div>
 
             <Form form={form} component={false}>
-                <Spin spinning={PostData.isLoading}>
+                <Spin spinning={isLoading}>
                     <Table
                         components={{
                             body: {
@@ -206,7 +205,7 @@ const PostData = (props) => {
                             },
                         }}
                         bordered
-                        dataSource={PostData.commentsarray}
+                        dataSource={PostData}
                         columns={mergedColumns}
                         rowClassName="editable-row"
                         pagination={{
@@ -219,17 +218,18 @@ const PostData = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ post }) => {
     return {
-        PostData: state.PostData.commentsarray,
+        isLoading: post.isLoading,
+        PostData: post.commentsarray || []
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        loadPosts: () => {
-            dispatch(loadPosts());
-        },
+        loadPosts: (data) => {
+            dispatch(loadPosts(data));
+        }
     };
 };
 
