@@ -9,11 +9,11 @@ export const loadPosts = () => (dispatch, getState) => {
 
   axios
     .get(
-      `http://localhost:8080/website/scrapper/profile/getprofiles`,
+      `https://backend.customfb.com/scb/website/scrapper/profile/getprofiles`,
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log('received data', res.data);
+      console.log("received data", res.data);
       dispatch({
         type: PROFILE_LOADED,
         payload: res.data,

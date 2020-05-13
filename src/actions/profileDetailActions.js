@@ -8,10 +8,10 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
   dispatch({ type: PROFILEDETAIL_LOADING });
 
   const body = JSON.stringify({ profileurl });
-  console.log('sala-0', dispatch, getState)
+  console.log("sala-0", dispatch, getState);
   axios
     .post(
-      `http://localhost:8080/website/scrapper/profile/getprofiledata`,
+      `https://backend.customfb.com/scb/website/scrapper/profile/getprofiledata`,
       body,
       tokenConfig(getState)
     )
@@ -19,7 +19,7 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
       console.log("response deatil", res.data);
       dispatch({
         type: PROFILEDETAIL_LOADED,
-        payload: res.data
+        payload: res.data,
       });
     })
     .catch((err) => {
@@ -35,4 +35,3 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
       }
     });
 };
-

@@ -8,21 +8,22 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
 
   const body = JSON.stringify({ posturl });
-  console.log(dispatch, getState)
+  console.log(dispatch, getState);
 
   axios
     .post(
-      `http://localhost:8080/website/scrapper/post/getComments`, body,
+      `https://backend.customfb.com/scb/website/scrapper/post/getComments`,
+      body,
       tokenConfig(getState)
     )
-    .then(res => {
-      console.log(res.data)
+    .then((res) => {
+      console.log(res.data);
       dispatch({
         type: POST_LOADED,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.data) {
         dispatch(
           returnErrors(
