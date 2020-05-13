@@ -96,7 +96,7 @@ const CommentData = (props) => {
                 console.log("rec", rec);
                 return (
                     <Link to={{
-                        pathname: '/post',
+                        pathname: '/comment',
                         state: {
                             postURL: rec.url
                         }

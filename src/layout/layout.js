@@ -26,7 +26,7 @@ const MENU = [
           name: 'Insights', url: '/insight', icon: AreaChartOutlined
      },
      {
-          name: 'Comments', url: '/comment', icon: CommentOutlined
+          name: 'Comments', url: '/post', icon: CommentOutlined
      },
      {
           name: 'Profile', url: '/profile', icon: UserAddOutlined

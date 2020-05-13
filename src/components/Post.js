@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { DownloadOutlined } from "@ant-design/icons";
 import { CSVLink, CSVDownload } from "react-csv";
-import { loadPosts } from '../actions/PostActions'
+import { loadPosts } from '../actions/postActions'
 import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;

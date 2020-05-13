@@ -21,9 +21,9 @@ const AppRouter = (props) => {
               path="/"
               render={() => (
                 <LayoutCover>
-                  <Route exact={true} path="/comment" component={CommentData} />
+                  <Route exact={true} path="/post" component={CommentData} />
                   <Route exact={true} path="/insight" component={Insight} />
-                  <Route exact={true} path="/post" component={PostData} />
+                  <Route exact={true} path="/comment" component={PostData} />
                   <Route exact={true} path="/profile" component={Profile} />
                   <Route
                     exact={true}
