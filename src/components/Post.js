@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from 'react-router-dom'
 import {
     Table,
     Input,
@@ -26,7 +27,7 @@ const PostData = (props) => {
             ? props.location.state.postURL
             : null;
         if (PostData) {
-            console.log('sala-1', profileurl)
+            console.log('hii', profileurl)
             loadPosts(profileurl);
         }
     }, [loadPosts]);
@@ -214,6 +215,7 @@ const PostData = (props) => {
                     />
                 </Spin>
             </Form>
+            <Link to="/comment">Back</Link>
         </div>
     );
 };

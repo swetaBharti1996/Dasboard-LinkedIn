@@ -8,28 +8,27 @@ import {
   Button,
   Spin,
 } from "antd";
-import { loadComment } from "../actions/profileDetailActions";
 import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { DownloadOutlined } from "@ant-design/icons";
 import { CSVLink, CSVDownload } from "react-csv";
+import { loadComment } from "../actions/profileDetailActions";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const ProfileDetail = (props) => {
-  console.log("props ", props);
-  console.log("mapateto propst", props.profileDetail);
-
-  const { loadComment, profileDetail } = props;
+const ProfileData = (props) => {
+  const { loadComment, ProfileData, isLoading } = props;
 
   useEffect(() => {
     let profileurl =
-      props.location.state && props.location.state.profileurl
-        ? props.location.state.profileurl
+      props.location.state && props.location.state.profileURL
+        ? props.location.state.profileURL
         : null;
-    if (ProfileDetail) {
+    if (ProfileData) {
+      console.log("sala-1", profileurl);
       loadComment(profileurl);
     }
   }, [loadComment]);
@@ -70,16 +69,13 @@ const ProfileDetail = (props) => {
   };
 
   const [form] = Form.useForm();
-  const [data, setData] = useState(profileDetail.datas);
+  const [data, setData] = useState();
   const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record) => record.key === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: "",
-      age: "",
-      address: "",
       ...record,
     });
     setEditingKey(record.key);
@@ -112,50 +108,41 @@ const ProfileDetail = (props) => {
 
   const columns = [
     {
-      title: "name",
-      dataIndex: "name",
-      width: "15%",
-    },
-    {
       title: "Profile Url",
-      dataIndex: 'profileurl',
-      width: '15%',
-      render: (_, record) => {
-        return <a>{record.profileurl}</a>
+      dataIndex: "profileurl",
+      render: (_, rec) => {
+        return (
+          <a>{rec.profileurl}</a>
+        )
+
       }
     },
-
     {
-      title: "college",
-      dataIndex: "college",
-      width: "15%",
+      title: "name",
+      dataIndex: "name",
+      width: "25%",
+      editable: true,
     },
     {
-      title: "Email",
-      dataIndex: "Email",
-      width: "15%",
+      title: "current place ",
+      dataIndex: "currentplace",
+      width: "25%",
     },
     {
       title: "facebook",
       dataIndex: "facebook",
-      width: "15%",
+      width: "25%",
     },
     {
       title: "twitter",
       dataIndex: "twitter",
-      width: "15%",
+      width: "25%",
     },
     {
-      title: "scrapedtime",
-      dataIndex: "scrapedtime",
-      width: "15%",
+      title: "college name",
+      dataIndex: "collegename",
+      width: "25%",
     },
-    {
-      title: "phonenumber",
-      dataIndex: "phonenumber",
-      width: "20%",
-    },
-
     {
       title: "Operation",
       dataIndex: "operation",
@@ -170,7 +157,7 @@ const ProfileDetail = (props) => {
               }}
             >
               Save
-            </a>
+              </a>
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
               <a>Cancel</a>
             </Popconfirm>
@@ -179,7 +166,7 @@ const ProfileDetail = (props) => {
             <div>
               <a disabled={editingKey !== ""} onClick={() => edit(record)}>
                 Edit
-            </a>
+              </a>
             </div>
           );
       },
@@ -201,7 +188,7 @@ const ProfileDetail = (props) => {
       }),
     };
   });
-  console.log("thisprops", props);
+  console.log("profile wala", ProfileData);
   return (
     <div>
       <div className="flex-between">
@@ -223,7 +210,7 @@ const ProfileDetail = (props) => {
       </div>
 
       <Form form={form} component={false}>
-        <Spin spinning={profileDetail.isLoading}>
+        <Spin spinning={isLoading}>
           <Table
             components={{
               body: {
@@ -231,7 +218,7 @@ const ProfileDetail = (props) => {
               },
             }}
             bordered
-            dataSource={profileDetail.datas}
+            dataSource={ProfileData._id ? [ProfileData] : []}
             columns={mergedColumns}
             rowClassName="editable-row"
             pagination={{
@@ -244,18 +231,19 @@ const ProfileDetail = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ profileDetail }) => {
   return {
-    profileDetail: state.profileDetail.linkdata,
+    isLoading: profileDetail.isLoading,
+    ProfileData: profileDetail.linkdata || null
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadComment: () => {
-      dispatch(loadComment());
+    loadComment: (data) => {
+      dispatch(loadComment(data));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileData);

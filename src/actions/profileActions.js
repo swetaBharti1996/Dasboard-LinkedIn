@@ -13,7 +13,7 @@ export const loadPosts = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log(res.data);
+      console.log('received data', res.data);
       dispatch({
         type: PROFILE_LOADED,
         payload: res.data,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
 import { loadPosts } from "../actions/profileActions";
 import { clearErrors } from "../actions/errorActions";
@@ -77,8 +77,8 @@ const Profile = (props) => {
     setEditingKey("");
   };
 
-  const handleLink = (url) => {
-    props.history.push("profileDetail", { url });
+  const handleLink = (profileurl) => {
+    props.history.push("profileDetail", { profileurl });
   };
 
   // const csvButton = () => {
@@ -111,21 +111,25 @@ const Profile = (props) => {
 
   const columns = [
     {
-      title: "Profile url",
+      title: "Profile Url",
       dataIndex: "profileurl",
       width: "25%",
       editable: true,
       render: (_, rec) => {
         console.log("rec", rec);
         return (
-          <Link to={{
-            pathname: '/profileDetail',
-            state: {
-              profileurl: rec.profileurl
-            }
-          }}>{rec.profileurl}</Link>
+          <Link
+            to={{
+              pathname: "/profileDetail",
+              state: {
+                profileURL: rec.profileurl,
+              },
+            }}
+          >
+            {rec.profileurl}
+          </Link>
         );
-      }
+      },
     },
     {
       title: "Name",
@@ -133,11 +137,11 @@ const Profile = (props) => {
       width: "15%",
     },
 
-    {
-      title: "Email",
-      dataIndex: "email",
-      width: "15%",
-    },
+    // {
+    //   title: "Email",
+    //   dataIndex: "email",
+    //   width: "15%",
+    // },
     {
       title: "Phone Number",
       dataIndex: "phonenumber",
@@ -193,7 +197,7 @@ const Profile = (props) => {
       }),
     };
   });
-
+  console.log('kyaa ', profile)
   return (
     <Form form={form} component={false}>
       <Table
@@ -203,7 +207,7 @@ const Profile = (props) => {
           },
         }}
         bordered
-        dataSource={profile.info}
+        dataSource={profile.info && profile.info.length ? profile.info : []}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
@@ -231,4 +235,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { loadPosts })(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
