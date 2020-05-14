@@ -6,14 +6,10 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
   DESTROY_SESSION,
 } from "./types";
 
-import { returnErrors, clearErrors } from "./errorActions";
-import { history } from "../routes/routes";
-import { pushPath } from "redux-simple-router";
+import { returnErrors } from "./errorActions";
 
 // Load user
 export const loadUser = () => (dispatch, getState) => {
@@ -53,7 +49,7 @@ export const login = ({ email, password }) => (dispatch) => {
     .post("http://localhost:8080/website/scrapper/auth/login", body, config)
     .then((res) => {
       let token = res.headers["x-auth"];
-      console.log("Token", res);
+      // console.log("Token", res);
       let payload = {
         ...res.data,
         token,
@@ -66,7 +62,7 @@ export const login = ({ email, password }) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log("errrr", err);
+      // console.log("errrr", err);
       dispatch(
         returnErrors(err.response, err.response, err.response, "LOGIN_ERROR")
       );
@@ -83,7 +79,6 @@ export const logout = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      // history.push('/')
       dispatch({ type: DESTROY_SESSION });
       dispatch({ type: LOGOUT_SUCCESS });
     })
@@ -101,10 +96,6 @@ export const logout = () => (dispatch, getState) => {
         });
       }
     });
-  // return dispatch => {
-  //   // Your code here...
-  //   history.push('/')
-  // };
 };
 
 export const tokenConfig = (getState) => {

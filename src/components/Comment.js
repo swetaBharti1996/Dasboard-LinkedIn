@@ -114,29 +114,30 @@ const CommentData = (props) => {
             dataIndex: 'time'
         },
         {
-            title: 'Operation',
-            dataIndex: 'operation',
+            title: "Operation",
+            dataIndex: "operation",
             render: (_, record) => {
                 const editable = isEditing(record);
                 return editable ? (
                     <span>
                         <a
-                            href="javascript:;"
                             onClick={() => save(record.key)}
                             style={{
                                 marginRight: 8,
                             }}
                         >
                             Save
-            </a>
+                    </a>
                         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
                             <a>Cancel</a>
                         </Popconfirm>
                     </span>
                 ) : (
-                        <a disabled={editingKey !== ''} onClick={() => edit(record)}>
-                            Edit
-                        </a>
+                        <div>
+                            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+                                Edit
+                    </a>
+                        </div>
                     );
             },
         },
@@ -175,6 +176,7 @@ const CommentData = (props) => {
                 }}
             />
         </Form>
+
     )
 
 }

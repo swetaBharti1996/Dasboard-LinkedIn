@@ -1,8 +1,6 @@
 import {
     COMMENT_LOADED,
-    COMMENT_LOADING,
-    CSV_LOADED,
-    CSV_LOADING,
+    COMMENT_LOADING
 } from "../actions/types";
 
 const initialState = {

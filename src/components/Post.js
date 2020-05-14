@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import {
     Table,
@@ -6,14 +6,9 @@ import {
     InputNumber,
     Popconfirm,
     Form,
-    Button,
     Spin,
 } from "antd";
-import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { DownloadOutlined } from "@ant-design/icons";
-import { CSVLink, CSVDownload } from "react-csv";
 import { loadPosts } from '../actions/postActions'
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -145,7 +140,7 @@ const PostData = (props) => {
                             }}
                         >
                             Save
-            </a>
+                    </a>
                         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
                             <a>Cancel</a>
                         </Popconfirm>
@@ -154,7 +149,7 @@ const PostData = (props) => {
                         <div>
                             <a disabled={editingKey !== ""} onClick={() => edit(record)}>
                                 Edit
-            </a>
+                    </a>
                         </div>
                     );
             },
@@ -215,7 +210,7 @@ const PostData = (props) => {
                     />
                 </Spin>
             </Form>
-            <Link to="/comment">Back</Link>
+            <Link to="/post">Back</Link>
         </div>
     );
 };

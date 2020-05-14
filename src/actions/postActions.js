@@ -4,6 +4,7 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
+//api for comments
 export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
 

@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
-import { loadPosts } from "../actions/profileActions";
-import { clearErrors } from "../actions/errorActions";
+import { loadProfiles } from "../actions/profileActions";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 const Profile = (props) => {
-  const { loadPosts, loadCSV, profile, profileDetail } = props;
+  const { loadProfiles, loadCSV, profile, profileDetail } = props;
   const [csvDat] = useState([]);
-  const [pid] = useState("some");
+  // const [pid] = useState("some");
   // const [csvDat2, setCSV2] = useState([])
   const mounted = useRef();
   let inputRef = React.createRef("csv");
@@ -17,10 +15,10 @@ const Profile = (props) => {
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
-      loadPosts();
+      loadProfiles();
     } else {
     }
-  }, [loadPosts, loadCSV, profileDetail, csvDat]);
+  }, [loadProfiles, loadCSV, profileDetail, csvDat]);
 
   const EditableCell = ({
     editing,
@@ -77,9 +75,6 @@ const Profile = (props) => {
     setEditingKey("");
   };
 
-  const handleLink = (profileurl) => {
-    props.history.push("profileDetail", { profileurl });
-  };
 
   // const csvButton = () => {
   // }
@@ -101,12 +96,8 @@ const Profile = (props) => {
         setEditingKey("");
       }
     } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
+      // console.log("Validate Failed:", errInfo);
     }
-  };
-  const getPosition = (string, subString, index) => {
-    console.log();
-    return string.split(subString, index).join(subString).length;
   };
 
   const columns = [
@@ -116,7 +107,7 @@ const Profile = (props) => {
       width: "25%",
       editable: true,
       render: (_, rec) => {
-        console.log("rec", rec);
+        // console.log("rec", rec);
         return (
           <Link
             to={{
@@ -136,12 +127,6 @@ const Profile = (props) => {
       dataIndex: "name",
       width: "15%",
     },
-
-    // {
-    //   title: "Email",
-    //   dataIndex: "email",
-    //   width: "15%",
-    // },
     {
       title: "Phone Number",
       dataIndex: "phonenumber",
@@ -155,12 +140,12 @@ const Profile = (props) => {
     {
       title: "Operation",
       dataIndex: "operation",
-      render: (_, record) => {
-        const editable = isEditing(record);
+      render: (_, rec) => {
+        const editable = isEditing(rec);
         return editable ? (
           <span>
             <a
-              onClick={() => save(record.key)}
+              onClick={() => save(rec.key)}
               style={{
                 marginRight: 8,
               }}
@@ -173,7 +158,7 @@ const Profile = (props) => {
           </span>
         ) : (
             <div className="flex">
-              <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+              <a disabled={editingKey !== ""} onClick={() => edit(rec)}>
                 Edit
             </a>
             </div>
@@ -197,7 +182,7 @@ const Profile = (props) => {
       }),
     };
   });
-  console.log('kyaa ', profile)
+  // console.log(profile)
   return (
     <Form form={form} component={false}>
       <Table
@@ -219,7 +204,7 @@ const Profile = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state on page", state);
+  // console.log("state on page", state);
   return {
     profile: state.profile,
     profileDetail: state.profileDetail,
@@ -229,8 +214,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadPosts: () => {
-      dispatch(loadPosts());
+    loadProfiles: () => {
+      dispatch(loadProfiles());
     },
   };
 };

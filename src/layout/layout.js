@@ -1,24 +1,17 @@
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useState } from 'react';
-import { Layout, Menu, Icon, Button } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
-
-
-
-
-
 import {
      MenuUnfoldOutlined,
      MenuFoldOutlined,
      AreaChartOutlined,
-     ProfileOutlined,
      CommentOutlined,
-     UserAddOutlined,
-     SolutionOutlined
+     UserAddOutlined
 } from '@ant-design/icons';
 import _ from 'lodash';
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Sider, Content } = Layout;
 
 
 const MENU = [

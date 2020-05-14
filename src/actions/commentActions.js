@@ -7,6 +7,7 @@ import { tokenConfig } from './authActions'
 
 import { returnErrors } from './errorActions'
 
+//api for post 
 export const loadComments = () => (dispatch, getState) => {
     dispatch({ type: COMMENT_LOADING });
 

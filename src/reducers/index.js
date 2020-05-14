@@ -4,8 +4,6 @@ import errorReducer from "./errorReducer";
 import postReducer from "./postReducer";
 import commentReducer from "./commentReducer";
 import { DESTROY_SESSION } from "../actions/types";
-// import { history } from '../routes/AppRouter'
-import { pushPath } from "redux-simple-router";
 import profileReducers from "./profileReducers";
 import profileDetailReducers from "./profileDetailReducer";
 

@@ -1,26 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import {
   Table,
   Input,
   InputNumber,
   Popconfirm,
   Form,
-  Button,
   Spin,
 } from "antd";
-import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
-import { useHistory } from "react-router-dom";
-import { DownloadOutlined } from "@ant-design/icons";
-import { CSVLink, CSVDownload } from "react-csv";
-import { loadComment } from "../actions/profileDetailActions";
+import { loadProfleDetails } from "../actions/profileDetailActions";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ProfileData = (props) => {
-  const { loadComment, ProfileData, isLoading } = props;
+  const { loadProfleDetails, ProfileData, isLoading } = props;
 
   useEffect(() => {
     let profileurl =
@@ -28,10 +23,10 @@ const ProfileData = (props) => {
         ? props.location.state.profileURL
         : null;
     if (ProfileData) {
-      console.log("sala-1", profileurl);
-      loadComment(profileurl);
+      // console.log("sala-1", profileurl);
+      loadProfleDetails(profileurl);
     }
-  }, [loadComment]);
+  }, [loadProfleDetails]);
 
   const EditableCell = ({
     editing,
@@ -118,30 +113,30 @@ const ProfileData = (props) => {
       }
     },
     {
-      title: "name",
+      title: "Name",
       dataIndex: "name",
       width: "25%",
       editable: true,
     },
     {
-      title: "current place ",
+      title: "Current Place ",
       dataIndex: "currentplace",
       width: "25%",
     },
     {
-      title: "facebook",
+      title: "Facebook",
       dataIndex: "facebook",
-      width: "25%",
+      width: "15%",
     },
     {
-      title: "twitter",
+      title: "Twitter",
       dataIndex: "twitter",
-      width: "25%",
+      width: "15%",
     },
     {
-      title: "college name",
+      title: "College Name",
       dataIndex: "collegename",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "Operation",
@@ -188,7 +183,7 @@ const ProfileData = (props) => {
       }),
     };
   });
-  console.log("profile wala", ProfileData);
+  // console.log("profile wala", ProfileData);
   return (
     <div>
       <div className="flex-between">
@@ -227,6 +222,7 @@ const ProfileData = (props) => {
           />
         </Spin>
       </Form>
+      <Link to="/profile">Back</Link>
     </div>
   );
 };
@@ -240,8 +236,8 @@ const mapStateToProps = ({ profileDetail }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadComment: (data) => {
-      dispatch(loadComment(data));
+    loadProfleDetails: (data) => {
+      dispatch(loadProfleDetails(data));
     },
   };
 };
