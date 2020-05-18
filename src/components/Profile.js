@@ -1,238 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
-import { loadPosts } from "../actions/profileActions";
-import { clearErrors } from "../actions/errorActions";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React, { Component } from "react";
+import Card from "./Card";
+import _ from "lodash";
+import styled from "styled-components";
 
-const Profile = (props) => {
-  const { loadPosts, loadCSV, profile, profileDetail } = props;
-  const [csvDat] = useState([]);
-  const [pid] = useState("some");
-  // const [csvDat2, setCSV2] = useState([])
-  const mounted = useRef();
-  let inputRef = React.createRef("csv");
+const Contaioner = styled.div`
+  > div {
+    display: flex;
+    justify-content: space-around;
+  }
+`;
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      loadPosts();
-    } else {
-    }
-  }, [loadPosts, loadCSV, profileDetail, csvDat]);
-
-  const EditableCell = ({
-    editing,
-    dataIndex,
-    title,
-    inputType,
-    record,
-    index,
-    children,
-    ...restProps
-  }) => {
-    const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
-    return (
-      <td {...restProps}>
-        {editing ? (
-          <Form.Item
-            name={dataIndex}
-            style={{
-              margin: 0,
-            }}
-            rules={[
-              {
-                required: true,
-                message: `Please Input ${title}!`,
-              },
-            ]}
-          >
-            {inputNode}
-          </Form.Item>
-        ) : (
-            children
-          )}
-      </td>
-    );
-  };
-
-  const [form] = Form.useForm();
-  const [data, setData] = useState(profile.info);
-  const [editingKey, setEditingKey] = useState("");
-
-  const isEditing = (record) => record.key === editingKey;
-
-  const edit = (record) => {
-    form.setFieldsValue({
-      profileurl: "",
-      scrapedtime: "",
-      name: "",
-      ...record,
+class Profile extends Component {
+  state = {};
+  render() {
+    const repeat = _.times(3, (i) => {
+      return (
+        <Contaioner>
+          <div>
+            <Card />
+          </div>
+        </Contaioner>
+      );
     });
-    setEditingKey(record.key);
-  };
+    return <div>{repeat}</div>;
+  }
+}
 
-  const cancel = () => {
-    setEditingKey("");
-  };
-
-  const handleLink = (profileurl) => {
-    props.history.push("profileDetail", { profileurl });
-  };
-
-  // const csvButton = () => {
-  // }
-
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        setData(newData);
-        setEditingKey("");
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey("");
-      }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
-  };
-  const getPosition = (string, subString, index) => {
-    console.log();
-    return string.split(subString, index).join(subString).length;
-  };
-
-  const columns = [
-    {
-      title: "Profile Url",
-      dataIndex: "profileurl",
-      width: "25%",
-      editable: true,
-      render: (_, rec) => {
-        console.log("rec", rec);
-        return (
-          <Link
-            to={{
-              pathname: "/profileDetail",
-              state: {
-                profileURL: rec.profileurl,
-              },
-            }}
-          >
-            {rec.profileurl}
-          </Link>
-        );
-      },
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      width: "15%",
-    },
-
-    // {
-    //   title: "Email",
-    //   dataIndex: "email",
-    //   width: "15%",
-    // },
-    {
-      title: "Phone Number",
-      dataIndex: "phonenumber",
-      width: "10%",
-    },
-    {
-      title: "Company",
-      dataIndex: "company",
-      width: "25%",
-    },
-    {
-      title: "Operation",
-      dataIndex: "operation",
-      render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <a
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </a>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-            <div className="flex">
-              <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-                Edit
-            </a>
-            </div>
-          );
-      },
-    },
-  ];
-  const mergedColumns = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        inputType: col.dataIndex === "age" ? "number" : "text",
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editing: isEditing(record),
-      }),
-    };
-  });
-  console.log('kyaa ', profile)
-  return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={profile.info && profile.info.length ? profile.info : []}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
-  );
-};
-
-const mapStateToProps = (state) => {
-  console.log("state on page", state);
-  return {
-    profile: state.profile,
-    profileDetail: state.profileDetail,
-    error: state.error,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    loadPosts: () => {
-      dispatch(loadPosts());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default Profile;
