@@ -4,7 +4,7 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
-export const loadPosts = () => (dispatch, getState) => {
+export const loadProfile = () => (dispatch, getState) => {
   dispatch({ type: PROFILE_LOADING });
 
   axios
@@ -13,7 +13,7 @@ export const loadPosts = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log('received data', res.data);
+      // console.log('received data', res.data);
       dispatch({
         type: PROFILE_LOADED,
         payload: res.data,

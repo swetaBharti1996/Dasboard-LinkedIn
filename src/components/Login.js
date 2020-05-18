@@ -1,26 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox, Row, Col, Alert, Modal, Radio } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Alert, Modal } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 import { login } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel, success, message }) => {
     const [form] = Form.useForm();

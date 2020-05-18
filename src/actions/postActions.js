@@ -8,7 +8,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
 
   const body = JSON.stringify({ posturl });
-  console.log(dispatch, getState)
+  // console.log(dispatch, getState)
 
   axios
     .post(
@@ -16,7 +16,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       dispatch({
         type: POST_LOADED,
         payload: res.data

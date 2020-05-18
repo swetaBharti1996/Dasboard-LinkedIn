@@ -1,26 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";//useRef
 import {
   Table,
   Input,
   InputNumber,
   Popconfirm,
   Form,
-  Button,
   Spin,
+  Card
 } from "antd";
-import { clearErrors } from "../actions/errorActions";
+// import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
-import { useHistory } from "react-router-dom";
-import { DownloadOutlined } from "@ant-design/icons";
-import { CSVLink, CSVDownload } from "react-csv";
-import { loadComment } from "../actions/profileDetailActions";
+// import { useHistory } from "react-router-dom";
+// import { DownloadOutlined } from "@ant-design/icons";
+// import { CSVLink, CSVDownload } from "react-csv";
+import { loadProfileDetail } from "../actions/profileDetailActions";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ProfileData = (props) => {
-  const { loadComment, ProfileData, isLoading } = props;
+  const { loadProfileDetail, ProfileData, isLoading } = props;
 
   useEffect(() => {
     let profileurl =
@@ -28,10 +27,10 @@ const ProfileData = (props) => {
         ? props.location.state.profileURL
         : null;
     if (ProfileData) {
-      console.log("sala-1", profileurl);
-      loadComment(profileurl);
+      // console.log( profileurl);
+      loadProfileDetail(profileurl);
     }
-  }, [loadComment]);
+  }, [loadProfileDetail]);
 
   const EditableCell = ({
     editing,
@@ -102,7 +101,7 @@ const ProfileData = (props) => {
         setEditingKey("");
       }
     } catch (errDatas) {
-      console.log("Validate Failed:", errDatas);
+      // console.log("Validate Failed:", errDatas);
     }
   };
 
@@ -188,7 +187,7 @@ const ProfileData = (props) => {
       }),
     };
   });
-  console.log("profile wala", ProfileData);
+  // console.log("profile wala", ProfileData);
   return (
     <div>
       <div className="flex-between">
@@ -211,20 +210,23 @@ const ProfileData = (props) => {
 
       <Form form={form} component={false}>
         <Spin spinning={isLoading}>
-          <Table
+          <Card title="Profile Details" bordered={false} style={{ width: 200 }}>
+            <li data={ProfileData._id ? [ProfileData] : []} >This is COW</li>
+          </Card>
+          {/* <Table
             components={{
               body: {
                 cell: EditableCell,
               },
             }}
             bordered
-            dataSource={ProfileData._id ? [ProfileData] : []}
+            dataSource=
             columns={mergedColumns}
             rowClassName="editable-row"
             pagination={{
               onChange: cancel,
             }}
-          />
+          /> */}
         </Spin>
       </Form>
     </div>
@@ -240,8 +242,8 @@ const mapStateToProps = ({ profileDetail }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadComment: (data) => {
-      dispatch(loadComment(data));
+    loadProfileDetail: (data) => {
+      dispatch(loadProfileDetail(data));
     },
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import {
     Table,
@@ -6,15 +6,14 @@ import {
     InputNumber,
     Popconfirm,
     Form,
-    Button,
     Spin,
 } from "antd";
-import { clearErrors } from "../actions/errorActions";
+// import { clearErrors } from "../actions/errorActions";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { DownloadOutlined } from "@ant-design/icons";
-import { CSVLink, CSVDownload } from "react-csv";
-import { loadPosts } from '../actions/PostActions'
+// import { useHistory } from "react-router-dom";
+// import { DownloadOutlined } from "@ant-design/icons";
+// import { CSVLink, CSVDownload } from "react-csv";
+import { loadPosts } from '../actions/postActions'
 import { LoadingOutlined } from "@ant-design/icons";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -27,7 +26,7 @@ const PostData = (props) => {
             ? props.location.state.postURL
             : null;
         if (PostData) {
-            console.log('hii', profileurl)
+            // console.log('hii', profileurl)
             loadPosts(profileurl);
         }
     }, [loadPosts]);
@@ -103,11 +102,18 @@ const PostData = (props) => {
                 setEditingKey("");
             }
         } catch (errDatas) {
-            console.log("Validate Failed:", errDatas);
+            // console.log("Validate Failed:", errDatas);
         }
     };
 
     const columns = [
+        {
+            title: 'Index',
+            dataIndex: 'index',
+            render: (_, record) => {
+                return <li>{record.index + 1}</li>
+            }
+        },
         {
             title: "Profile Url",
             dataIndex: 'profileurl',
@@ -176,7 +182,7 @@ const PostData = (props) => {
             }),
         };
     });
-    console.log("thisprops", props);
+    // console.log("thisprops", props);
     return (
         <div>
             <div className="flex-between">
@@ -215,7 +221,7 @@ const PostData = (props) => {
                     />
                 </Spin>
             </Form>
-            <Link to="/comment">Back</Link>
+            <Link to="/post" style={{ marginBottom: '5px' }}>Back</Link>
         </div>
     );
 };

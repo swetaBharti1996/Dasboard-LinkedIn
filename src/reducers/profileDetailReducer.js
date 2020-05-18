@@ -1,8 +1,6 @@
 import {
   PROFILEDETAIL_LOADED,
-  PROFILEDETAIL_LOADING,
-  CSV_LOADED,
-  CSV_LOADING,
+  PROFILEDETAIL_LOADING
 } from "../actions/types";
 
 const initialState = {
