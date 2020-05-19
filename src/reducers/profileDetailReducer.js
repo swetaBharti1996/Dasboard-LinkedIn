@@ -1,6 +1,6 @@
 import {
   PROFILEDETAIL_LOADED,
-  PROFILEDETAIL_LOADING,
+  PROFILEDETAIL_LOADING
 } from "../actions/types";
 
 const initialState = {

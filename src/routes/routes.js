@@ -8,7 +8,7 @@ import CommentData from "../components/Comment";
 import PostData from "../components/Post"
 import Profile from "../components/Profile";
 import { connect } from "react-redux";
-import ProfileDetail from "../components/ProfileDetail";
+
 export const history = createHistory();
 
 const AppRouter = (props) => {
@@ -25,11 +25,6 @@ const AppRouter = (props) => {
                   <Route exact={true} path="/insight" component={Insight} />
                   <Route exact={true} path="/comment" component={PostData} />
                   <Route exact={true} path="/profile" component={Profile} />
-                  <Route
-                    exact={true}
-                    path="/profileDetail"
-                    component={ProfileDetail}
-                  />
                 </LayoutCover>
               )}
             />

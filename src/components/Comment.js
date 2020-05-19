@@ -55,7 +55,7 @@ const CommentData = (props) => {
     const edit = record => {
         form.setFieldsValue({
             url: '',
-
+            index: '',
             ...record,
         });
         setEditingKey(record.key);
@@ -82,7 +82,7 @@ const CommentData = (props) => {
                 setEditingKey('');
             }
         } catch (errInfo) {
-            console.log('Validate Failed:', errInfo);
+            // console.log('Validate Failed:', errInfo);
         }
     };
 
@@ -93,7 +93,7 @@ const CommentData = (props) => {
             width: "25%",
             editable: true,
             render: (_, rec) => {
-                console.log("rec", rec);
+                // console.log("rec", rec);
                 return (
                     <Link to={{
                         pathname: '/comment',
@@ -182,7 +182,7 @@ const CommentData = (props) => {
 }
 
 const mapStateToProps = state => {
-    console.log("state on page", state);
+    // console.log("state on page", state);
     return {
         comments: state.comment.comments,
         error: state.error

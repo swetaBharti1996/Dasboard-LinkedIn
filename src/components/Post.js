@@ -22,7 +22,7 @@ const PostData = (props) => {
             ? props.location.state.postURL
             : null;
         if (PostData) {
-            console.log('hii', profileurl)
+            // console.log('hii', profileurl)
             loadPosts(profileurl);
         }
     }, [loadPosts]);
@@ -98,7 +98,7 @@ const PostData = (props) => {
                 setEditingKey("");
             }
         } catch (errDatas) {
-            console.log("Validate Failed:", errDatas);
+            // console.log("Validate Failed:", errDatas);
         }
     };
 
@@ -171,7 +171,7 @@ const PostData = (props) => {
             }),
         };
     });
-    console.log("thisprops", props);
+    // console.log("thisprops", props);
     return (
         <div>
             <div className="flex-between">

@@ -25,7 +25,7 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data,
       });
-      console.log("log in");
+      // console.log("log in");
     })
     .catch((err) => {
       dispatch(returnErrors(err.response, err.response, err.response));
@@ -62,7 +62,7 @@ export const login = ({ email, password }) => (dispatch) => {
       });
     })
     .catch((err) => {
-      // console.log("errrr", err);
+      // console.log(err);
       dispatch(
         returnErrors(err.response, err.response, err.response, "LOGIN_ERROR")
       );

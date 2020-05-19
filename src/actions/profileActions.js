@@ -1,13 +1,13 @@
 import axios from "axios";
 import { PROFILE_LOADED, PROFILE_LOADING } from "./types";
 import { tokenConfig } from "./authActions";
-
 import { returnErrors } from "./errorActions";
 
 
 //api for profile
-export const loadProfiles = () => (dispatch, getState) => {
+export const loadProfile = () => (dispatch, getState) => {
   dispatch({ type: PROFILE_LOADING });
+  // console.log(loadProfile, 'load profile')
 
   axios
     .get(
@@ -20,6 +20,7 @@ export const loadProfiles = () => (dispatch, getState) => {
         type: PROFILE_LOADED,
         payload: res.data,
       });
+
     })
     .catch((err) => {
       if (err.data) {

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Input, Button, Alert, Modal } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+// import { Redirect } from 'react-router-dom';
+
 import { login } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 

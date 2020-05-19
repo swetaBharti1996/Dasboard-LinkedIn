@@ -8,7 +8,7 @@ import {
      MenuFoldOutlined,
      AreaChartOutlined,
      CommentOutlined,
-     UserAddOutlined
+     UserAddOutlined,
 } from '@ant-design/icons';
 import _ from 'lodash';
 const { Header, Sider, Content } = Layout;
@@ -69,10 +69,12 @@ const LayoutCover = (props) => {
                     </Header>
                     <Content
                          className="site-layout-background"
+
                          style={{
                               margin: '24px 16px',
                               padding: 24,
-                              height: '100vh'
+                              height: '100vh',
+                              overflow: 'auto'
                          }}
                     >
                          {children}
