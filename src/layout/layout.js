@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Icon, Button } from 'antd';
 import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
 import {
@@ -69,10 +69,12 @@ const LayoutCover = (props) => {
                     </Header>
                     <Content
                          className="site-layout-background"
+
                          style={{
                               margin: '24px 16px',
                               padding: 24,
-                              height: '100vh'
+                              height: '100vh',
+                              overflow: 'auto'
                          }}
                     >
                          {children}

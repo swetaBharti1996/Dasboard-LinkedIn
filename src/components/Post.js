@@ -108,13 +108,6 @@ const PostData = (props) => {
 
     const columns = [
         {
-            title: 'Index',
-            dataIndex: 'index',
-            render: (_, record) => {
-                return <li>{record.index + 1}</li>
-            }
-        },
-        {
             title: "Profile Url",
             dataIndex: 'profileurl',
             render: (_, record) => {

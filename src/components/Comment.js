@@ -87,13 +87,6 @@ const CommentData = (props) => {
     };
 
     const columns = [
-        // {
-        //     title: 'Index',
-        //     dataIndex: 'index',
-        //     render: (_, rec) => {
-        //         return <li>{rec.index + 1}</li>
-        //     }
-        // },
         {
             title: "Profile Url",
             dataIndex: "url",
