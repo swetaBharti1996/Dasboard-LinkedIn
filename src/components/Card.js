@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { loadProfile } from '../actions/profileActions'
 import { connect } from 'react-redux'
 import styled from "styled-components";
-// import _ from "lodash"
+import _ from "lodash"
 
 const Header = styled.div``;
 
@@ -71,10 +71,10 @@ class ShowCards extends React.Component {
         {profile.map(profile => (
 
           <Card style={{ marginRight: '3rem' }}>
-            <form >
+            <form>
               <Header>
                 <Img src={profile.imgsrc} />
-                <Link >{profile.profileurl}</Link>
+                <Link>{profile.profileurl}</Link>
               </Header>
               <Bodypart>
                 <p>
@@ -125,5 +125,3 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowCards);
-
-

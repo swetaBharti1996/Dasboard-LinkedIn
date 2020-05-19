@@ -17,7 +17,7 @@ export const loadUser = () => (dispatch, getState) => {
 
   axios
     .get(
-      "http://localhost:8080/website/scrapper/auth/user/me",
+      "https://backend.customfb.com/scb/website/scrapper/auth/user/me",
       tokenConfig(getState)
     )
     .then((res) => {
@@ -46,7 +46,11 @@ export const login = ({ email, password }) => (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   axios
-    .post("http://localhost:8080/website/scrapper/auth/login", body, config)
+    .post(
+      "https://backend.customfb.com/scb/website/scrapper/auth/login",
+      body,
+      config
+    )
     .then((res) => {
       let token = res.headers["x-auth"];
       // console.log("Token", res);
@@ -75,7 +79,7 @@ export const login = ({ email, password }) => (dispatch) => {
 export const logout = () => (dispatch, getState) => {
   axios
     .delete(
-      `http://localhost:8080/website/scrapper/auth/logout`,
+      `https://backend.customfb.com/scb/website/scrapper/auth/logout`,
       tokenConfig(getState)
     )
     .then((res) => {
