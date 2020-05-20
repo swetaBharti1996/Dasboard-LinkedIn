@@ -10,7 +10,7 @@ export const loadComments = () => (dispatch, getState) => {
 
   axios
     .get(
-      `https://backend.customfb.com/scb/website/scrapper/post/getAllComments`,
+      `http://localhost:8080/website/scrapper/post/getAllComments`,
       tokenConfig(getState)
     )
     .then((res) => {

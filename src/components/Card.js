@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { loadProfile } from "../actions/profileActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import _ from "lodash";
 
 const Header = styled.div`
   margin: 10px 10px;
