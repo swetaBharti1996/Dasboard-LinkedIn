@@ -6,7 +6,8 @@ import styled from "styled-components";
 const Contaioner = styled.div`
   > div {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    flex-wrp: wrap;
   }
 `;
 
@@ -14,8 +15,6 @@ class Profile extends Component {
   state = {};
 
   render() {
-
-
     return (
       <Contaioner>
         <div>
