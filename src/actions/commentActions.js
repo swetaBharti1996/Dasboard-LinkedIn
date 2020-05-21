@@ -1,6 +1,9 @@
-import axios from "axios";
-import { COMMENT_LOADED, COMMENT_LOADING } from "./types";
-import { tokenConfig } from "./authActions";
+import axios from 'axios';
+import {
+  COMMENT_LOADED,
+  COMMENT_LOADING,
+} from './types'
+import { tokenConfig } from './authActions'
 
 import { returnErrors } from "./errorActions";
 
@@ -13,14 +16,14 @@ export const loadComments = () => (dispatch, getState) => {
       `https://backend.customfb.com/scb/website/scrapper/post/getAllComments`,
       tokenConfig(getState)
     )
-    .then((res) => {
+    .then(res => {
       // console.log("response in comment action", res.data);
       dispatch({
         type: COMMENT_LOADED,
-        payload: res.data,
+        payload: res.data
       });
     })
-    .catch((err) => {
+    .catch(err => {
       // console.log(" load post erorr in", err);
       if (err.data) {
         dispatch(

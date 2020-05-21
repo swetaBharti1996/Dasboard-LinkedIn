@@ -13,8 +13,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
 
   axios
     .post(
-      `https://backend.customfb.com/scb/website/scrapper/post/getComments`,
-      body,
+      `https://backend.customfb.com/scb/website/scrapper/post/getComments`, body,
       tokenConfig(getState)
     )
     .then(res => {
