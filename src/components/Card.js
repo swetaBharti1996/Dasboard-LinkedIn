@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { loadProfile } from "../actions/profileActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Pagination } from "antd";
-import queryString from "query-string";
 
 const Header = styled.div`
   margin: 10px 10px;
@@ -59,41 +57,14 @@ class ShowCards extends React.Component {
     profile: {},
   };
 
-  componentDidMount() {
-    let data = {};
-    data.pageNo = 1;
-    data.size = 10;
-    let query = queryString.stringify(data);
-    this.props.loadProfile(query);
-  }
 
-  handlePgination = (pageNo, size) => {
-    let data = {};
-    data.pageNo = pageNo;
-    data.size = 10;
-    let query = queryString.stringify(data);
-    this.props.loadProfile(query);
-  };
-
-  // handlePagination = (pageNo, pageSize) => {
-  //   this.setState({
-  //     page: pageNo
-  //   });
-  //   console.log("pageNo", pageNo);
-  //   this.props.getDescription(pageNo);
-  // };
-
-  // onChange(){
-  //   this.props.loadProfile();
-  // }
 
   render() {
-    const { loadProfile, info, profile } = this.props;
+    const { profile } = this.props;
     // console.log(profile, "render data");
 
     return (
       <Fragment>
-        {profile.map((profile) => (
           <Card style={{ marginRight: "52rem" }}>
             <form>
               <Header>
@@ -127,38 +98,16 @@ class ShowCards extends React.Component {
                   {profile.skype}
                 </p>
               </Bodypart>
+              
             </form>
           </Card>
-        ))}
-        {/* <Pagination defaultCurrent={1} total={500} /> */}
-        <Pagination
-          style={{ textAlign: "end" }}
-          total={100}
-          current={this.state.page}
-          defaultCurrent={1}
-          onChange={(pageNo, size) => this.handlePgination(pageNo, size)}
-        />
+      
+        
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  // console.log("state on card page ", state);
-  return {
-    profile: state.profile.info,
-    error: state.error,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  // console.log(dispatch, "dispatch data");
-  return {
-    loadProfile: () => {
-      dispatch(loadProfile());
-    },
-  };
-};
 // ReactDOM.render(<Pagination defaultCurrent={6} total={500} />, mountNode);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowCards);
+export default ShowCards;
