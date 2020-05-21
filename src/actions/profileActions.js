@@ -10,7 +10,7 @@ export const loadProfile = () => (dispatch, getState) => {
 
   axios
     .get(
-      `http://localhost:8080/website/scrapper/profile/getprofiles`,
+      `https://backend.customfb.com/scb/website/scrapper/profile/getprofiles`,
       tokenConfig(getState)
     )
     .then((res) => {
