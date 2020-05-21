@@ -49,6 +49,7 @@ const CommentData = (props) => {
     const [form] = Form.useForm();
     const [data, setData] = useState(comments);
     const [editingKey, setEditingKey] = useState('');
+    const [dataSource, setDataSource] = useState()
 
     const isEditing = record => record.key === editingKey;
 
@@ -86,6 +87,12 @@ const CommentData = (props) => {
         }
     };
 
+    const handleDelete = key => {
+        setDataSource(
+            dataSource.filter(item => item.key !== key)
+        );
+    };
+
     const columns = [
         {
             title: "Profile Url",
@@ -114,32 +121,14 @@ const CommentData = (props) => {
             dataIndex: 'time'
         },
         {
-            title: "Operation",
-            dataIndex: "operation",
-            render: (_, record) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <span>
-                        <a
-                            onClick={() => save(record.key)}
-                            style={{
-                                marginRight: 8,
-                            }}
-                        >
-                            Save
-                    </a>
-                        <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                            <a>Cancel</a>
-                        </Popconfirm>
-                    </span>
-                ) : (
-                        <div>
-                            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-                                Edit
-                    </a>
-                        </div>
-                    );
-            },
+            title: 'operation',
+            dataIndex: 'operation',
+            render: (text, rec) =>
+                // dataSource.length >= 1 ? (
+                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
+                    <a>Delete</a>
+                </Popconfirm>
+            // ) : null,
         },
     ];
     const mergedColumns = columns.map(col => {

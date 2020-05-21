@@ -66,6 +66,7 @@ const PostData = (props) => {
     const [form] = Form.useForm();
     const [data, setData] = useState();
     const [editingKey, setEditingKey] = useState('');
+    const [dataSource, setDataSource] = React.useState([])
 
     const isEditing = (record) => record.key === editingKey;
 
@@ -81,6 +82,11 @@ const PostData = (props) => {
         setEditingKey("");
     };
 
+    const handleDelete = key => {
+        setDataSource(
+            dataSource.filter(item => item.key !== key)
+        );
+    };
     const save = async (key) => {
         try {
             const row = await form.validateFields();
@@ -127,32 +133,14 @@ const PostData = (props) => {
             width: "25%"
         },
         {
-            title: "Operation",
-            dataIndex: "operation",
-            render: (_, record) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <span>
-                        <a
-                            onClick={() => save(record.key)}
-                            style={{
-                                marginRight: 8,
-                            }}
-                        >
-                            Save
-                    </a>
-                        <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                            <a>Cancel</a>
-                        </Popconfirm>
-                    </span>
-                ) : (
-                        <div>
-                            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-                                Edit
-                    </a>
-                        </div>
-                    );
-            },
+            title: 'operation',
+            dataIndex: 'operation',
+            render: (text, rec) =>
+                // dataSource.length >= 1 ? (
+                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
+                    <a>Delete</a>
+                </Popconfirm>
+            // ) : null,
         },
     ];
     const mergedColumns = columns.map((col) => {
