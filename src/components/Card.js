@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { loadProfile } from "../actions/profileActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { Pagination } from "antd";
 
 const Header = styled.div`
   margin: 10px 10px;
@@ -24,7 +25,7 @@ const Card = styled.div`
     border: 2px;
     display: flex;
     border: 1px solid grey;
-    margin-top: 20px;.,
+    margin-top: 20px;
     /* justify-content: space-around; */
   }
   :hover {
@@ -61,7 +62,6 @@ class ShowCards extends React.Component {
     this.props.loadProfile();
   }
 
-
   render() {
     const { loadProfile, info, profile } = this.props;
     // console.log(profile, "render data");
@@ -79,30 +79,33 @@ class ShowCards extends React.Component {
               </Header>
               <Bodypart>
                 <p>
-                  <b style={{ color: "blue" }}>Name:</b>{profile.name}
+                  <b style={{ color: "blue" }}>Name:</b>
+                  {profile.name}
                 </p>
                 <p>
-                  <b style={{ color: "blue" }} >Email:</b> {profile.email}
+                  <b style={{ color: "blue" }}>Email:</b> {profile.email}
                 </p>
                 <p>
-                  <b style={{ color: "blue" }} >Phone Number:</b>
+                  <b style={{ color: "blue" }}>Phone Number:</b>
                   {profile.phonenumber}
                 </p>
                 <p>
-                  <b style={{ color: "blue" }} >Scraped Time: </b>
+                  <b style={{ color: "blue" }}>Scraped Time: </b>
                   {profile.scrapedtime}
                 </p>
                 <p>
-                  <b style={{ color: "blue" }} >Company Name:</b> {profile.company}
+                  <b style={{ color: "blue" }}>Company Name:</b>
+                  {profile.company}
                 </p>
                 <p>
-                  <b style={{ color: "blue" }} >Skype Id: </b>
+                  <b style={{ color: "blue" }}>Skype Id: </b>
                   {profile.skype}
                 </p>
               </Bodypart>
             </form>
           </Card>
         ))}
+        <Pagination defaultCurrent={6} total={500} />
       </Fragment>
     );
   }
@@ -124,16 +127,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
   };
 };
+// ReactDOM.render(<Pagination defaultCurrent={6} total={500} />, mountNode);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowCards);
-
-
-
-
-
-
-
-
-
-
-

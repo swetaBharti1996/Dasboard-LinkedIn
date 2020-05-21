@@ -7,7 +7,7 @@ const Contaioner = styled.div`
   > div {
     display: flex;
     flex-direction: column;
-    flex-wrp: wrap;
+    flex-wrap: wrap;
   }
 `;
 
@@ -22,13 +22,7 @@ class Profile extends Component {
         </div>
       </Contaioner>
     );
-
   }
 }
 
-export default Profile
-
-
-
-
-
+export default Profile;
