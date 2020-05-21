@@ -4,6 +4,7 @@ import { loadProfile } from "../actions/profileActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Pagination } from "antd";
+import queryString from "query-string";
 
 const Header = styled.div`
   margin: 10px 10px;
@@ -59,8 +60,32 @@ class ShowCards extends React.Component {
   };
 
   componentDidMount() {
-    this.props.loadProfile();
+    let data = {};
+    data.pageNo = 1;
+    data.size = 10;
+    let query = queryString.stringify(data);
+    this.props.loadProfile(query);
   }
+
+  handlePgination = (pageNo, size) => {
+    let data = {};
+    data.pageNo = pageNo;
+    data.size = 10;
+    let query = queryString.stringify(data);
+    this.props.loadProfile(query);
+  };
+
+  // handlePagination = (pageNo, pageSize) => {
+  //   this.setState({
+  //     page: pageNo
+  //   });
+  //   console.log("pageNo", pageNo);
+  //   this.props.getDescription(pageNo);
+  // };
+
+  // onChange(){
+  //   this.props.loadProfile();
+  // }
 
   render() {
     const { loadProfile, info, profile } = this.props;
@@ -105,7 +130,14 @@ class ShowCards extends React.Component {
             </form>
           </Card>
         ))}
-        <Pagination defaultCurrent={6} total={500} />
+        {/* <Pagination defaultCurrent={1} total={500} /> */}
+        <Pagination
+          style={{ textAlign: "end" }}
+          total={100}
+          current={this.state.page}
+          defaultCurrent={1}
+          onChange={(pageNo, size) => this.handlePgination(pageNo, size)}
+        />
       </Fragment>
     );
   }

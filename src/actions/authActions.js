@@ -9,9 +9,7 @@ import {
   DESTROY_SESSION,
 } from "./types";
 
-import { history } from '../routes/routes';
-
-
+import { history } from "../routes/routes";
 
 import { returnErrors } from "./errorActions";
 
@@ -21,7 +19,7 @@ export const loadUser = () => (dispatch, getState) => {
 
   axios
     .get(
-      "http://localhost:8080/website/scrapper/auth/user/me",
+      "https://backend.customfb.com/scb/website/scrapper/auth/user/me",
       tokenConfig(getState)
     )
     .then((res) => {
@@ -51,7 +49,7 @@ export const login = ({ email, password }) => (dispatch) => {
 
   axios
     .post(
-      "http://localhost:8080/website/scrapper/auth/login",
+      "https://backend.customfb.com/scb/website/scrapper/auth/login",
       body,
       config
     )
@@ -83,12 +81,12 @@ export const login = ({ email, password }) => (dispatch) => {
 export const logout = () => (dispatch, getState) => {
   axios
     .delete(
-      `http://localhost:8080/website/scrapper/auth/logout`,
+      `https://backend.customfb.com/scb/website/scrapper/auth/logout`,
       tokenConfig(getState)
     )
     .then((res) => {
-            history.push('/')
-       dispatch({ type: DESTROY_SESSION });
+      history.push("/");
+      dispatch({ type: DESTROY_SESSION });
       dispatch({ type: LOGOUT_SUCCESS });
     })
     .catch((err) => {

@@ -4,13 +4,13 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
-//api for post 
+//api for post
 export const loadComments = () => (dispatch, getState) => {
   dispatch({ type: COMMENT_LOADING });
 
   axios
     .get(
-      `http://localhost:8080/website/scrapper/post/getAllComments`,
+      `https://backend.customfb.com/scbwebsite/scrapper/post/getAllComments`,
       tokenConfig(getState)
     )
     .then((res) => {
