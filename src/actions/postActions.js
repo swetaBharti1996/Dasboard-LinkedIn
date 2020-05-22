@@ -7,9 +7,10 @@ import { returnErrors } from "./errorActions";
 //api for comments
 export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
+  console.log(dispatch, getState)
 
   const body = JSON.stringify({ posturl });
-  // console.log(dispatch, getState);
+  // console.log(body)
 
   axios
     .post(
@@ -17,7 +18,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      // console.log(res.data)
+      console.log("data received", res.data);
       dispatch({
         type: POST_LOADED,
         payload: res.data,
@@ -35,3 +36,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       }
     });
 };
+
+
+
+

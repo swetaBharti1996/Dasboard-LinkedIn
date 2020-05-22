@@ -16,6 +16,8 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const PostData = (props) => {
     const { loadPosts, PostData, isLoading } = props;
+    // console.log(PostData, 'post data')
+
 
     useEffect(() => {
         let profileurl = props.location.state && props.location.state.postURL
@@ -206,8 +208,8 @@ const PostData = (props) => {
 const mapStateToProps = ({ post }) => {
     return {
         isLoading: post.isLoading,
-        PostData: post.commentsarray || []
-    };
+        PostData: post.posts.length ? post.posts[0].commentsarray : []
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

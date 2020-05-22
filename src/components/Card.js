@@ -24,7 +24,7 @@ const Card = styled.div`
     border: 2px;
     display: flex;
     border: 1px solid grey;
-    margin-top: 20px;.,
+    margin-top: 20px;
     /* justify-content: space-around; */
   }
   :hover {
@@ -57,83 +57,55 @@ class ShowCards extends React.Component {
     profile: {},
   };
 
-  componentDidMount() {
-    this.props.loadProfile();
-  }
 
 
   render() {
-    const { loadProfile, info, profile } = this.props;
+    const { profile } = this.props;
     // console.log(profile, "render data");
 
     return (
       <Fragment>
-        {profile.map((profile) => (
-          <Card style={{ marginRight: "52rem" }}>
-            <form>
-              <Header>
-                <Img src={profile.imgsrc} />
-                <Url>
-                  <Link>{profile.profileurl}</Link>
-                </Url>
-              </Header>
-              <Bodypart>
-                <p>
-                  <b style={{ color: "blue" }}>Name:</b>{profile.name}
-                </p>
-                <p>
-                  <b style={{ color: "blue" }} >Email:</b> {profile.email}
-                </p>
-                <p>
-                  <b style={{ color: "blue" }} >Phone Number:</b>
-                  {profile.phonenumber}
-                </p>
-                <p>
-                  <b style={{ color: "blue" }} >Scraped Time: </b>
-                  {profile.scrapedtime}
-                </p>
-                <p>
-                  <b style={{ color: "blue" }} >Company Name:</b> {profile.company}
-                </p>
-                <p>
-                  <b style={{ color: "blue" }} >Skype Id: </b>
-                  {profile.skype}
-                </p>
-              </Bodypart>
-            </form>
-          </Card>
-        ))}
+        <Card style={{ marginRight: "52rem" }}>
+          <form>
+            <Header>
+              <Img src={profile.imgsrc} />
+              <Url>
+                <Link>{profile.profileurl}</Link>
+              </Url>
+            </Header>
+            <Bodypart>
+              <p>
+                <b style={{ color: "blue" }}>Name:</b>
+                {profile.name}
+              </p>
+              <p>
+                <b style={{ color: "blue" }}>Email:</b> {profile.email}
+              </p>
+              <p>
+                <b style={{ color: "blue" }}>Phone Number:</b>
+                {profile.phonenumber}
+              </p>
+              <p>
+                <b style={{ color: "blue" }}>Scraped Time: </b>
+                {profile.scrapedtime}
+              </p>
+              <p>
+                <b style={{ color: "blue" }}>Company Name:</b>
+                {profile.company}
+              </p>
+              <p>
+                <b style={{ color: "blue" }}>Skype Id: </b>
+                {profile.skype}
+              </p>
+            </Bodypart>
+
+          </form>
+        </Card>
+
+
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  // console.log("state on card page ", state);
-  return {
-    profile: state.profile.info,
-    error: state.error,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  // console.log(dispatch, "dispatch data");
-  return {
-    loadProfile: () => {
-      dispatch(loadProfile());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ShowCards);
-
-
-
-
-
-
-
-
-
-
-
+export default ShowCards;

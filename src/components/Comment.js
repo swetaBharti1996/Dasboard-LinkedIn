@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 import { connect } from 'react-redux'
@@ -9,8 +9,16 @@ import { loadComments } from '../actions/commentActions'
 const CommentData = (props) => {
 
     const { loadComments, loadCSV, comments, commentsarray } = props;
-    console.log(props.loadComments())
+    // console.log(props.loadComments())
+    const mounted = useRef();
 
+    useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+            loadComments();
+        } else {
+        }
+    }, [loadComments, loadCSV, commentsarray]);
     const EditableCell = ({
         editing,
         dataIndex,
@@ -49,7 +57,7 @@ const CommentData = (props) => {
     const [form] = Form.useForm();
     const [data, setData] = useState(comments);
     const [editingKey, setEditingKey] = useState('');
-    const [dataSource, setDataSource] = useState()
+    const [dataSource, setDataSource] = useState([])
 
     const isEditing = record => record.key === editingKey;
 
@@ -64,6 +72,13 @@ const CommentData = (props) => {
 
     const cancel = () => {
         setEditingKey('');
+    };
+
+
+    const handleDelete = key => {
+        setDataSource(
+            dataSource.filter(item => item.key !== key)
+        );
     };
 
     const save = async key => {
@@ -87,11 +102,7 @@ const CommentData = (props) => {
         }
     };
 
-    const handleDelete = key => {
-        setDataSource(
-            dataSource.filter(item => item.key !== key)
-        );
-    };
+
 
     const columns = [
         {
@@ -121,15 +132,15 @@ const CommentData = (props) => {
             dataIndex: 'time'
         },
         {
-            title: 'operation',
-            dataIndex: 'operation',
+            title: 'Action',
+            dataIndex: 'action',
             render: (text, rec) =>
                 // dataSource.length >= 1 ? (
                 <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
                     <a>Delete</a>
                 </Popconfirm>
             // ) : null,
-        },
+        }
     ];
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
