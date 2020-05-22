@@ -46,7 +46,7 @@ export const login = ({ email, password }) => (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   axios
-    .post(`https://backend.customfb.com/scb/auth/login `, body, config)
+    .post(`https://backend.customfb.com/scb/website/scrapper/auth/login `, body, config)
     .then((res) => {
       let token = res.headers["x-auth"];
       console.log("Token", res);

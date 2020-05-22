@@ -1,7 +1,8 @@
 import { POST_LOADED, POST_LOADING, POST_UNLOADED } from "../actions/types";
 
 const initialState = {
-    isLoading: false
+    isLoading: false,
+    posts: []
 };
 
 export default function (state = initialState, action) {
@@ -15,9 +16,8 @@ export default function (state = initialState, action) {
         case POST_LOADED:
             // console.log('finally,', action.payload)
             return {
-                ...state,
                 isLoading: false,
-                ...action.payload
+                posts: [...action.payload]
             };
         case POST_UNLOADED:
             return {

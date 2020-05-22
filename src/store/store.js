@@ -5,8 +5,8 @@ import { createLogger } from "redux-logger";
 
 import rootReducer from "../reducers";
 
-// const initialState = {};
-// const middleware = [thunk];
+const initialState = {};
+const middleware = [thunk];
 
 function configureStore(initialState = {}) {
   const middleware = [thunk];

@@ -20,6 +20,8 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const PostData = (props) => {
     const { loadPosts, PostData, isLoading } = props;
+    // console.log(PostData, 'post data')
+
 
     useEffect(() => {
         let profileurl = props.location.state && props.location.state.postURL
@@ -131,33 +133,36 @@ const PostData = (props) => {
             width: "25%"
         },
         {
-            title: "Operation",
-            dataIndex: "operation",
-            render: (_, record) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <span>
-                        <a
-                            onClick={() => save(record.key)}
-                            style={{
-                                marginRight: 8,
-                            }}
-                        >
-                            Save
-            </a>
-                        <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                            <a>Cancel</a>
-                        </Popconfirm>
-                    </span>
-                ) : (
-                        <div>
-                            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-                                Edit
-            </a>
-                        </div>
-                    );
-            },
-        },
+
+        }
+        // {
+        //     title: "Operation",
+        //     dataIndex: "operation",
+        //     render: (_, record) => {
+        //         const editable = isEditing(record);
+        //         return editable ? (
+        //             <span>
+        //                 <a
+        //                     onClick={() => save(record.key)}
+        //                     style={{
+        //                         marginRight: 8,
+        //                     }}
+        //                 >
+        //                     Save
+        //     </a>
+        //                 <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+        //                     <a>Cancel</a>
+        //                 </Popconfirm>
+        //             </span>
+        //         ) : (
+        //                 <div>
+        //                     <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+        //                         Edit
+        //     </a>
+        //                 </div>
+        //             );
+        //     },
+        // },
     ];
     const mergedColumns = columns.map((col) => {
         if (!col.editable) {
@@ -222,8 +227,8 @@ const PostData = (props) => {
 const mapStateToProps = ({ post }) => {
     return {
         isLoading: post.isLoading,
-        PostData: post.commentsarray || []
-    };
+        PostData: post.posts.length ? post.posts[0].commentsarray : []
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

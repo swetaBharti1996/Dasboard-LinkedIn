@@ -8,6 +8,7 @@ import { tokenConfig } from './authActions'
 import { returnErrors } from './errorActions'
 
 export const loadComments = () => (dispatch, getState) => {
+  // console.log(dispatch, getState)
   dispatch({ type: COMMENT_LOADING });
 
   axios

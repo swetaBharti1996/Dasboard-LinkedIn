@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 import { connect } from 'react-redux'
@@ -9,8 +9,16 @@ import { loadComments } from '../actions/commentActions'
 const CommentData = (props) => {
 
     const { loadComments, loadCSV, comments, commentsarray } = props;
-    console.log(props.loadComments())
+    // console.log(props.loadComments())
+    const mounted = useRef();
 
+    useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+            loadComments();
+        } else {
+        }
+    }, [loadComments, loadCSV, commentsarray]);
     const EditableCell = ({
         editing,
         dataIndex,
@@ -49,6 +57,7 @@ const CommentData = (props) => {
     const [form] = Form.useForm();
     const [data, setData] = useState(comments);
     const [editingKey, setEditingKey] = useState('');
+    const [dataSource, setDataSource] = useState([])
 
     const isEditing = record => record.key === editingKey;
 
@@ -63,6 +72,13 @@ const CommentData = (props) => {
 
     const cancel = () => {
         setEditingKey('');
+    };
+
+
+    const handleDelete = key => {
+        setDataSource(
+            dataSource.filter(item => item.key !== key)
+        );
     };
 
     const save = async key => {
@@ -114,32 +130,42 @@ const CommentData = (props) => {
             dataIndex: 'time'
         },
         {
-            title: 'Operation',
-            dataIndex: 'operation',
-            render: (_, record) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <span>
-                        <a
-                            href="javascript:;"
-                            onClick={() => save(record.key)}
-                            style={{
-                                marginRight: 8,
-                            }}
-                        >
-                            Save
-            </a>
-                        <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                            <a>Cancel</a>
-                        </Popconfirm>
-                    </span>
-                ) : (
-                        <a disabled={editingKey !== ''} onClick={() => edit(record)}>
-                            Edit
-                        </a>
-                    );
-            },
+            title: 'Action',
+            dataIndex: 'action',
+            render: (text, rec) =>
+                // dataSource.length >= 1 ? (
+                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
+                    <a>Delete</a>
+                </Popconfirm>
+            // ) : null,
         },
+        // {
+        //     title: 'Operation',
+        //     dataIndex: 'operation',
+        //     render: (_, record) => {
+        //         const editable = isEditing(record);
+        //         return editable ? (
+        //             <span>
+        //                 <a
+        //                     href="javascript:;"
+        //                     onClick={() => save(record.key)}
+        //                     style={{
+        //                         marginRight: 8,
+        //                     }}
+        //                 >
+        //                     Save
+        //     </a>
+        //                 <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+        //                     <a>Cancel</a>
+        //                 </Popconfirm>
+        //             </span>
+        //         ) : (
+        //                 <a disabled={editingKey !== ''} onClick={() => edit(record)}>
+        //                     Edit
+        //                 </a>
+        //             );
+        //     },
+        // },
     ];
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
