@@ -17,6 +17,21 @@ const Contaioner = styled.div`
 
 class Profile extends Component {
   state = {};
+  componentDidMount() {
+    let data = {};
+    data.pageNo = 1;
+    data.size = 10;
+    let query = queryString.stringify(data);
+    this.props.loadProfile(query);
+  }
+
+  handlePgination = (pageNo, size) => {
+    let data = {};
+    data.pageNo = pageNo;
+    data.size = 10;
+    let query = queryString.stringify(data);
+    this.props.loadProfile(query);
+  };
 
   componentDidMount() {
     let data = {};
@@ -72,6 +87,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
   };
 };
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -9,6 +9,8 @@ import {
   DESTROY_SESSION,
 } from "./types";
 
+import { history } from "../routes/routes";
+
 import { returnErrors } from "./errorActions";
 
 // Load user
@@ -79,7 +81,6 @@ export const logout = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-
       dispatch({ type: DESTROY_SESSION });
       dispatch({ type: LOGOUT_SUCCESS });
     })

@@ -102,8 +102,6 @@ const CommentData = (props) => {
         }
     };
 
-
-
     const columns = [
         {
             title: "Profile Url",
@@ -134,13 +132,40 @@ const CommentData = (props) => {
         {
             title: 'Action',
             dataIndex: 'action',
-            render: (text, rec) =>
+            render: (tpext, rec) =>
                 // dataSource.length >= 1 ? (
                 <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
                     <a>Delete</a>
                 </Popconfirm>
             // ) : null,
-        }
+        },
+        // {
+        //     title: 'Operation',
+        //     dataIndex: 'operation',
+        //     render: (_, record) => {
+        //         const editable = isEditing(record);
+        //         return editable ? (
+        //             <span>
+        //                 <a
+        //                     href="javascript:;"
+        //                     onClick={() => save(record.key)}
+        //                     style={{
+        //                         marginRight: 8,
+        //                     }}
+        //                 >
+        //                     Save
+        //     </a>
+        //                 <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+        //                     <a>Cancel</a>
+        //                 </Popconfirm>
+        //             </span>
+        //         ) : (
+        //                 <a disabled={editingKey !== ''} onClick={() => edit(record)}>
+        //                     Edit
+        //                 </a>
+        //             );
+        //     },
+        // },
     ];
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
@@ -176,7 +201,6 @@ const CommentData = (props) => {
                 }}
             />
         </Form>
-
     )
 
 }
