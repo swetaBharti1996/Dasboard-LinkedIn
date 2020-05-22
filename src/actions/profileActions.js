@@ -14,7 +14,7 @@ export const loadProfile = (data) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log("received data", res.data);
+      console.log("received profile data", res.data);
       dispatch({
         type: PROFILE_LOADED,
         payload: res.data,
