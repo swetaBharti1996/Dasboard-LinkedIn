@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { loadProfile } from "../actions/profileActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import _ from "lodash";
+import linkedin from "../images/linkedin.png";
 
 const Header = styled.div`
   margin: 10px 10px;
@@ -25,21 +25,21 @@ const Card = styled.div`
     display: flex;
     border: 1px solid grey;
     margin-top: 20px;
-    /* justify-content: space-around; */
   }
   :hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }
 `;
 const Url = styled.div`
-  font-size: 14px;
-  font-family: robto;
-  color: black;
+  margin-left: 10px;
+  > a {
+    > img {
+      height: 40px;
+      width: 40px;
+    }
+  }
 `;
 
-// const Link = styled.div`
-//   width: 50px;
-// `;
 const Bodypart = styled.div`
   font-size: 12px;
   font-family: arial;
@@ -57,12 +57,9 @@ class ShowCards extends React.Component {
     profile: {},
   };
 
-
-
   render() {
     const { profile } = this.props;
-    // console.log(profile, "render data");
-
+    console.log("timeeeeeeeeeeeeee", profile.scrapedtime);
     return (
       <Fragment>
         <Card style={{ marginRight: "52rem" }}>
@@ -70,7 +67,9 @@ class ShowCards extends React.Component {
             <Header>
               <Img src={profile.imgsrc} />
               <Url>
-                <Link>{profile.profileurl}</Link>
+                <a href={profile.profileurl}>
+                  <img src={linkedin} alt="fairpe" />
+                </a>
               </Url>
             </Header>
             <Bodypart>
@@ -87,7 +86,11 @@ class ShowCards extends React.Component {
               </p>
               <p>
                 <b style={{ color: "blue" }}>Scraped Time: </b>
-                {profile.scrapedtime}
+                {new Date(profile.scrapedtime * 1000).toString().slice(3,15)},
+
+                {new Date(profile.scrapedtime * 1000)
+                  .toLocaleTimeString()
+                  .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")}
               </p>
               <p>
                 <b style={{ color: "blue" }}>Company Name:</b>
@@ -98,15 +101,11 @@ class ShowCards extends React.Component {
                 {profile.skype}
               </p>
             </Bodypart>
-
           </form>
         </Card>
-
-
       </Fragment>
     );
   }
 }
-
 
 export default ShowCards;

@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 .trigger {
   font-size: 18px;
@@ -17,14 +17,15 @@
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+  position: relative;
+  /* position: absolute; */
 }
 
 .site-layout-background {
   background: #fff;
- 
 }
 
-.wrapper{
+.wrapper {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -33,16 +34,20 @@
   min-height: 805px;
 }
 
-.ant-layout{
+.ant-layout {
   height: auto;
 }
 
-.fl-right{
-display: flex;
-justify-content: space-between;
-align-items: center;
+.fl-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.cus-btn{
+.cus-btn {
   margin-right: 20px;
+}
+.sidebar {
+  position: fixed;
+  width: 200px;
 }

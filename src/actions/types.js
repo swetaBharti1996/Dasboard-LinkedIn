@@ -20,6 +20,7 @@ export const POST_UNLOADED = "POST_UNLOADED";
 // Comments
 export const COMMENT_LOADING = "COMMENT_LOADING";
 export const COMMENT_LOADED = "COMMENT_LOADED";
+export const COMMENT_REMOVE = "COMMENT_REMOVE";
 
 export const DESTROY_SESSION = "DESTROY_SESSION";
 

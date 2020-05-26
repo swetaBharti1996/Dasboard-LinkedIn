@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ShowCards from "./Card";
-// import _ from "lodash";
 import styled from "styled-components";
 import { Pagination } from "antd";
 import { loadProfile } from "../actions/profileActions";
@@ -16,7 +15,8 @@ const Contaioner = styled.div`
 `;
 
 class Profile extends Component {
-  state = {};
+  state = {
+  };
   componentDidMount() {
     let data = {};
     data.pageNo = 1;
@@ -50,6 +50,8 @@ class Profile extends Component {
   };
 
   render() {
+    const today = this.state.currentDate;
+
     const { profile } = this.props;
     return (
       <Contaioner>
@@ -87,7 +89,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
   };
 };
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
