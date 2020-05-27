@@ -74,7 +74,7 @@ const LayoutCover = (props) => {
                               margin: '24px 16px',
                               padding: 24,
                               height: '100vh',
-                              overflow: 'auto'
+                              overflowY: 'auto'
                          }}
                     >
                          {children}

@@ -1,12 +1,13 @@
 import {
     COMMENT_LOADED,
-    COMMENT_LOADING
+    COMMENT_LOADING,
+    COMMENT_UNLOADED
 } from "../actions/types";
 
 const initialState = {
     isLoading: false,
     comments: [],
-    csvData: [],
+    csvData: []
 };
 
 export default function (state = initialState, action) {
@@ -22,6 +23,10 @@ export default function (state = initialState, action) {
                 isLoading: false,
                 comments: [...action.payload],
             };
+        case COMMENT_UNLOADED:
+            return {
+                comments: [state.comments.filter((data) => data.url !== action.payload)]
+            }
         default:
             return state;
     }

@@ -6,7 +6,7 @@ import { returnErrors } from "./errorActions";
 
 export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
-  console.log(dispatch, getState)
+  // console.log(dispatch, getState)
 
   const body = JSON.stringify({ posturl });
   // console.log(body)
@@ -17,7 +17,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      console.log("data received", res.data);
+      // console.log("data received", res.data);
       dispatch({
         type: POST_LOADED,
         payload: res.data

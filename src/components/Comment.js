@@ -2,23 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 import { connect } from 'react-redux'
-import { loadComments } from '../actions/commentActions'
+
+import { loadComments, deletePosts } from '../actions/commentActions'
 
 
 
 const CommentData = (props) => {
 
-    const { loadComments, loadCSV, comments, commentsarray } = props;
+    const { loadComments, loadCSV, comments, commentsarray, deletePosts } = props;
     // console.log(props.loadComments())
     const mounted = useRef();
 
     useEffect(() => {
         if (!mounted.current) {
             mounted.current = true;
-            loadComments();
+            loadComments()
+
         } else {
         }
     }, [loadComments, loadCSV, commentsarray]);
+
     const EditableCell = ({
         editing,
         dataIndex,
@@ -75,11 +78,10 @@ const CommentData = (props) => {
     };
 
 
-    const handleDelete = key => {
-        setDataSource(
-            dataSource.filter(item => item.key !== key)
-        );
-    };
+    const handleDelete = (posturl) => {
+        deletePosts(posturl)
+
+    }
 
     const save = async key => {
         try {
@@ -104,7 +106,7 @@ const CommentData = (props) => {
 
     const columns = [
         {
-            title: "Profile Url",
+            title: "Post Url",
             dataIndex: "url",
             width: "25%",
             editable: true,
@@ -133,39 +135,10 @@ const CommentData = (props) => {
             title: 'Action',
             dataIndex: 'action',
             render: (text, rec) =>
-                // dataSource.length >= 1 ? (
-                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
+                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.url)}>
                     <a>Delete</a>
                 </Popconfirm>
-            // ) : null,
-        },
-        // {
-        //     title: 'Operation',
-        //     dataIndex: 'operation',
-        //     render: (_, record) => {
-        //         const editable = isEditing(record);
-        //         return editable ? (
-        //             <span>
-        //                 <a
-        //                     href="javascript:;"
-        //                     onClick={() => save(record.key)}
-        //                     style={{
-        //                         marginRight: 8,
-        //                     }}
-        //                 >
-        //                     Save
-        //     </a>
-        //                 <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-        //                     <a>Cancel</a>
-        //                 </Popconfirm>
-        //             </span>
-        //         ) : (
-        //                 <a disabled={editingKey !== ''} onClick={() => edit(record)}>
-        //                     Edit
-        //                 </a>
-        //             );
-        //     },
-        // },
+        }
     ];
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
@@ -192,7 +165,7 @@ const CommentData = (props) => {
                         cell: EditableCell,
                     },
                 }}
-                bordered
+                // bordered
                 dataSource={comments}
                 columns={mergedColumns}
                 rowClassName="editable-row"
@@ -217,6 +190,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         loadComments: () => {
             dispatch(loadComments());
+        },
+        deletePosts: (posturl) => {
+            dispatch(deletePosts(posturl))
         }
     };
 };
