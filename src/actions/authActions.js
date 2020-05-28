@@ -81,6 +81,7 @@ export const logout = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
+      history.push("/")
       dispatch({ type: DESTROY_SESSION });
       dispatch({ type: LOGOUT_SUCCESS });
     })
