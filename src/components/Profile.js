@@ -60,9 +60,10 @@ class Profile extends Component {
             <ShowCards profile={item} />
           ))}
 
+
           <Pagination
             style={{ marginLeft: "60%", marginTop: "5%" }}
-            total={50}
+            total={profile && profile.length}
             current={this.state.page}
             defaultCurrent={1}
             onChange={(pageNo, size) => this.handlePgination(pageNo, size)}

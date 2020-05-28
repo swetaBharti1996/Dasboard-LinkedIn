@@ -2,7 +2,7 @@
 import {
   PROFILE_LOADED,
   PROFILE_LOADING,
-  PROFILE_UNLOADED
+  PROFILE_REMOVE
 } from "../actions/types";
 
 const initialState = {
@@ -24,7 +24,7 @@ export default function (state = initialState, action) {
         isLoading: false,
         info: [...action.payload]
       };
-    case PROFILE_UNLOADED:
+    case PROFILE_REMOVE:
       return {
         isLoading: false,
         info: []

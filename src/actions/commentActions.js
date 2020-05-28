@@ -1,5 +1,12 @@
 import axios from "axios";
-import { COMMENT_LOADED, COMMENT_LOADING, COMMENT_REMOVE } from "./types";
+import {
+  COMMENT_LOADED,
+  COMMENT_LOADING,
+  COMMENT_UNLOADED,
+  EMAILS_LOADED,
+  EMAILS_LOADING,
+  EMAILS_UNLOADED,
+} from "./types";
 import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
@@ -14,9 +21,10 @@ export const loadComments = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
+      console.log(res.data, "getting data");
       dispatch({
         type: COMMENT_LOADED,
-        payload: res.data,
+        payload: res.data.splice(1),
       });
     })
     .catch((err) => {
@@ -33,36 +41,66 @@ export const loadComments = () => (dispatch, getState) => {
     });
 };
 
+// //delete Posts
 export const deletePosts = (posturl) => (dispatch, getState) => {
-  const body = JSON.stringify({ posturl });
-  // console.log(deletePosts, 'data define')
-  return (dispatch) => {
-    console.log("bodynnnnnnnnnnnnnn", body);
-    axios
-      .post(
-        `https://backend.customfb.com/scb/website/scrapper/post/delComments`,
-        body,
-        tokenConfig()
-      )
-      .then((res) => {
-        console.log(res.data, "data deleted");
-        dispatch({
-          type: COMMENT_REMOVE,
-          payload: res.database,
-        });
-      })
-      .catch((err) => {
-        console.log("data deleted errorrrrrrrrrrrrr");
+  dispatch({ type: COMMENT_LOADING });
 
-        if (err.data) {
-          dispatch(
-            returnErrors(
-              err.response.data.message,
-              err.response.status,
-              err.response.data.success
-            )
-          );
-        }
+  const body = JSON.stringify({ posturl });
+
+  axios
+    .post(
+      `https://backend.customfb.com/scb/website/scrapper/post/delComments`,
+      body,
+      tokenConfig(getState)
+    )
+    .then((res) => {
+      dispatch({
+        type: COMMENT_UNLOADED,
+        payload: getState().comment.comments.filter(
+          (data) => data.url !== posturl
+        ),
       });
-  };
+    })
+    .catch((err) => {
+      if (err.data) {
+        dispatch(
+          returnErrors(
+            err.response.data.message,
+            err.response.status,
+            err.response.data.success
+          )
+        );
+      }
+    });
+};
+
+//bulk email sending
+
+export const loadEmails = (postUrl) => (dispatch, getState) => {
+  dispatch({ type: EMAILS_UNLOADED });
+  dispatch({ type: EMAILS_LOADING });
+  const body = JSON.stringify({ postUrl });
+  axios
+    .post(
+      `https://backend.customfb.com/scb/website/scrapper/post/getEmails`,
+      body,
+      tokenConfig(getState)
+    )
+    .then((res) => {
+      dispatch({
+        type: EMAILS_LOADED,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      if (err.data) {
+        dispatch(
+          returnErrors(
+            err.response.data.message,
+            err.response.status,
+            err.response.data.success
+          )
+        );
+      }
+    });
 };
