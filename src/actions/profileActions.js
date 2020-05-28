@@ -17,7 +17,7 @@ export const loadProfile = (data) => (dispatch, getState) => {
       // console.log("received profile data", res.data);
       dispatch({
         type: PROFILE_LOADED,
-        payload: res.data,
+        payload: res.data.slice(1),
       });
     })
     .catch((err) => {
@@ -33,6 +33,35 @@ export const loadProfile = (data) => (dispatch, getState) => {
     });
 };
 
-export const deleteProfile = () => {
+
+
+export const deleteProfile = (profileurl) => (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  const body = JSON.stringify({ profileurl });
+  console.log(body, 'body generated')
+
+
+  axios.post(`https://backend.customfb.com/scb/website/scrapper/profile/delprofile`, body, tokenConfig(getState))
+    .then(res => {
+      console.log(res.data, 'show data')
+      dispatch({
+        type: PROFILE_REMOVE,
+        payload: res.profileurl
+        // payload: getState().profile.info.filter(data => data.profileurl !== profileurl)
+      })
+    })
+    .catch(err => {
+      if (err.data) {
+        dispatch(
+          returnErrors(
+            err.response.data.message,
+            err.response.status,
+            err.response.data.success
+          ))
+      }
+    })
 
 }
+
+

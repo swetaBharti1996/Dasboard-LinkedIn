@@ -1,4 +1,3 @@
-
 import {
   PROFILE_LOADED,
   PROFILE_LOADING,
@@ -26,8 +25,9 @@ export default function (state = initialState, action) {
       };
     case PROFILE_REMOVE:
       return {
+        ...state,
         isLoading: false,
-        info: []
+        info: [...action.payload]
       };
     default:
       return state;

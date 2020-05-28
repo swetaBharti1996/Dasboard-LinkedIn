@@ -13,6 +13,8 @@ const CommentData = (props) => {
     // console.log(props.loadComments())
     const mounted = useRef();
 
+
+
     useEffect(() => {
         console.log('useref', comments)
         if (!mounted.current) {

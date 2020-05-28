@@ -2,12 +2,26 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import _ from "lodash";
+import { Button } from 'antd';
+import { deleteProfile } from "../actions/profileActions"
 import linkedin from "../images/linkedin.png";
 
 const Header = styled.div`
   margin: 10px 10px;
   width: 280px;
 `;
+
+// const Button = styled.button`
+//   /* Adapt the colors based on primary prop */
+//   background: ${props => props.primary ? "palevioletred" : "white"};
+//   color: ${props => props.primary ? "white" : "palevioletred"};
+
+//   font-size: 1em;
+//   margin: 1em;
+//   padding: 0.25em 1em;
+//   border: 2px solid palevioletred;
+//   border-radius: 3px;
+// `;
 
 const Img = styled.img`
   height: 80px;
@@ -72,6 +86,10 @@ class ShowCards extends React.Component {
     profile: {},
   };
 
+  handleDelete = (profileurl) => {
+    this.props.deletePosts(profileurl)
+  }
+
   render() {
     const { profile } = this.props;
     console.log("timeeeeeeeeeeeeee", profile.scrapedtime);
@@ -116,7 +134,7 @@ class ShowCards extends React.Component {
               </p>
             </Bodypart>
           </form>
-          <Delete>DELETE</Delete>
+          <Delete onClick={(profileurl) => this.handleDelete(profileurl)}>Delete</Delete>
         </Card>
       </Fragment>
     );
