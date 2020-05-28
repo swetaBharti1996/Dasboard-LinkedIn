@@ -100,7 +100,7 @@ class LoginPage extends React.Component {
     };
 
     onCreate = values => {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
 
         const { email, password } = values;
 

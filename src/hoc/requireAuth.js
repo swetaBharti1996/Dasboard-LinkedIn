@@ -1,7 +1,4 @@
-import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { } from "../actions/asyncAction";
-// import { authRefresh } from "../actions/syncAction";
+import React, { Component } from "react";;
 import { withRouter } from "react-router-dom";
 import LayoutCover from "../layout/layout";
 

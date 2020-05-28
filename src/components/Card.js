@@ -141,11 +141,4 @@ class ShowCards extends React.Component {
   }
 }
 
-
-
-
-
-
-
-
-export default ShowCards
+export default ShowCards;

@@ -51,3 +51,20 @@
   position: fixed;
   width: 200px;
 }
+.flex{
+  display:flex;
+  justify-content: space-around;
+}
+
+.flex-between{
+  display:flex;
+  justify-content: space-between;
+}
+
+.table-operations {
+  margin-bottom: 16px;
+}
+
+.table-operations > button {
+  margin-right: 8px;
+}

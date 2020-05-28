@@ -9,6 +9,8 @@ import {
   DESTROY_SESSION,
 } from "./types";
 
+import { history } from "../routes/routes";
+
 import { returnErrors } from "./errorActions";
 
 // Load user
@@ -25,7 +27,7 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data,
       });
-      console.log("log in");
+      // console.log("log in");
     })
     .catch((err) => {
       dispatch(returnErrors(err.response, err.response, err.response));
@@ -49,7 +51,7 @@ export const login = ({ email, password }) => (dispatch) => {
     .post(`https://backend.customfb.com/scb/website/scrapper/auth/login `, body, config)
     .then((res) => {
       let token = res.headers["x-auth"];
-      console.log("Token", res);
+      // console.log("Token", res);
       let payload = {
         ...res.data,
         token,
@@ -62,7 +64,7 @@ export const login = ({ email, password }) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       dispatch(
         returnErrors(err.response, err.response, err.response, "LOGIN_ERROR")
       );

@@ -1,30 +1,53 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
-import { loadPosts } from '../actions/postActions'
-import { clearErrors } from '../actions/errorActions';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+    Table,
+    Input,
+    InputNumber,
+    Popconfirm,
+    Form,
+    Button,
+    Spin,
+    Modal,
+    Select,
+    Divider,
+} from "antd";
+import { useHistory } from "react-router-dom";
+import { DownloadOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
+import "braft-editor/dist/index.css";
+import BraftEditor from "braft-editor";
+import { connect } from "react-redux";
+import { loadPosts } from "../actions/postActions";
 import { CSVLink, CSVDownload } from "react-csv";
 import queryString from "query-string";
 import { Pagination } from "antd";
+import Email from "./Email";
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const PostData = (props) => {
+    let tempeditorState = BraftEditor.createEditorState(
+        "<p>Hello <b>World!</b></p>"
+    );
 
     const { loadPosts, PostData, isLoading } = props;
-
-
+    const [modal1Visible, setVisible] = useState(false);
+    const [editorState, setEditorState] = useState(tempeditorState);
+    const [outputHTML, setOutputHTML] = useState("<p></p>");
+    const [emails, setEmails] = useState([]);
+    const [didMount, setDidMount] = useState(false);
+    const [postUrlS, setPostUrl] = useState();
 
     useEffect(() => {
-        let profileurl = props.location.state && props.location.state.postURL
-            ? props.location.state.postURL
-            : null;
+        let profileurl =
+            props.location.state && props.location.state.postURL
+                ? props.location.state.postURL
+                : null;
         if (PostData) {
-            console.log('hii', profileurl)
+            console.log("hii", profileurl);
             loadPosts(profileurl);
         }
-    }, [loadPosts])
-
-
+    }, [loadPosts]);
 
     const EditableCell = ({
         editing,
@@ -36,7 +59,7 @@ const PostData = (props) => {
         children,
         ...restProps
     }) => {
-        const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+        const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
         return (
             <td {...restProps}>
                 {editing ? (
@@ -63,59 +86,73 @@ const PostData = (props) => {
 
     const [form] = Form.useForm();
     const [data, setData] = useState();
-    const [editingKey, setEditingKey] = useState('');
+    const [editingKey, setEditingKey] = useState("");
+    const [dataSource, setDataSource] = React.useState([]);
 
+    const isEditing = (record) => record.key === editingKey;
 
-    const isEditing = record => record.key === editingKey;
-
-    const edit = record => {
+    const edit = (record) => {
         form.setFieldsValue({
-            name: '',
-            age: '',
-            address: '',
+            name: "",
+            age: "",
+            address: "",
             ...record,
         });
         setEditingKey(record.key);
     };
 
     const cancel = () => {
-        setEditingKey('');
+        setEditingKey("");
     };
 
-    // const handleLink = (postUrl) => {
-    //     props.history.push('comment', { postUrl });
-    // }
+    const extractEmails = (text) => {
+        text = text.toLowerCase();
+        let temp = { value: null };
+        let formattedEmail = text.match(
+            /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+        );
+        temp["value"] = formattedEmail;
 
+        return formattedEmail;
+    };
 
-    const save = async key => {
+    const handleEditorChange = (editorState) => {
+        setEditorState(editorState);
+        setOutputHTML(editorState.toHTML());
+    };
+
+    const save = async (key) => {
         try {
             const row = await form.validateFields();
             const newData = [...data];
-            const index = newData.findIndex(item => key === item.key);
+            const index = newData.findIndex((item) => key === item.key);
 
             if (index > -1) {
                 const item = newData[index];
                 newData.splice(index, 1, { ...item, ...row });
                 setData(newData);
-                setEditingKey('');
+                setEditingKey("");
             } else {
                 newData.push(row);
                 setData(newData);
-                setEditingKey('');
+                setEditingKey("");
             }
         } catch (errInfo) {
-            console.log('Validate Failed:', errInfo);
+            console.log("Validate Failed:", errInfo);
         }
     };
 
+    const setModal1Visible = (modalVisible) => {
+        setVisible(modalVisible);
+    };
 
     const columns = [
         {
             title: "Profile Url",
-            dataIndex: 'profileurl',
+            dataIndex: "profileurl",
             render: (_, record) => {
-                return <a>{record.profileurl}</a>
-            }
+                return <a>{record.profileurl}</a>;
+            },
         },
         {
             title: "name",
@@ -129,23 +166,30 @@ const PostData = (props) => {
             width: "25%",
         },
         {
+            title: "Email(s)",
+            dataIndex: "comment",
+            width: "25%",
+            render: (_, rec) => {
+                return <p>{extractEmails(rec.comment)}</p>;
+            },
+        },
+
+        {
             title: "Comment",
-            dataIndex: 'comment',
-            width: "25%"
-        }
-
-
+            dataIndex: "comment",
+            width: "25%",
+        },
     ];
-    const mergedColumns = columns.map(col => {
+    const mergedColumns = columns.map((col) => {
         if (!col.editable) {
             return col;
         }
 
         return {
             ...col,
-            onCell: record => ({
+            onCell: (record) => ({
                 record,
-                inputType: col.dataIndex === 'age' ? 'number' : 'text',
+                inputType: col.dataIndex === "age" ? "number" : "text",
                 dataIndex: col.dataIndex,
                 title: col.title,
                 editing: isEditing(record),
@@ -153,39 +197,66 @@ const PostData = (props) => {
         };
     });
 
-
     return (
-        <Form form={form} component={false}>
-            <Table
-                components={{
-                    body: {
-                        cell: EditableCell,
-                    },
-                }}
-                bordered
-                dataSource={PostData}
-                columns={mergedColumns}
-                rowClassName="editable-row"
-                pagination={{
-                    onChange: cancel,
-                }}
-            />
-        </Form>
-    )
+        <div>
+            <div className="flex-between">
+                <div className="table-operations">
+                    {/* <Button >Sort age</Button>
+            <Button >Clear filters</Button>
+            <Button>Clear filters and sorters</Button> */}
+                    <Button type="primary" ghost onClick={() => setModal1Visible(true)}>
+                        Send email
+          </Button>
+                </div>
+                <div>
+                    <CSVLink className="csv-download" data={PostData}>
+                        <Button type="primary" icon={<DownloadOutlined />} size="medium">
+                            Download CSV
+            </Button>
+                    </CSVLink>
+                </div>
+            </div>
 
-}
+            <Form form={form} component={false}>
+                <Spin spinning={isLoading}>
+                    <Table
+                        components={{
+                            body: {
+                                cell: EditableCell,
+                            },
+                        }}
+                        bordered
+                        dataSource={PostData}
+                        columns={mergedColumns}
+                        rowClassName="editable-row"
+                        pagination={{
+                            onChange: cancel,
+                        }}
+                    />
+                </Spin>
+            </Form>
+            <Link to="/post">Back</Link>
+            <Email
+                setModal1Visible={setModal1Visible}
+                modal1Visible={modal1Visible}
+                postUrl={postUrlS}
+            />
+        </div>
+    );
+};
+
 const mapStateToProps = ({ post }) => {
     return {
         isLoading: post.isLoading,
-        PostData: post.posts.length ? post.posts[0].commentsarray : []
-    }
+        PostData: post.posts.length ? post.posts[0].commentsarray : [],
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         loadPosts: (data) => {
             dispatch(loadPosts(data));
-        }
+        },
     };
 };
 

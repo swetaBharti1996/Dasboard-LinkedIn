@@ -1,20 +1,23 @@
 import {
     COMMENT_LOADED,
     COMMENT_LOADING,
-    COMMENT_REMOVE
+    COMMENT_REMOVE,
+    EMAILS_LOADED,
+    EMAILS_LOADING,
+    EMAILS_UNLOADED,
 } from "../actions/types";
 
 
 const initialState = {
     isLoading: false,
     comments: [],
-    csvData: []
+    csvData: [],
+    emails: [],
 };
 
 
 
 export default function (state = initialState, action) {
-
     switch (action.type) {
         case COMMENT_LOADING:
             return {
@@ -22,7 +25,12 @@ export default function (state = initialState, action) {
                 isLoading: true,
             };
         case COMMENT_LOADED:
-            console.log('this is state', state.comments, 'this is action', action.payload)
+            console.log(
+                "this is state",
+                state.comments,
+                "this is action",
+                action.payload
+            );
             return {
                 ...state,
                 isLoading: false,
@@ -32,8 +40,25 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isLoading: false,
-                comments: [...action.payload]
-            }
+                comments: [...action.payload],
+            };
+        case EMAILS_LOADING:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case EMAILS_LOADED:
+            return {
+                ...state,
+                isLoading: false,
+                emails: [...action.payload],
+            };
+        case EMAILS_UNLOADED:
+            return {
+                ...state,
+                emails: [],
+            };
+
         default:
             return state;
     }

@@ -1,8 +1,18 @@
-import { POST_LOADED, POST_LOADING, POST_UNLOADED } from "../actions/types";
+import {
+    POST_LOADED,
+    POST_LOADING,
+    POST_UNLOADED,
+    SENDING_EMAIL,
+    EMAIL_SENT,
+    COLLECT_EMAILS,
+} from "../actions/types";
 
 const initialState = {
     isLoading: false,
-    posts: []
+    posts: [],
+    csvData: [],
+    emailCollection: [],
+    isEmailSending: false,
 };
 
 export default function (state = initialState, action) {
@@ -17,13 +27,29 @@ export default function (state = initialState, action) {
             // console.log('finally,', action.payload)
             return {
                 isLoading: false,
-                posts: [action.payload]
+                posts: [action.payload],
             };
         case POST_UNLOADED:
             return {
                 isLoading: false,
                 posts: [],
             };
+        case COLLECT_EMAILS:
+            return {
+                ...state,
+                emailCollection: [...action.email],
+            };
+        case SENDING_EMAIL:
+            return {
+                ...state,
+                isEmailSending: true,
+            };
+        case EMAIL_SENT:
+            return {
+                ...state,
+                isEmailSending: false,
+            };
+
         default:
             return state;
     }

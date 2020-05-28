@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ShowCards from "./Card";
-// import _ from "lodash";
 import styled from "styled-components";
 import { Pagination } from "antd";
 import { loadProfile, deleteProfile } from "../actions/profileActions";
@@ -27,7 +26,23 @@ const Button = styled.button`
 `;
 
 class Profile extends Component {
-  state = {};
+  state = {
+  };
+  componentDidMount() {
+    let data = {};
+    data.pageNo = 1;
+    data.size = 10;
+    let query = queryString.stringify(data);
+    this.props.loadProfile(query);
+  }
+
+  handlePgination = (pageNo, size) => {
+    let data = {};
+    data.pageNo = pageNo;
+    data.size = 10;
+    let query = queryString.stringify(data);
+    this.props.loadProfile(query);
+  };
 
   componentDidMount() {
     let data = {};
@@ -47,6 +62,8 @@ class Profile extends Component {
   };
 
   render() {
+    const today = this.state.currentDate;
+
     const { profile } = this.props;
     return (
       <Contaioner>
@@ -55,6 +72,7 @@ class Profile extends Component {
             <ShowCards profile={item} />
 
           ))}
+
 
           <Pagination
             style={{ marginLeft: "60%", marginTop: "5%" }}

@@ -115,7 +115,7 @@ const CommentData = (props) => {
                 setEditingKey('');
             }
         } catch (errInfo) {
-            // console.log('Validate Failed:', errInfo);
+            console.log('Validate Failed:', errInfo);
         }
     };
 
@@ -172,6 +172,8 @@ const CommentData = (props) => {
             }),
         };
     });
+
+    console.log('component comments', comments)
 
     return (
         <Form form={form} component={false}>
