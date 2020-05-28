@@ -27,7 +27,7 @@ export default function (state = initialState, action) {
             // console.log('finally,', action.payload)
             return {
                 isLoading: false,
-                posts: [action.payload],
+                posts: [...action.payload],
             };
         case POST_UNLOADED:
             return {

@@ -55,7 +55,7 @@ export const collectEmails = (email) => (dispatch, getState) => {
 
 export const bulkEmailSend = (template) => (dispatch, getState) => {
   const emails = getState().comment.emailCollection;
-
+  console.log(emails, 'get emails')
   const body = JSON.stringify({
     emails,
     template,
@@ -70,7 +70,7 @@ export const bulkEmailSend = (template) => (dispatch, getState) => {
     .then((res) => {
       dispatch({
         type: EMAIL_SENT,
-        payload: res.emails
+        payload: res.post.commentsarray.email
       });
     })
     .catch((err) => {

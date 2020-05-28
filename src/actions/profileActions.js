@@ -17,7 +17,7 @@ export const loadProfile = (data) => (dispatch, getState) => {
       // console.log("received profile data", res.data);
       dispatch({
         type: PROFILE_LOADED,
-        payload: res.data.slice(1),
+        payload: res.data.data.slice(1),
       });
     })
     .catch((err) => {
@@ -47,8 +47,8 @@ export const deleteProfile = (profileurl) => (dispatch, getState) => {
       console.log(res.data, 'show data')
       dispatch({
         type: PROFILE_REMOVE,
-        payload: res.profileurl
-        // payload: getState().profile.info.filter(data => data.profileurl !== profileurl)
+        // payload: res.profileurl
+        payload: getState().profile.info.filter(data => data.profileurl !== profileurl)
       })
     })
     .catch(err => {

@@ -25,7 +25,7 @@ export const loadComments = () => (dispatch, getState) => {
       console.log(res.data, "getting data");
       dispatch({
         type: COMMENT_LOADED,
-        payload: res.data.splice(1),
+        payload: res.data.data.splice(1),
       });
     })
     .catch((err) => {
@@ -77,10 +77,10 @@ export const deletePosts = (posturl) => (dispatch, getState) => {
 
 //bulk email sending
 
-export const loadEmails = (postUrl) => (dispatch, getState) => {
+export const loadEmails = (posturl) => (dispatch, getState) => {
   dispatch({ type: EMAILS_UNLOADED });
   dispatch({ type: EMAILS_LOADING });
-  const body = JSON.stringify({ postUrl });
+  const body = JSON.stringify({ posturl });
   axios
     .post(
       `https://backend.customfb.com/scb/website/scrapper/post/getEmails`,
@@ -88,6 +88,7 @@ export const loadEmails = (postUrl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
+      console.log(res.data, 'get response')
       dispatch({
         type: EMAILS_LOADED,
         payload: res.data,

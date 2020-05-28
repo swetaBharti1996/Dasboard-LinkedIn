@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import _ from "lodash";
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import { deleteProfile } from "../actions/profileActions"
 import linkedin from "../images/linkedin.png";
 
@@ -10,18 +10,6 @@ const Header = styled.div`
   margin: 10px 10px;
   width: 280px;
 `;
-
-// const Button = styled.button`
-//   /* Adapt the colors based on primary prop */
-//   background: ${props => props.primary ? "palevioletred" : "white"};
-//   color: ${props => props.primary ? "white" : "palevioletred"};
-
-//   font-size: 1em;
-//   margin: 1em;
-//   padding: 0.25em 1em;
-//   border: 2px solid palevioletred;
-//   border-radius: 3px;
-// `;
 
 const Img = styled.img`
   height: 80px;
@@ -66,20 +54,32 @@ const Bodypart = styled.div`
   }
 `;
 
-const Delete = styled.button`
-  background: transparent linear-gradient(111deg, #000033 0%, #1890ff 100%) 0%
-    0% no-repeat padding-box;
-  border: navajowhite;
+const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => props.primary ? "palevioletred" : "white"};
+  color: ${props => props.primary ? "white" : "palevioletred"};
 
-  font-weight: bolder;
-  text-align: center;
-  width: 500px;
-  margin-top: 20px;
-  font-family: "Karla", sans-serif;
-  letter-spacing: 0;
-  color: #ffffff;
-  opacity: 1;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
 `;
+
+// const Delete = styled.button`
+//   background: transparent linear-gradient(111deg, #000033 0%, #1890ff 100%) 0%
+//     0% no-repeat padding-box;
+//   border: navajowhite;
+
+//   font-weight: bolder;
+//   text-align: center;
+//   width: 500px;
+//   margin-top: 20px;
+//   font-family: "Karla", sans-serif;
+//   letter-spacing: 0;
+//   color: #ffffff;
+//   opacity: 1;
+// `;
 
 class ShowCards extends React.Component {
   state = {
@@ -134,7 +134,7 @@ class ShowCards extends React.Component {
               </p>
             </Bodypart>
           </form>
-          <Delete onClick={(profileurl) => this.handleDelete(profileurl)}>Delete</Delete>
+          <Button onClick={(profileurl) => this.handleDelete(profileurl)}>Delete</Button>
         </Card>
       </Fragment>
     );

@@ -18,6 +18,7 @@ export default function (state = initialState, action) {
         isLoading: true
       };
     case PROFILE_LOADED:
+      console.log("this is state", "action in profile", action.payload)
       return {
         ...state,
         isLoading: false,
