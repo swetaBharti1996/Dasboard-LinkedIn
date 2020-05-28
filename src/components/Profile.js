@@ -3,7 +3,7 @@ import ShowCards from "./Card";
 // import _ from "lodash";
 import styled from "styled-components";
 import { Pagination } from "antd";
-import { loadProfile } from "../actions/profileActions";
+import { loadProfile, deleteProfile } from "../actions/profileActions";
 import { connect } from "react-redux";
 import queryString from "query-string";
 
@@ -13,6 +13,17 @@ const Contaioner = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
   }
+`;
+const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => props.primary ? "palevioletred" : "white"};
+  color: ${props => props.primary ? "white" : "palevioletred"};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
 `;
 
 class Profile extends Component {
@@ -24,6 +35,7 @@ class Profile extends Component {
     data.size = 10;
     let query = queryString.stringify(data);
     this.props.loadProfile(query);
+    deleteProfile()
   }
 
   handlePgination = (pageNo, size) => {
@@ -41,11 +53,12 @@ class Profile extends Component {
         <div>
           {profile.map((item, index) => (
             <ShowCards profile={item} />
+
           ))}
 
           <Pagination
             style={{ marginLeft: "60%", marginTop: "5%" }}
-            total={50}
+            total={profile && profile.length}
             current={this.state.page}
             defaultCurrent={1}
             onChange={(pageNo, size) => this.handlePgination(pageNo, size)}
@@ -56,20 +69,25 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ profile, error }) => {
   // console.log("state on card page ", state);
   return {
-    profile: state.profile.info,
-    error: state.error,
+    profile: profile.info,
+    error
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   // console.log(dispatch, "dispatch data");
   return {
-    loadProfile: (data) => {
-      dispatch(loadProfile(data));
+    loadProfile: () => {
+      dispatch(loadProfile());
     },
+    deleteProfile: (profileurl) => {
+      dispatch(deleteProfile(profileurl))
+    }
+
+
   };
 };
 

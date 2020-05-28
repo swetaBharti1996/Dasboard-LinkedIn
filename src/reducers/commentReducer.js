@@ -1,8 +1,9 @@
 import {
     COMMENT_LOADED,
     COMMENT_LOADING,
-    COMMENT_UNLOADED
+    COMMENT_REMOVE
 } from "../actions/types";
+
 
 const initialState = {
     isLoading: false,
@@ -10,7 +11,10 @@ const initialState = {
     csvData: []
 };
 
+
+
 export default function (state = initialState, action) {
+
     switch (action.type) {
         case COMMENT_LOADING:
             return {
@@ -18,14 +22,17 @@ export default function (state = initialState, action) {
                 isLoading: true,
             };
         case COMMENT_LOADED:
+            console.log('this is state', state.comments, 'this is action', action.payload)
             return {
                 ...state,
                 isLoading: false,
                 comments: [...action.payload],
             };
-        case COMMENT_UNLOADED:
+        case COMMENT_REMOVE:
             return {
-                comments: [state.comments.filter((data) => data.url !== action.payload)]
+                ...state,
+                isLoading: false,
+                comments: [...action.payload]
             }
         default:
             return state;

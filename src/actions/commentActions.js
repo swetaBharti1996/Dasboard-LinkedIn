@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   COMMENT_LOADED,
   COMMENT_LOADING,
-  COMMENT_UNLOADED
+  COMMENT_REMOVE
 } from './types'
 import { tokenConfig } from './authActions'
 
@@ -22,7 +22,7 @@ export const loadComments = () => (dispatch, getState) => {
       // console.log("response in comment action", res.data);
       dispatch({
         type: COMMENT_LOADED,
-        payload: res.data
+        payload: res.data.splice(1),
       });
     })
     .catch(err => {
@@ -40,20 +40,18 @@ export const loadComments = () => (dispatch, getState) => {
 };
 
 
-// //delete Posts
 export const deletePosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: COMMENT_LOADING });
 
   const body = JSON.stringify({ posturl });
-  console.log(body, 'body')
-  console.log(deletePosts, 'data define')
+
 
   axios.post(`https://backend.customfb.com/scb/website/scrapper/post/delComments`, body, tokenConfig(getState))
     .then(res => {
-      console.log(res.posturl, 'data deleted')
+      console.log(res.data, 'show data')
       dispatch({
-        type: COMMENT_UNLOADED,
-        payload: res.posturl
+        type: COMMENT_REMOVE,
+        payload: getState().comment.comments.filter(data => data.url !== posturl)
       })
     })
     .catch(err => {

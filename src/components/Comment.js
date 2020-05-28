@@ -13,7 +13,10 @@ const CommentData = (props) => {
     // console.log(props.loadComments())
     const mounted = useRef();
 
+
+
     useEffect(() => {
+        console.log('useref', comments)
         if (!mounted.current) {
             mounted.current = true;
             loadComments()
@@ -77,6 +80,18 @@ const CommentData = (props) => {
         setEditingKey('');
     };
 
+    const convertTime = (time) => {
+        var newTime = new Date(time * 1000).toString();
+        var newTime1 = newTime.slice(3, 15);
+        var newTime2 = new Date(time * 1000)
+            .toLocaleTimeString()
+            .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+
+        return newTime1 + "," + newTime2;
+    };
+
+
+
 
     const handleDelete = (posturl) => {
         deletePosts(posturl)
@@ -129,7 +144,8 @@ const CommentData = (props) => {
         },
         {
             title: 'Scraped Time',
-            dataIndex: 'time'
+            dataIndex: 'time',
+            render: (time) => <span>{convertTime(time)}</span>,
         },
         {
             title: 'Action',
@@ -178,11 +194,11 @@ const CommentData = (props) => {
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ comment, error }) => {
     // console.log("state on page", state);
     return {
-        comments: state.comment.comments,
-        error: state.error
+        comments: comment.comments,
+        error
     };
 };
 

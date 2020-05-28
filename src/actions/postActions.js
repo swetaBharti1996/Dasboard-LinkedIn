@@ -4,6 +4,7 @@ import { tokenConfig } from "./authActions";
 
 import { returnErrors } from "./errorActions";
 
+//api for comments
 export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
   // console.log(dispatch, getState)
@@ -17,13 +18,13 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      // console.log("data received", res.data);
+      console.log("data received", res.data);
       dispatch({
         type: POST_LOADED,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.data) {
         dispatch(
           returnErrors(

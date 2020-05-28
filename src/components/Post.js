@@ -19,10 +19,12 @@ const PostData = (props) => {
             ? props.location.state.postURL
             : null;
         if (PostData) {
-            // console.log('hii', profileurl)
+            console.log('hii', profileurl)
             loadPosts(profileurl);
         }
-    }, [loadPosts]);
+    }, [loadPosts])
+
+
 
     const EditableCell = ({
         editing,
