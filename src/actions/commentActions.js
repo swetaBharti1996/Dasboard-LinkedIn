@@ -1,6 +1,10 @@
-import axios from "axios";
-import { COMMENT_LOADED, COMMENT_LOADING, COMMENT_REMOVE } from "./types";
-import { tokenConfig } from "./authActions";
+import axios from 'axios';
+import {
+  COMMENT_LOADED,
+  COMMENT_LOADING,
+  COMMENT_UNLOADED
+} from './types'
+import { tokenConfig } from './authActions'
 
 import { returnErrors } from "./errorActions";
 
@@ -8,15 +12,17 @@ import { returnErrors } from "./errorActions";
 export const loadComments = () => (dispatch, getState) => {
   dispatch({ type: COMMENT_LOADING });
 
+
   axios
     .get(
       `https://backend.customfb.com/scb/website/scrapper/post/getAllComments`,
       tokenConfig(getState)
     )
     .then((res) => {
+      console.log(res.data, 'getting data')
       dispatch({
         type: COMMENT_LOADED,
-        payload: res.data,
+        payload: res.data.splice(1),
       });
     })
     .catch((err) => {
@@ -33,36 +39,36 @@ export const loadComments = () => (dispatch, getState) => {
     });
 };
 
-export const deletePosts = (posturl) => (dispatch, getState) => {
-  const body = JSON.stringify({ posturl });
-  // console.log(deletePosts, 'data define')
-  return (dispatch) => {
-    console.log("bodynnnnnnnnnnnnnn", body);
-    axios
-      .post(
-        `https://backend.customfb.com/scb/website/scrapper/post/delComments`,
-        body,
-        tokenConfig()
-      )
-      .then((res) => {
-        console.log(res.data, "data deleted");
-        dispatch({
-          type: COMMENT_REMOVE,
-          payload: res.database,
-        });
-      })
-      .catch((err) => {
-        console.log("data deleted errorrrrrrrrrrrrr");
 
-        if (err.data) {
-          dispatch(
-            returnErrors(
-              err.response.data.message,
-              err.response.status,
-              err.response.data.success
-            )
-          );
-        }
-      });
-  };
-};
+// //delete Posts
+export const deletePosts = (posturl) => (dispatch, getState) => {
+  dispatch({ type: COMMENT_LOADING });
+
+  const body = JSON.stringify({ posturl });
+
+
+  axios.post(`https://backend.customfb.com/scb/website/scrapper/post/delComments`, body, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: COMMENT_UNLOADED,
+        payload: getState().comment.comments.filter(data => data.url !== posturl)
+      })
+    })
+    .catch(err => {
+      if (err.data) {
+        dispatch(
+          returnErrors(
+            err.response.data.message,
+            err.response.status,
+            err.response.data.success
+          ))
+      }
+    })
+
+}
+
+
+
+
+
+

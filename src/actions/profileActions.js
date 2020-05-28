@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PROFILE_LOADED, PROFILE_LOADING } from "./types";
+import { PROFILE_LOADED, PROFILE_LOADING, PROFILE_REMOVE } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
@@ -32,3 +32,7 @@ export const loadProfile = (data) => (dispatch, getState) => {
       }
     });
 };
+
+export const deleteProfile = () => {
+
+}

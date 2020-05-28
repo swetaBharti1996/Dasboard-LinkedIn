@@ -10,13 +10,14 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import { loadPosts } from '../actions/postActions'
-import { LoadingOutlined } from "@ant-design/icons";
-
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+import { CSVLink, CSVDownload } from "react-csv";
+import queryString from "query-string";
+import { Pagination } from "antd";
 
 const PostData = (props) => {
+
     const { loadPosts, PostData, isLoading } = props;
-    // console.log(PostData, 'post data')
+
 
 
     useEffect(() => {
@@ -24,11 +25,10 @@ const PostData = (props) => {
             ? props.location.state.postURL
             : null;
         if (PostData) {
-            // console.log('hii', profileurl)
+            console.log('hii', profileurl)
             loadPosts(profileurl);
         }
     }, [loadPosts]);
-
 
     const EditableCell = ({
         editing,
@@ -40,7 +40,7 @@ const PostData = (props) => {
         children,
         ...restProps
     }) => {
-        const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+        const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
         return (
             <td {...restProps}>
                 {editing ? (
@@ -70,45 +70,45 @@ const PostData = (props) => {
     const [editingKey, setEditingKey] = useState('');
     const [dataSource, setDataSource] = React.useState([])
 
-    const isEditing = (record) => record.key === editingKey;
 
-    const edit = (record) => {
+    const isEditing = record => record.key === editingKey;
+
+    const edit = record => {
         form.setFieldsValue({
-
+            name: '',
+            age: '',
+            address: '',
             ...record,
         });
         setEditingKey(record.key);
     };
 
     const cancel = () => {
-        setEditingKey("");
+        setEditingKey('');
     };
 
-    const handleDelete = key => {
-        setDataSource(
-            dataSource.filter(item => item.key !== key)
-        );
-    };
+
     const save = async (key) => {
         try {
             const row = await form.validateFields();
             const newData = [...data];
-            const index = newData.findIndex((item) => key === item.key);
+            const index = newData.findIndex(item => key === item.key);
 
             if (index > -1) {
                 const item = newData[index];
                 newData.splice(index, 1, { ...item, ...row });
                 setData(newData);
-                setEditingKey("");
+                setEditingKey('');
             } else {
                 newData.push(row);
                 setData(newData);
-                setEditingKey("");
+                setEditingKey('');
             }
-        } catch (errDatas) {
-            // console.log("Validate Failed:", errDatas);
+        } catch (errInfo) {
+            console.log('Validate Failed:', errInfo);
         }
     };
+
 
     const columns = [
         {
@@ -133,35 +133,26 @@ const PostData = (props) => {
             title: "Comment",
             dataIndex: 'comment',
             width: "25%"
-        },
-        {
-            title: 'operation',
-            dataIndex: 'operation',
-            render: (text, rec) =>
-                // dataSource.length >= 1 ? (
-                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(rec.key)}>
-                    <a>Delete</a>
-                </Popconfirm>
-            // ) : null,
-        },
+        }
     ];
-    const mergedColumns = columns.map((col) => {
+    const mergedColumns = columns.map(col => {
         if (!col.editable) {
             return col;
         }
 
         return {
             ...col,
-            onCell: (record) => ({
+            onCell: record => ({
                 record,
-                inputType: col.dataIndex === "age" ? "number" : "text",
+                inputType: col.dataIndex === 'age' ? 'number' : 'text',
                 dataIndex: col.dataIndex,
                 title: col.title,
                 editing: isEditing(record),
             }),
         };
     });
-    // console.log("thisprops", props);
+
+
     return (
         <div>
             <div className="flex-between">
@@ -221,3 +212,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

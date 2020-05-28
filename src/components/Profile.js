@@ -60,6 +60,7 @@ class Profile extends Component {
             <ShowCards profile={item} />
           ))}
 
+
           <Pagination
             style={{ marginLeft: "60%", marginTop: "5%" }}
             total={50}

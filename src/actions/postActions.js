@@ -7,7 +7,7 @@ import { returnErrors } from "./errorActions";
 //api for comments
 export const loadPosts = (posturl) => (dispatch, getState) => {
   dispatch({ type: POST_LOADING });
-  console.log(dispatch, getState)
+  // console.log(dispatch, getState)
 
   const body = JSON.stringify({ posturl });
   // console.log(body)
@@ -36,7 +36,4 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       }
     });
 };
-
-
-
 

@@ -20,7 +20,7 @@ export const POST_UNLOADED = "POST_UNLOADED";
 // Comments
 export const COMMENT_LOADING = "COMMENT_LOADING";
 export const COMMENT_LOADED = "COMMENT_LOADED";
-export const COMMENT_REMOVE = "COMMENT_REMOVE";
+export const COMMENT_UNLOADED = "COMMENT_UNLOADED"
 
 export const DESTROY_SESSION = "DESTROY_SESSION";
 
@@ -28,7 +28,7 @@ export const DESTROY_SESSION = "DESTROY_SESSION";
 
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const PROFILE_LOADED = "PROFILE_LOADED";
-export const PROFILE_UNLOADED = "PROFILE_UNLOADED";
+export const PROFILE_REMOVE = "PROFILE_REMOVE";
 
 // profiles details
 
