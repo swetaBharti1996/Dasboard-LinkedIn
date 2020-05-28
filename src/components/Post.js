@@ -105,16 +105,16 @@ const PostData = (props) => {
         setEditingKey("");
     };
 
-    const extractEmails = (text) => {
-        text = text.toLowerCase();
-        let temp = { value: null };
-        let formattedEmail = text.match(
-            /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
-        );
-        temp["value"] = formattedEmail;
+    // const extractEmails = (text) => {
+    //     text = text.toLowerCase();
+    //     let temp = { value: null };
+    //     let formattedEmail = text.match(
+    //         /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+    //     );
+    //     temp["value"] = formattedEmail;
 
-        return formattedEmail;
-    };
+    //     return formattedEmail;
+    // };
 
     const handleEditorChange = (editorState) => {
         setEditorState(editorState);
@@ -155,7 +155,7 @@ const PostData = (props) => {
             },
         },
         {
-            title: "name",
+            title: "Name",
             dataIndex: "name",
             width: "25%",
             editable: true,
@@ -167,11 +167,11 @@ const PostData = (props) => {
         },
         {
             title: "Email(s)",
-            dataIndex: "comment",
+            // dataIndex: "comment",
             width: "25%",
-            render: (_, rec) => {
-                return <p>{extractEmails(rec.comment)}</p>;
-            },
+            // render: (_, rec) => {
+            //     return <p>{extractEmails(rec.comment)}</p>;
+            // },
         },
 
         {
@@ -248,7 +248,7 @@ const PostData = (props) => {
 const mapStateToProps = ({ post }) => {
     return {
         isLoading: post.isLoading,
-        PostData: post.posts.length ? post.posts[0].commentsarray : [],
+        PostData: post.posts.length ? post.posts : [],
     };
 };
 
@@ -261,7 +261,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData);
-
 
 
 
