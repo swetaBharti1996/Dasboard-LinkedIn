@@ -11,7 +11,7 @@ import {
 const initialState = {
     isLoading: false,
     comments: [],
-    csvData: [],
+    // csvData: [],
     emails: [],
 };
 

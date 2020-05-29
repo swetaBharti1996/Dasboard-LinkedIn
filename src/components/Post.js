@@ -23,7 +23,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 import queryString from "query-string";
 import { Pagination } from "antd";
 import Email from "./Email";
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+// const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const PostData = (props) => {
     let tempeditorState = BraftEditor.createEditorState(
@@ -32,7 +32,7 @@ const PostData = (props) => {
 
     const { loadPosts, PostData, isLoading } = props;
     const [modal1Visible, setVisible] = useState(false);
-    const [editorState, setEditorState] = useState(tempeditorState);
+    const [editorState, setEditorState] = useState(tempeditorState)
     const [outputHTML, setOutputHTML] = useState("<p></p>");
     const [emails, setEmails] = useState([]);
     const [data, setData] = useState(PostData)
@@ -40,14 +40,14 @@ const PostData = (props) => {
     const [postUrlS, setPostUrl] = useState();
 
     useEffect(() => {
-        let profileurl =
+        let posturl =
             props.location.state && props.location.state.postURL
                 ? props.location.state.postURL
                 : null;
         if (PostData) {
-            console.log("hii", profileurl);
-            setPostUrl(profileurl)
-            loadPosts(profileurl);
+            // console.log("hii", profileurl);
+            setPostUrl(posturl)
+            loadPosts(posturl);
         }
     }, [loadPosts]);
 
@@ -203,7 +203,7 @@ const PostData = (props) => {
             <Button>Clear filters and sorters</Button> */}
                     <Button type="primary" ghost onClick={() => setModal1Visible(true)}>
                         Send email
-          </Button>
+                    </Button>
                 </div>
                 <div>
                     <CSVLink className="csv-download" data={PostData}>
@@ -215,28 +215,28 @@ const PostData = (props) => {
             </div>
 
             <Form form={form} component={false}>
-                <Spin spinning={isLoading}>
-                    <Table
-                        components={{
-                            body: {
-                                cell: EditableCell,
-                            },
-                        }}
-                        bordered
-                        dataSource={PostData}
-                        columns={mergedColumns}
-                        rowClassName="editable-row"
-                        pagination={{
-                            onChange: cancel,
-                        }}
-                    />
-                </Spin>
+                {/* <Spin spinning={isLoading}> */}
+                <Table
+                    components={{
+                        body: {
+                            cell: EditableCell,
+                        },
+                    }}
+                    bordered
+                    dataSource={PostData}
+                    columns={mergedColumns}
+                    rowClassName="editable-row"
+                    pagination={{
+                        onChange: cancel,
+                    }}
+                />
+                {/* </Spin> */}
             </Form>
             <Link to="/post">Back</Link>
             <Email
                 setModal1Visible={setModal1Visible}
                 modal1Visible={modal1Visible}
-                profileurl={postUrlS}
+                posturl={postUrlS}
             />
         </div>
     );

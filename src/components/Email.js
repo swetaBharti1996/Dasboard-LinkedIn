@@ -66,30 +66,30 @@ const Email = (props) => {
         okText="Send mail"
         onCancel={() => setModal1Visible(false)}
       >
-        <Spin spinning={isEmailSending}>
-          <Select
-            mode="multiple"
-            style={{ width: "100%" }}
-            placeholder="Please select email(s) to send"
-            onChange={handleSelectChange}
-            options={post.emails}
-          />
+        {/* <Spin spinning={isEmailSending}> */}
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="Please select email(s) to send"
+          onChange={handleSelectChange}
+          options={comments.emails}
+        />
 
-          <Divider />
-          <BraftEditor
-            language="en"
-            value={editorState}
-            onChange={handleEditorChange}
-          />
-        </Spin>
+        <Divider />
+        <BraftEditor
+          language="en"
+          value={editorState}
+          onChange={handleEditorChange}
+        />
+        {/* </Spin> */}
       </Modal>
     </div>
   );
 };
 
-const mapStateToProps = ({ comment, post }) => {
+const mapStateToProps = ({ comment }) => {
   return {
-    post: post.posts,
+    comments: comment.comments,
     emailCollection: comment.emailCollection,
     isEmailSending: comment.isEmailSending,
   };

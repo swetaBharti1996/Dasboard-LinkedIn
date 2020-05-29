@@ -7,16 +7,16 @@ import {
   EMAIL_SENT,
 } from "./types";
 import { tokenConfig } from "./authActions";
-
 import { returnErrors } from "./errorActions";
 
 //api for comments
 export const loadPosts = (posturl) => (dispatch, getState) => {
+
   dispatch({ type: POST_LOADING });
   // console.log(dispatch, getState)
 
   const body = JSON.stringify({ posturl });
-  // console.log(body)
+  console.log(body)
 
   axios
     .post(
@@ -25,7 +25,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log("data received", res.data);
+      // console.log("data received", res.data);
       dispatch({
         type: POST_LOADED,
         payload: res.data,
@@ -55,12 +55,14 @@ export const collectEmails = (email) => (dispatch, getState) => {
 
 
 export const bulkEmailSend = (template) => (dispatch, getState) => {
-  const emails = getState().post.posts.emailCollection;
-  console.log(emails, 'get emails')
+
+  const emails = getState().comment.emailCollection;
+
   const body = JSON.stringify({
     emails,
     template,
   });
+
   dispatch({ type: SENDING_EMAIL });
   axios
     .post(

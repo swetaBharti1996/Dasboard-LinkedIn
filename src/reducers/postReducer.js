@@ -35,6 +35,7 @@ export default function (state = initialState, action) {
                 posts: [],
             };
         case COLLECT_EMAILS:
+            console.log(action.email, 'email')
             return {
                 ...state,
                 emailCollection: [...action.email],

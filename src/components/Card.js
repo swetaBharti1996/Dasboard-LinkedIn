@@ -90,13 +90,13 @@ class ShowCards extends React.Component {
   };
 
   handleDelete = (profileurl) => {
-    this.props.deletePosts(profileurl);
+    this.props.deleteProfile(profileurl);
   };
 
 
   render() {
-    const { profile } = this.props;
-    console.log("timeeeeeeeeeeeeee", profile.scrapedtime);
+    const { profile, deleteProfile } = this.props;
+    // console.log("timeeeeeeeeeeeeee", profile.scrapedtime);
     return (
       <div>
         <Card style={{ marginRight: "52rem" }}>
