@@ -56,7 +56,7 @@ export const collectEmails = (email) => (dispatch, getState) => {
 
 export const bulkEmailSend = (template) => (dispatch, getState) => {
 
-  const emails = getState().comment.emailCollection;
+  const emails = getState().post.emailCollection;
 
   const body = JSON.stringify({
     emails,

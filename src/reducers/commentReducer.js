@@ -1,18 +1,14 @@
 import {
     COMMENT_LOADED,
     COMMENT_LOADING,
-    COMMENT_REMOVE,
-    EMAILS_LOADED,
-    EMAILS_LOADING,
-    EMAILS_UNLOADED,
+    COMMENT_REMOVE
 } from "../actions/types";
 
 
 const initialState = {
     isLoading: false,
     comments: [],
-    // csvData: [],
-    emails: [],
+    // csvData: []
 };
 
 
@@ -42,22 +38,6 @@ export default function (state = initialState, action) {
                 ...state,
                 isLoading: false,
                 comments: [...action.payload],
-            };
-        case EMAILS_LOADING:
-            return {
-                ...state,
-                isLoading: true,
-            };
-        case EMAILS_LOADED:
-            return {
-                ...state,
-                isLoading: false,
-                emails: [...action.payload],
-            };
-        case EMAILS_UNLOADED:
-            return {
-                ...state,
-                emails: [],
             };
 
         default:

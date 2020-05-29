@@ -5,12 +5,16 @@ import {
     SENDING_EMAIL,
     EMAIL_SENT,
     COLLECT_EMAILS,
+    EMAILS_LOADED,
+    EMAILS_LOADING,
+    EMAILS_UNLOADED,
 } from "../actions/types";
 
 const initialState = {
     isLoading: false,
     posts: [],
     csvData: [],
+    emails: [],
     emailCollection: [],
     isEmailSending: false,
 };
@@ -50,6 +54,23 @@ export default function (state = initialState, action) {
                 ...state,
                 isEmailSending: false,
             };
+        case EMAILS_LOADING:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case EMAILS_LOADED:
+            return {
+                ...state,
+                isLoading: false,
+                emails: [...action.payload],
+            };
+        case EMAILS_UNLOADED:
+            return {
+                ...state,
+                emails: [],
+            };
+
 
         default:
             return state;

@@ -21,7 +21,6 @@ class Profile extends Component {
     data.size = 10;
     let query = queryString.stringify(data);
     this.props.loadProfile(query);
-    this.props.deleteProfile();
   }
 
   handlePgination = (pageNo, size) => {
@@ -37,7 +36,8 @@ class Profile extends Component {
     return (
       <Contaioner>
         {profile.map((item, index) => (
-          <ShowCards profile={item} />
+          <ShowCards profile={item} deleteProfile={this.props.deleteProfile} />
+
         ))}
 
         <Pagination

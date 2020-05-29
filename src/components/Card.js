@@ -89,8 +89,12 @@ class ShowCards extends React.Component {
     profile: {},
   };
 
-  handleDelete = (profileurl) => {
+  handleDelete = (e, profileurl) => {
+
+
     this.props.deleteProfile(profileurl);
+    e.preventDefault()
+
   };
 
 
@@ -108,7 +112,7 @@ class ShowCards extends React.Component {
                   <img src={linkedin} alt="fairpe" />
                 </a>
               </Url>
-              <Button onClick={(profileurl) => this.handleDelete(profileurl)}>
+              <Button onClick={(e) => this.handleDelete(e, profile.profileurl)}>
                 Delete
               </Button>
             </Header>

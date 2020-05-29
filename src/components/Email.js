@@ -31,7 +31,7 @@ const Email = (props) => {
     emailCollection,
     bulkEmailSend,
     isEmailSending,
-    comments,
+    emails,
   } = props;
 
   const [editorState, setEditorState] = useState(tempeditorState);
@@ -72,7 +72,7 @@ const Email = (props) => {
           style={{ width: "100%" }}
           placeholder="Please select email(s) to send"
           onChange={handleSelectChange}
-          options={comments.emails}
+          options={emails}
         />
 
         <Divider />
@@ -87,9 +87,10 @@ const Email = (props) => {
   );
 };
 
-const mapStateToProps = ({ comment }) => {
+const mapStateToProps = ({ comment, post }) => {
   return {
     comments: comment.comments,
+    emails: post.emails,
     emailCollection: comment.emailCollection,
     isEmailSending: comment.isEmailSending,
   };

@@ -89,10 +89,10 @@ export const loadEmails = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      // console.log(res.data, 'get response')
+      console.log(res.data, 'got emails')
       dispatch({
         type: EMAILS_LOADED,
-        payload: res.posturl.email,
+        payload: res.data
       });
     })
     .catch((err) => {
