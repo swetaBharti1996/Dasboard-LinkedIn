@@ -9,7 +9,7 @@ import { loadComments, deletePosts } from '../actions/commentActions'
 
 const CommentData = (props) => {
 
-    const { loadComments, loadCSV, comments, commentsarray, deletePosts } = props;
+    const { loadComments, loadCSV, comments, commentsarray, deletePosts, PostData, post, posts } = props;
     // console.log(props.loadComments())
     const mounted = useRef();
 
@@ -22,7 +22,7 @@ const CommentData = (props) => {
             loadComments()
 
         }
-    }, [commentsarray, loadComments]);
+    }, [loadComments, loadCSV, post, commentsarray]);
 
     const EditableCell = ({
         editing,
@@ -88,7 +88,6 @@ const CommentData = (props) => {
 
         return newTime1 + "," + newTime2;
     };
-
 
 
     const handleDelete = (posturl) => {
@@ -193,10 +192,11 @@ const CommentData = (props) => {
 
 }
 
-const mapStateToProps = ({ comment, error }) => {
+const mapStateToProps = ({ comment, error, post }) => {
     // console.log("state on page", state);
     return {
         comments: comment.comments,
+        PostData: post.posts,
         error
     };
 };

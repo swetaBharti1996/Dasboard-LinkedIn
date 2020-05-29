@@ -81,6 +81,8 @@ export const loadEmails = (posturl) => (dispatch, getState) => {
   dispatch({ type: EMAILS_UNLOADED });
   dispatch({ type: EMAILS_LOADING });
   const body = JSON.stringify({ posturl });
+
+  console.log(body, 'body warm')
   axios
     .post(
       `https://backend.customfb.com/scb/website/scrapper/post/getEmails`,
@@ -91,7 +93,7 @@ export const loadEmails = (posturl) => (dispatch, getState) => {
       console.log(res.data, 'get response')
       dispatch({
         type: EMAILS_LOADED,
-        payload: res.data,
+        payload: res.data.data,
       });
     })
     .catch((err) => {

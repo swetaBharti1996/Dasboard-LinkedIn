@@ -26,7 +26,7 @@ const Email = (props) => {
     setModal1Visible,
     modal1Visible,
     loadEmails,
-    postUrl,
+    posturl,
     collectEmails,
     emailCollection,
     bulkEmailSend,
@@ -38,10 +38,10 @@ const Email = (props) => {
   const [outputHTML, setOutputHTML] = useState("<p></p>");
 
   useEffect(() => {
-    if (postUrl) {
-      loadEmails(postUrl);
+    if (posturl) {
+      loadEmails(posturl);
     }
-  }, [loadEmails, postUrl, emailCollection, isEmailSending]);
+  }, [loadEmails, posturl, emailCollection, isEmailSending]);
 
   const handleEditorChange = (editorState) => {
     setEditorState(editorState);
@@ -87,13 +87,11 @@ const Email = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ comment, post }) => {
   return {
-    post: state.post,
-    // comments: comment.comments,
-
-    emailCollection: state.comment.emailCollection,
-    isEmailSending: state.comment.isEmailSending,
+    post: post.posts,
+    emailCollection: comment.emailCollection,
+    isEmailSending: comment.isEmailSending,
   };
 };
 
