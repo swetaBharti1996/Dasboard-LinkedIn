@@ -92,7 +92,7 @@ export const loadEmails = (posturl) => (dispatch, getState) => {
       // console.log(res.data, 'get response')
       dispatch({
         type: EMAILS_LOADED,
-        payload: res.postUrl.email,
+        payload: res.posturl.email,
       });
     })
     .catch((err) => {
