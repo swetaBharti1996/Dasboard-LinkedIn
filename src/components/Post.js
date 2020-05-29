@@ -35,6 +35,7 @@ const PostData = (props) => {
     const [editorState, setEditorState] = useState(tempeditorState);
     const [outputHTML, setOutputHTML] = useState("<p></p>");
     const [emails, setEmails] = useState([]);
+    const [data, setData] = useState(PostData)
     const [didMount, setDidMount] = useState(false);
     const [postUrlS, setPostUrl] = useState();
 
@@ -45,6 +46,7 @@ const PostData = (props) => {
                 : null;
         if (PostData) {
             console.log("hii", profileurl);
+            setPostUrl(profileurl)
             loadPosts(profileurl);
         }
     }, [loadPosts]);
@@ -85,7 +87,6 @@ const PostData = (props) => {
     };
 
     const [form] = Form.useForm();
-    const [data, setData] = useState();
     const [editingKey, setEditingKey] = useState("");
     const [dataSource, setDataSource] = React.useState([]);
 
@@ -105,17 +106,14 @@ const PostData = (props) => {
         setEditingKey("");
     };
 
-    // const extractEmails = (text) => {
-    //     text = text.toLowerCase();
-    //     let temp = { value: null };
-    //     let formattedEmail = text.match(
-    //         /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
-    //     );
-    //     temp["value"] = formattedEmail;
 
-    //     return formattedEmail;
-    // };
-
+    const extractEmails = (text) => {
+        text = text.toLowerCase()
+        let temp = { value: null }
+        let formattedEmail = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+        temp['value'] = formattedEmail;
+        return formattedEmail
+    }
     const handleEditorChange = (editorState) => {
         setEditorState(editorState);
         setOutputHTML(editorState.toHTML());
@@ -166,14 +164,13 @@ const PostData = (props) => {
             width: "25%",
         },
         {
-            title: "Email(s)",
-            // dataIndex: "comment",
-            width: "25%",
-            // render: (_, rec) => {
-            //     return <p>{extractEmails(rec.comment)}</p>;
-            // },
+            title: 'Email(s)',
+            dataIndex: 'comment',
+            width: '25%',
+            render: (_, rec) => {
+                return (<p>{extractEmails(rec.comment)}</p>)
+            },
         },
-
         {
             title: "Comment",
             dataIndex: "comment",
@@ -239,7 +236,7 @@ const PostData = (props) => {
             <Email
                 setModal1Visible={setModal1Visible}
                 modal1Visible={modal1Visible}
-                postUrl={postUrlS}
+                profileurl={postUrlS}
             />
         </div>
     );

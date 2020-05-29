@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import _ from "lodash";
 // import { Button } from 'antd';
-import { deleteProfile } from "../actions/profileActions"
+import { deleteProfile } from "../actions/profileActions";
 import linkedin from "../images/linkedin.png";
 
 const Header = styled.div`
   margin: 10px 10px;
-  width: 280px;
+  width: 220px;
 `;
 
 const Img = styled.img`
@@ -44,42 +44,45 @@ const Url = styled.div`
 const Bodypart = styled.div`
   font-size: 12px;
   font-family: arial;
-  margin-top: 10px;
-  width: 320px;
+  margin-top: 4%;
   > p {
     font-size: 12px;
     font-weight: bold;
     color: transparent linear-gradient(111deg, #000033 0%, #2b2b3b 100%) 0% 0%
       no-repeat padding-box;
+    line-height: 20px;
   }
 `;
 
-const Button = styled.button`
-  /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
+// const Button = styled.button`
+//   /* Adapt the colors based on primary prop */
+//   background: ${props => props.primary ? "palevioletred" : "white"};
+//   color: ${props => props.primary ? "white" : "palevioletred"};
 
-  font-size: 1em;
+//   font-size: 1em;
+//   margin: 1em;
+//   padding: 0.25em 1em;
+//   border: 2px solid palevioletred;
+//   border-radius: 3px;
+// `;
+
+const Button = styled.button`
+  background: transparent linear-gradient(111deg, #000033 0%, #1890ff 100%) 0%
+    0% no-repeat padding-box;
+  border: navajowhite;
+
+  font-weight: bolder;
+  text-align: center;
+  width: 180px;
+  margin-top: 15%;
+  font-family: "Karla", sans-serif;
+  letter-spacing: 0;
+  color: #ffffff;
+  opacity: 1;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
   border-radius: 3px;
 `;
-
-// const Delete = styled.button`
-//   background: transparent linear-gradient(111deg, #000033 0%, #1890ff 100%) 0%
-//     0% no-repeat padding-box;
-//   border: navajowhite;
-
-//   font-weight: bolder;
-//   text-align: center;
-//   width: 500px;
-//   margin-top: 20px;
-//   font-family: "Karla", sans-serif;
-//   letter-spacing: 0;
-//   color: #ffffff;
-//   opacity: 1;
-// `;
 
 class ShowCards extends React.Component {
   state = {
@@ -87,14 +90,15 @@ class ShowCards extends React.Component {
   };
 
   handleDelete = (profileurl) => {
-    this.props.deletePosts(profileurl)
-  }
+    this.props.deletePosts(profileurl);
+  };
+
 
   render() {
     const { profile } = this.props;
     console.log("timeeeeeeeeeeeeee", profile.scrapedtime);
     return (
-      <Fragment>
+      <div>
         <Card style={{ marginRight: "52rem" }}>
           <form>
             <Header>
@@ -104,6 +108,9 @@ class ShowCards extends React.Component {
                   <img src={linkedin} alt="fairpe" />
                 </a>
               </Url>
+              <Button onClick={(profileurl) => this.handleDelete(profileurl)}>
+                Delete
+              </Button>
             </Header>
             <Bodypart>
               <p>
@@ -134,11 +141,11 @@ class ShowCards extends React.Component {
               </p>
             </Bodypart>
           </form>
-          <Button onClick={(profileurl) => this.handleDelete(profileurl)}>Delete</Button>
         </Card>
-      </Fragment>
+      </div>
     );
   }
 }
+
 
 export default ShowCards;
