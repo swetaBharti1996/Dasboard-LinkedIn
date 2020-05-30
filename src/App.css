@@ -1,5 +1,6 @@
-@import "~antd/dist/antd.css";
-
+@import '~antd/dist/antd.css';
+/* @import 'braft-editor/dist/index.css' */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 .trigger {
   font-size: 18px;
   line-height: 64px;
@@ -17,40 +18,34 @@
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
-  position: relative;
-  /* position: absolute; */
 }
 
 .site-layout-background {
   background: #fff;
 }
 
-.wrapper {
+.wrapper{
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(241, 241, 241);
-  min-height: 805px;
 }
 
-.ant-layout {
+.ant-layout{
   height: auto;
 }
 
-.fl-right {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.fl-right{
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
-.cus-btn {
+.cus-btn{
   margin-right: 20px;
 }
-.sidebar {
-  position: fixed;
-  width: 200px;
-}
+
 .flex{
   display:flex;
   justify-content: space-around;
@@ -67,4 +62,8 @@
 
 .table-operations > button {
   margin-right: 8px;
+}
+
+.bg{
+  background-color: #fcfcfc;
 }
