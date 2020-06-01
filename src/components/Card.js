@@ -54,18 +54,6 @@ const Bodypart = styled.div`
   }
 `;
 
-// const Button = styled.button`
-//   /* Adapt the colors based on primary prop */
-//   background: ${props => props.primary ? "palevioletred" : "white"};
-//   color: ${props => props.primary ? "white" : "palevioletred"};
-
-//   font-size: 1em;
-//   margin: 1em;
-//   padding: 0.25em 1em;
-//   border: 2px solid palevioletred;
-//   border-radius: 3px;
-// `;
-
 const Button = styled.button`
   background: transparent linear-gradient(111deg, #000033 0%, #1890ff 100%) 0%
     0% no-repeat padding-box;
@@ -90,17 +78,17 @@ class ShowCards extends React.Component {
   };
 
   handleDelete = (e, profileurl) => {
-
-
     this.props.deleteProfile(profileurl);
-    e.preventDefault()
-
+    e.preventDefault();
   };
-
 
   render() {
     const { profile, deleteProfile } = this.props;
-    // console.log("timeeeeeeeeeeeeee", profile.scrapedtime);
+    console.log("emailllllll", profile);
+    // const myLists = profile.email;
+    // const listItems = myLists.map((myList) => {
+    //   return <li>{myList}</li>;
+    // });
     return (
       <div>
         <Card style={{ marginRight: "52rem" }}>
@@ -121,12 +109,13 @@ class ShowCards extends React.Component {
                 <b style={{ color: "#1890ff" }}>Name:</b>
                 {profile.name}
               </p>
-              <p>
-                <b style={{ color: "#1890ff" }}>Email:</b> {profile.email}
-              </p>
+              {/* <ul>
+                <b style={{ color: "#1890ff" }}>Email:</b> {listItems}
+              </ul> */}
               <p>
                 <b style={{ color: "#1890ff" }}>Phone Number:</b>
                 {profile.phonenumber}
+
               </p>
               <p>
                 <b style={{ color: "#1890ff" }}>Scraped Time: </b>
@@ -150,6 +139,5 @@ class ShowCards extends React.Component {
     );
   }
 }
-
 
 export default ShowCards;
