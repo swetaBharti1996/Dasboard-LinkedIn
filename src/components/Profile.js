@@ -37,7 +37,6 @@ class Profile extends Component {
       <Contaioner>
         {profile.map((item, index) => (
           <ShowCards profile={item} deleteProfile={this.props.deleteProfile} />
-
         ))}
 
         <Pagination

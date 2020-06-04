@@ -8,7 +8,7 @@ import linkedin from "../images/linkedin.png";
 
 const Header = styled.div`
   margin: 10px 10px;
-  width: 220px;
+  width: 300px;
 `;
 
 const Img = styled.img`
@@ -24,7 +24,7 @@ const Card = styled.div`
   margin-top: 20px;
   > form {
     height: 100%;
-    width: 500px;
+    width: 600px;
     display: flex;
   }
   :hover {
@@ -45,6 +45,7 @@ const Bodypart = styled.div`
   font-size: 12px;
   font-family: arial;
   margin-top: 4%;
+  width: 300px;
   > p {
     font-size: 12px;
     font-weight: bold;
@@ -58,23 +59,58 @@ const Button = styled.button`
   background: transparent linear-gradient(111deg, #000033 0%, #1890ff 100%) 0%
     0% no-repeat padding-box;
   border: navajowhite;
-
   font-weight: bolder;
   text-align: center;
   width: 180px;
-  margin-top: 15%;
+  margin-top: 5%;
   font-family: "Karla", sans-serif;
   letter-spacing: 0;
   color: #ffffff;
   opacity: 1;
-  margin: 1em;
+  /* margin: 1em; */
   padding: 0.25em 1em;
   border-radius: 3px;
+`;
+
+const Span = styled.div`
+  color: white;
+  background-color: #0066ff;
+  text-align: center;
+  width: 100px;
+  font-size: 10px;
+  margin-right: 4px;
+`;
+
+const SpanPersonal = styled.div`
+  color: white;
+  background-color: #33cc33;
+  text-align: center;
+  width: 100px;
+  margin-top: 2px;
+  font-size: 10px;
+  margin-right: 4px;
+`;
+
+const MailConatiner = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Detail = styled.div`
+  font-family: arial;
+`;
+
+const Name = styled.div`
+  font-family: arial;
+  font-size: 20px;
+  color: #1890ff;
+  margin-top: 5%;
 `;
 
 class ShowCards extends React.Component {
   state = {
     profile: {},
+    // experience:[]
   };
 
   handleDelete = (e, profileurl) => {
@@ -83,12 +119,10 @@ class ShowCards extends React.Component {
   };
 
   render() {
-    const { profile, deleteProfile } = this.props;
+    const { profile, deleteProfile, experience } = this.props;
     console.log("emailllllll", profile);
-    // const myLists = profile.email;
-    // const listItems = myLists.map((myList) => {
-    //   return <li>{myList}</li>;
-    // });
+    console.log("profil experianceeeeeeeeeeeeeeeeeeeeeeee", profile.experience);
+
     return (
       <div>
         <Card style={{ marginRight: "52rem" }}>
@@ -100,22 +134,42 @@ class ShowCards extends React.Component {
                   <img src={linkedin} alt="fairpe" />
                 </a>
               </Url>
+              <Name>{profile.name}</Name>
+              <Detail>
+                <h5>
+                  <b> {profile.breakwords}</b>
+                </h5>
+                <h5> {profile.connectedon}</h5>
+                <h5> {profile.currentplace}</h5>
+              </Detail>
               <Button onClick={(e) => this.handleDelete(e, profile.profileurl)}>
                 Delete
               </Button>
             </Header>
             <Bodypart>
               <p>
-                <b style={{ color: "#1890ff" }}>Name:</b>
-                {profile.name}
-              </p>
-              {/* <ul>
-                <b style={{ color: "#1890ff" }}>Email:</b> {listItems}
-              </ul> */}
-              <p>
-                <b style={{ color: "#1890ff" }}>Phone Number:</b>
-                {profile.phonenumber}
+                <b style={{ color: "#1890ff" }}>Email</b>
 
+                <MailConatiner>
+                  <li>{profile.officeemail}</li>
+                  <Span>official email</Span>
+                </MailConatiner>
+                <MailConatiner>
+                  <li>{profile.personalemail}</li>
+                  <SpanPersonal>personal email</SpanPersonal>
+                </MailConatiner>
+              </p>
+              <p>
+                <b style={{ color: "#1890ff" }}>Phone Number</b>
+
+                <MailConatiner>
+                  <li>{profile.officephonenumber}</li>
+                  <Span>official phone </Span>
+                </MailConatiner>
+                <MailConatiner>
+                  <li>{profile.personalphonenumber}</li>
+                  <SpanPersonal>personal phone</SpanPersonal>
+                </MailConatiner>
               </p>
               <p>
                 <b style={{ color: "#1890ff" }}>Scraped Time: </b>
@@ -124,13 +178,21 @@ class ShowCards extends React.Component {
                   .toLocaleTimeString()
                   .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")}
               </p>
-              <p>
+              {/* <p>
                 <b style={{ color: "#1890ff" }}>Company Name:</b>
-                {profile.company}
-              </p>
+                {experience.map((text, index) => (
+                  <span experience={text}>
+                    {profile.experience[0].companyname}
+                  </span>
+                ))}
+              </p> */}
               <p>
                 <b style={{ color: "#1890ff" }}>Skype Id: </b>
                 {profile.skype}
+              </p>
+              <p>
+                <b style={{ color: "#1890ff" }}>twitter: </b>
+                {profile.twitter}
               </p>
             </Bodypart>
           </form>
