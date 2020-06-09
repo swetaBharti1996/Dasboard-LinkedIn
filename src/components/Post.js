@@ -111,6 +111,11 @@ const PostData = (props) => {
         text = text.toLowerCase()
         let temp = { value: null }
         let formattedEmail = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+
+        if (formattedEmail == null) {
+            const display = "Can't Find Email...!!!"
+            return <a>{display}</a>
+        }
         temp['value'] = formattedEmail;
         return formattedEmail
     }
