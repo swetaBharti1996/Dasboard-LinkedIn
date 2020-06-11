@@ -5,6 +5,12 @@ import _ from "lodash";
 // import { Button } from 'antd';
 import { deleteProfile } from "../actions/profileActions";
 import linkedin from "../images/linkedin.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashAlt,
+  faEnvelope,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Header = styled.div`
   margin: 10px 10px;
@@ -24,7 +30,7 @@ const Card = styled.div`
   margin-top: 20px;
   > form {
     height: 100%;
-    width: 600px;
+    width: 640px;
     display: flex;
   }
   :hover {
@@ -45,7 +51,7 @@ const Bodypart = styled.div`
   font-size: 12px;
   font-family: arial;
   margin-top: 4%;
-  width: 300px;
+  width: 340px;
   > p {
     font-size: 12px;
     font-weight: bold;
@@ -78,7 +84,7 @@ const Span = styled.div`
   text-align: center;
   width: 100px;
   font-size: 10px;
-  margin-right: 4px;
+  margin-right: 10px;
 `;
 
 const SpanPersonal = styled.div`
@@ -86,14 +92,18 @@ const SpanPersonal = styled.div`
   background-color: #33cc33;
   text-align: center;
   width: 100px;
-  margin-top: 2px;
   font-size: 10px;
-  margin-right: 4px;
+  margin-right: 10px;
+  margin-top: 2px;
 `;
 
 const MailConatiner = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+const Box = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
 `;
 
 const Detail = styled.div`
@@ -105,6 +115,11 @@ const Name = styled.div`
   font-size: 20px;
   color: #1890ff;
   margin-top: 5%;
+`;
+
+const SendEmail = styled.div`
+  margin-right: 10px;
+  font-size: 20px;
 `;
 
 class ShowCards extends React.Component {
@@ -152,11 +167,27 @@ class ShowCards extends React.Component {
 
                 <MailConatiner>
                   <li>{profile.officeemail}</li>
-                  <Span>official email</Span>
+                  <Box>
+                    <Span>official email</Span>
+                    <SendEmail>
+                      <FontAwesomeIcon
+                        icon={faEnvelope}
+                        style={{ color: "#0066ff" }}
+                      />
+                    </SendEmail>
+                  </Box>
                 </MailConatiner>
                 <MailConatiner>
                   <li>{profile.personalemail}</li>
-                  <SpanPersonal>personal email</SpanPersonal>
+                  <Box>
+                    <SpanPersonal>personal email</SpanPersonal>
+                    <SendEmail>
+                      <FontAwesomeIcon
+                        icon={faEnvelope}
+                        style={{ color: " #33cc33" }}
+                      />
+                    </SendEmail>
+                  </Box>
                 </MailConatiner>
               </p>
               <p>
