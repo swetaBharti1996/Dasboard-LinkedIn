@@ -114,7 +114,7 @@ const PostData = (props) => {
 
         if (formattedEmail == null) {
             const display = "Can't Find Email...!!!"
-            return <a>{display}</a>
+            return <h4 style={{ color: "red" }}>{display}</h4>
         }
         temp['value'] = formattedEmail;
         return formattedEmail
