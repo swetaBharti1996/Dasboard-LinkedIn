@@ -13,6 +13,7 @@ import {
     Divider,
 } from "antd";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components"
 import { DownloadOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
 import "braft-editor/dist/index.css";
@@ -21,9 +22,23 @@ import { connect } from "react-redux";
 import { loadPosts } from "../actions/postActions";
 import { CSVLink, CSVDownload } from "react-csv";
 import queryString from "query-string";
+import { MailOutlined } from '@ant-design/icons'
 import { Pagination } from "antd";
 import Email from "./Email";
+import mail from '../images/mail.png'
+import responseMail from '../images/res-email.png'
+import { Label } from "reactstrap";
+
+
+const Contaioner = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+`;
+
+
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 
 const PostData = (props) => {
     let tempeditorState = BraftEditor.createEditorState(
@@ -118,7 +133,11 @@ const PostData = (props) => {
         }
         temp['value'] = formattedEmail;
         return formattedEmail
+
+
     }
+
+
     const handleEditorChange = (editorState) => {
         setEditorState(editorState);
         setOutputHTML(editorState.toHTML());
@@ -173,8 +192,26 @@ const PostData = (props) => {
             dataIndex: 'comment',
             width: '25%',
             render: (_, rec) => {
-                return (<p>{extractEmails(rec.comment)}</p>)
+                return (
+
+                    <p>{extractEmails(rec.comment)}</p>
+                )
             },
+        },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            width: '5%',
+            render: (_, rec) => {
+                return (
+                    <>
+                        <img src={mail} style={{ height: '31px' }} />
+                        <img src={responseMail} style={{ height: '26px', marginLeft: '52px' }} />
+                    </>
+                )
+            }
+
+
         },
         {
             title: "Comment",
