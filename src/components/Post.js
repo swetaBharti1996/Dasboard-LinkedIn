@@ -21,34 +21,27 @@ import BraftEditor from "braft-editor";
 import { connect } from "react-redux";
 import { loadPosts } from "../actions/postActions";
 import { CSVLink, CSVDownload } from "react-csv";
-import queryString from "query-string";
-import { MailOutlined } from "@ant-design/icons";
-import { Pagination } from "antd";
 import Email from "./Email";
 // import mail from '../images/mail.png'
 // import responseMail from '../images/res-email.png'
-import { Label } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTrashAlt,
-  faEnvelope,
-  faPaperPlane,
+  faEnvelope
 } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
-  /* display: flex; */
   font-size: 16px;
 `;
 
 const Comment = styled.div`
-width:100%;
   > textarea {
-    width:220px;
-    border:none;
+    border: none;
+    min-height: 75px;
+    max-height: 100%;
+    margin-left: 5px;
   }
 `;
 
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const PostData = (props) => {
   let tempeditorState = BraftEditor.createEditorState(
@@ -140,10 +133,11 @@ const PostData = (props) => {
 
     if (formattedEmail == null) {
       const display = "Can't Find Email...!!!";
+      
       return <h4 style={{ color: "red" }}>{display}</h4>;
     }
     temp["value"] = formattedEmail;
-    return formattedEmail;
+    return <p>{formattedEmail}<input type = "checkbox" style={{marginLeft:"5px"}} /></p>;
   };
 
   const handleEditorChange = (editorState) => {
@@ -178,7 +172,7 @@ const PostData = (props) => {
 
   const columns = [
     {
-      title: "Profile Url",
+      title: "Profile Link",
       dataIndex: "profileurl",
       render: (_, record) => {
         return <a>{record.profileurl}</a>;
@@ -211,7 +205,7 @@ const PostData = (props) => {
           <Container>
             <FontAwesomeIcon
               icon={faEnvelope}
-              style={{ color: "#0066ff", marginLeft: "10px" }}
+              style={{ color: "#0066ff", marginLeft: "10px" ,fontSize:"20px"}}
             />
             <h6>reponse</h6>
           </Container>
@@ -226,7 +220,7 @@ const PostData = (props) => {
       render: (comment) => {
         return (
           <Comment>
-          <textarea>{comment}</textarea>
+            <textarea>{comment}</textarea>
           </Comment>
         );
       },

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Table, Input, InputNumber, Popconfirm, Form } from "antd";
+import { Table, Input, InputNumber, Popconfirm, Form, Button } from "antd";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -90,8 +90,9 @@ const CommentData = (props) => {
     var newTime2 = new Date(time * 1000)
       .toLocaleTimeString()
       .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+    const records = newTime1 + "," + newTime2;
 
-    return newTime1 + "," + newTime2;
+    return records;
   };
 
   const handleDelete = (posturl) => {
@@ -118,7 +119,16 @@ const CommentData = (props) => {
       console.log("Validate Failed:", errInfo);
     }
   };
+  // function sortRecordsByDate(records) {
+  //   return records.map((record) => {
+  //     const dateString = records.submissionDate.split("/").reverse().toString();
+  //     const dateTimestamp = Date.parse(dateString);
 
+  //     record.submissionDate = dateTimestamp;
+
+  //     return record;
+  //   });
+  // }
   const columns = [
     {
       title: "Post Url",
@@ -189,22 +199,32 @@ const CommentData = (props) => {
   console.log("component comments", comments);
 
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={comments}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
+    <div>
+      <div className="flex-between">
+        <div className="table-operations">
+          {/* <Button   type="primary" onClick={(records) => sortRecordsByDate(records)}>
+            Sort table by scraped time
+          </Button> */}
+        </div>
+      </div>
+
+      <Form form={form} component={false}>
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          bordered
+          dataSource={comments}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={{
+            onChange: cancel,
+          }}
+        />
+      </Form>
+    </div>
   );
 };
 

@@ -2,8 +2,6 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import _ from "lodash";
-// import { Button } from 'antd';
-import { deleteProfile } from "../actions/profileActions";
 import linkedin from "../images/linkedin.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
