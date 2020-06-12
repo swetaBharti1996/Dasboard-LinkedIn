@@ -1,12 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Table, Input, InputNumber, Popconfirm, Form, Button } from "antd";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { loadComments, deletePosts } from "../actions/commentActions";
 
+const Url = styled.div`
+  margin-left: 10px;
+  > a {
+    > img {
+      height: 40px;
+      width: 40px;
+    }
+  }
+`;
 const CommentData = (props) => {
   const {
     loadComments,
@@ -94,6 +104,16 @@ const CommentData = (props) => {
 
     return records;
   };
+  // function sortRecordsByDate(records) {
+  //   return records.map((record) => {
+  //     const dateString = records.submissionDate.split("/").reverse().toString();
+  //     const dateTimestamp = Date.parse(dateString);
+
+  //     record.submissionDate = dateTimestamp;
+
+  //     return record;
+  //   });
+  // }
 
   const handleDelete = (posturl) => {
     deletePosts(posturl);
@@ -124,11 +144,10 @@ const CommentData = (props) => {
   //     const dateString = records.submissionDate.split("/").reverse().toString();
   //     const dateTimestamp = Date.parse(dateString);
 
-  //     record.submissionDate = dateTimestamp;
+  const getPosition = (string, subString, index) => {
+    return string.split(subString, index).join(subString).length;
+  };
 
-  //     return record;
-  //   });
-  // }
   const columns = [
     {
       title: "Post Url",
@@ -138,16 +157,20 @@ const CommentData = (props) => {
       render: (_, rec) => {
         // console.log("rec", rec);
         return (
-          <Link
-            to={{
-              pathname: "/comment",
-              state: {
-                postURL: rec.url,
-              },
-            }}
-          >
-            {rec.url}
-          </Link>
+          <div>
+            <Link
+              to={{
+                pathname: "/comment",
+                state: {
+                  postURL: rec.url,
+                },
+              }}
+            >
+              Total Comment
+              <br />
+              {rec.url.slice(getPosition(rec.url, "/", 4))}
+            </Link>
+          </div>
         );
       },
     },
