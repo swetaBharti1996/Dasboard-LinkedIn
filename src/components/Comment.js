@@ -68,8 +68,8 @@ const CommentData = (props) => {
             {inputNode}
           </Form.Item>
         ) : (
-          children
-        )}
+            children
+          )}
       </td>
     );
   };
@@ -158,7 +158,9 @@ const CommentData = (props) => {
         // console.log("rec", rec);
         return (
           <div>
+            <a href={rec.url} target="_blank">View Post</a>
             <Link
+              style={{ marginLeft: '25px' }}
               to={{
                 pathname: "/comment",
                 state: {
@@ -168,7 +170,7 @@ const CommentData = (props) => {
             >
               Total Comment
               <br />
-              {rec.url.slice(getPosition(rec.url, "/", 4))}
+              {/* {rec.url.slice(getPosition(rec.url, "/", 4))} */}
             </Link>
           </div>
         );
@@ -182,11 +184,13 @@ const CommentData = (props) => {
     {
       title: "Scraped Time",
       dataIndex: "time",
+      width: '25%',
       render: (time) => <span>{convertTime(time)}</span>,
     },
     {
       title: "Action",
       dataIndex: "action",
+      width: '25px',
       render: (text, rec) => (
         <Popconfirm
           title="Sure to delete?"
