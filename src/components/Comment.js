@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-
 import { loadComments, deletePosts } from "../actions/commentActions";
 
 const Url = styled.div`
@@ -68,8 +67,8 @@ const CommentData = (props) => {
             {inputNode}
           </Form.Item>
         ) : (
-            children
-          )}
+          children
+        )}
       </td>
     );
   };
@@ -104,16 +103,6 @@ const CommentData = (props) => {
 
     return records;
   };
-  // function sortRecordsByDate(records) {
-  //   return records.map((record) => {
-  //     const dateString = records.submissionDate.split("/").reverse().toString();
-  //     const dateTimestamp = Date.parse(dateString);
-
-  //     record.submissionDate = dateTimestamp;
-
-  //     return record;
-  //   });
-  // }
 
   const handleDelete = (posturl) => {
     deletePosts(posturl);
@@ -139,10 +128,6 @@ const CommentData = (props) => {
       console.log("Validate Failed:", errInfo);
     }
   };
-  // function sortRecordsByDate(records) {
-  //   return records.map((record) => {
-  //     const dateString = records.submissionDate.split("/").reverse().toString();
-  //     const dateTimestamp = Date.parse(dateString);
 
   const getPosition = (string, subString, index) => {
     return string.split(subString, index).join(subString).length;
@@ -155,12 +140,13 @@ const CommentData = (props) => {
       width: "25%",
       editable: true,
       render: (_, rec) => {
-        // console.log("rec", rec);
         return (
           <div>
-            <a href={rec.url} target="_blank">View Post</a>
+            <a href={rec.url} target="_blank">
+              View Post
+            </a>
             <Link
-              style={{ marginLeft: '25px' }}
+              style={{ marginLeft: "25px" }}
               to={{
                 pathname: "/comment",
                 state: {
@@ -170,7 +156,6 @@ const CommentData = (props) => {
             >
               Total Comment
               <br />
-              {/* {rec.url.slice(getPosition(rec.url, "/", 4))} */}
             </Link>
           </div>
         );
@@ -184,13 +169,18 @@ const CommentData = (props) => {
     {
       title: "Scraped Time",
       dataIndex: "time",
-      width: '25%',
+      width: "25%",
+      key: "time",
+      defaultSortOrder: "ascend",
+      sorter: (a, b) => {
+        return a.time.toString().localeCompare(b.time);
+      },
       render: (time) => <span>{convertTime(time)}</span>,
     },
     {
       title: "Action",
       dataIndex: "action",
-      width: '25px',
+      width: "25px",
       render: (text, rec) => (
         <Popconfirm
           title="Sure to delete?"
@@ -229,7 +219,7 @@ const CommentData = (props) => {
     <div>
       <div className="flex-between">
         <div className="table-operations">
-          {/* <Button   type="primary" onClick={(records) => sortRecordsByDate(records)}>
+          {/* <Button   type="primary" >
             Sort table by scraped time
           </Button> */}
         </div>
