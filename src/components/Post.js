@@ -98,8 +98,8 @@ const PostData = (props) => {
             {inputNode}
           </Form.Item>
         ) : (
-          children
-        )}
+            children
+          )}
       </td>
     );
   };
@@ -133,11 +133,11 @@ const PostData = (props) => {
 
     if (formattedEmail == null) {
       const display = "Can't Find Email...!!!";
-      
+
       return <h4 style={{ color: "red" }}>{display}</h4>;
     }
     temp["value"] = formattedEmail;
-    return <p>{formattedEmail}<input type = "checkbox" style={{marginLeft:"5px"}} /></p>;
+    return <p>{formattedEmail}<input type="checkbox" style={{ marginLeft: "5px" }} /></p>;
   };
 
   const handleEditorChange = (editorState) => {
@@ -175,7 +175,7 @@ const PostData = (props) => {
       title: "Profile Link",
       dataIndex: "profileurl",
       render: (_, record) => {
-        return <a>{record.profileurl}</a>;
+        return <a href={record.profileurl} target="_blank">{record.profileurl}</a>;
       },
     },
     {
@@ -205,7 +205,7 @@ const PostData = (props) => {
           <Container>
             <FontAwesomeIcon
               icon={faEnvelope}
-              style={{ color: "#0066ff", marginLeft: "10px" ,fontSize:"20px"}}
+              style={{ color: "#0066ff", marginLeft: "10px", fontSize: "20px" }}
             />
             <h6>reponse</h6>
           </Container>
