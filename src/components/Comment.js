@@ -67,8 +67,8 @@ const CommentData = (props) => {
             {inputNode}
           </Form.Item>
         ) : (
-          children
-        )}
+            children
+          )}
       </td>
     );
   };
@@ -129,9 +129,6 @@ const CommentData = (props) => {
     }
   };
 
-  const getPosition = (string, subString, index) => {
-    return string.split(subString, index).join(subString).length;
-  };
 
   const columns = [
     {
@@ -143,7 +140,7 @@ const CommentData = (props) => {
         return (
           <div>
             <a href={rec.url} target="_blank">
-              View Post
+              View Post {rec.url.length}
             </a>
             <Link
               style={{ marginLeft: "25px" }}
