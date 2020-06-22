@@ -143,7 +143,7 @@ class ShowCards extends React.Component {
             <Header>
               <Img src={profile.imgsrc} />
               <Url>
-                <a href={profile.profileurl}>
+                <a href={profile.profileurl} target="_blank">
                   <img src={linkedin} alt="fairpe" />
                 </a>
               </Url>

@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
+import { Link } from "react-router-dom";
 import { Row, Col, Spin, Input, Typography, Divider, Card } from 'antd';
 import styled from 'styled-components';
 import { LoadingOutlined, ArrowUpOutlined, PercentageOutlined, CommentOutlined, LikeOutlined } from '@ant-design/icons';
@@ -9,23 +10,9 @@ import Curious from "../images/curious.jpg";
 import Bulb from "../images/bulb.jpg";
 import Clap from "../images/clap.jpg";
 import CountUp from 'react-countup';
-import { connect } from "react-redux";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-// import ReactSvgPieChart from "react-svg-piechart";
 
-const { Search } = Input;
-
-const SearchInput = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    padding-left: 0px;
-    p{
-      font-weight:700;
-    } 
-`;
 
 const Post = styled.div`
     ${'' /* width: 60%;
@@ -107,15 +94,13 @@ const AnalyseButton = styled(Button)`
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-class Insight extends React.Component {
+class PostInsight extends React.Component {
 
     state = {
-        url: null,
         message: null,
         visible: false,
         loading: false,
-        errorMessage: '',
-        insight: null
+        errorMessage: ''
     }
 
     static propTypes = {
@@ -125,48 +110,30 @@ class Insight extends React.Component {
         clearErrors: PropTypes.func.isRequired
     }
 
-    componentDidMount() {
-        // loadInsight()
+
+
+    componentDidUpdate(prevProps) {
+        const { error, isLoading } = this.props;
+        if (error !== prevProps.error) {
+            if (error.id === 'POST_ERROR') {
+                this.setState({ errorMessage: error.message })
+            } else {
+                this.setState({ errorMessage: null })
+            }
+        }
+
+        if (isLoading !== prevProps.isLoading) {
+            this.setState({ loading: isLoading })
+        }
     }
 
-    // componentDidUpdate(prevProps) {
-    //     const { error, isLoading } = this.props;
-    //     if (error !== prevProps.error) {
-    //         if (error.id === 'INSIGHT_ERROR') {
-    //             this.setState({ errorMessage: error.message })
-    //         } else {
-    //             this.setState({ errorMessage: null })
-    //         }
-    //     }
 
-    //     if (isLoading !== prevProps.isLoading) {
-    //         this.setState({ loading: isLoading })
-    //     }
-    // }
-    handleAnalyseClick = () => {
-        // postAnalyse(this.state.url)
-    }
-    handelSearch = (e) => {
-        this.state.url = e.target.value
-    }
 
     render() {
         const { errorMessage, loading } = this.state;
 
         return (
             <Fragment>
-                <h2>Enter the Url Here</h2>
-                <SearchInput>
-                    {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
-                    <Search
-                        style={{ width: "60%" }}
-                        placeholder="Enter the Post URL...."
-                        enterButton="Analyse"
-                        size="large"
-                        onChange={this.handelSearch}
-                        onSearch={this.handleAnalyseClick}
-                    />
-                </SearchInput>
                 <Row style={{
                     marginTop: "18px",
                     paddingTop: "5px",
@@ -174,7 +141,6 @@ class Insight extends React.Component {
                     height: "77vh",
                     justifyContent: "space-around",
                 }}>
-                    <Spin indicator={antIcon} spinning={loading} style={{ color: '#1890ff', background: 'none' }} ></Spin>
                     <Col xs={4} style={{
                         backgroundColor: "aqua",
                         paddingTop: "10px"
@@ -202,67 +168,80 @@ class Insight extends React.Component {
                     <Col xs={14} style={{
                         paddingBottom: "5px",
                     }} >
-                        <h1 style={{ margin: "10px", fontSize: "17px", letterSpacing: "5px", textAlign: "center" }}>Posts</h1>
                         <Post style={{ display: "flex", paddingTop: "4px" }}>
-                            <Card title="Total Post" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
-                                <div style={{ width: "fit-content" }}>
-                                    <h2 style={{
-                                        fontSize: "50px",
-                                        fontFamily: "Open Sans,sans-serif",
-                                        border: "1px solid #666",
-                                        padding: "10px 37px",
-                                        color: "#666"
-                                    }}><CountUp start={0} end={254} duration={4} /></h2>
+                            {/* <Card title="Total Post" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}> */}
+                            <div style={{ width: "100%", textAlign: "center" }}>
+                                <label style={{ fontWeight: "600" }}>Post Link :</label><p><a href={"https://www.google.com"}>https://www.linkedin.com/article-838y23y82487294</a></p>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div>
+                                        <label style={{ fontWeight: "600" }}>Posted By :</label><p>Rahul TG</p>
+                                    </div>
+                                    <div>
+                                        <label style={{ fontWeight: "600" }}>Scraped Time :</label><p>Jan 28th 2020</p>
+                                    </div>
                                 </div>
-                            </Card>
-                            <Card title="Post per/day" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
-                                <div style={{ width: "fit-content" }}>
-                                    <h2 style={{
-                                        fontSize: "50px",
-                                        fontFamily: "Open Sans,sans-serif",
-                                        border: "1px solid #666",
-                                        padding: "10px 37px",
-                                        color: "green"
-                                    }}><CountUp start={0} end={3.1} duration={3} /> <ArrowUpOutlined /></h2>
-                                </div>
-                            </Card>
+                            </div>
+                            {/* </Card> */}
                         </Post>
-                        <h1 style={{ margin: "10px", fontSize: "17px", letterSpacing: "5px", textAlign: "center" }}>Profiles</h1>
-                        <Profiles style={{ display: "flex", paddingTop: "18px", justifyContent: "space-between" }}>
-                            <Card title="Total Profile" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
+                        <Profiles style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Card title="Post Comments" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <h2 style={{
                                         fontSize: "50px",
                                         fontFamily: "Open Sans,sans-serif",
                                         border: "1px solid #666",
-                                        padding: "10px 37px",
+                                        padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={254} duration={4} /></h2>
+                                    }}><CountUp start={0} end={1300} duration={5} /></h2>
                                 </div>
                             </Card>
-                            <Card title="Profile per/day" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
+                            <Card title="Post Likes" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <h2 style={{
                                         fontSize: "50px",
                                         fontFamily: "Open Sans,sans-serif",
                                         border: "1px solid #666",
-                                        padding: "10px 37px",
+                                        padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={22} duration={4} /></h2>
+                                    }}><CountUp start={0} end={978} duration={4} /></h2>
                                 </div>
                             </Card>
-                            <Card title="Connected Profiles" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
+                            <Card title="Emails Found" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <h2 style={{
                                         fontSize: "50px",
                                         fontFamily: "Open Sans,sans-serif",
                                         border: "1px solid #666",
-                                        padding: "10px",
+                                        padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={38} duration={4} /><PercentageOutlined /></h2>
+                                    }}><CountUp start={0} end={453} duration={4} /></h2>
                                 </div>
                             </Card>
                         </Profiles>
+                        <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
+                            <div style={{ display: "flex", justifyContent: "space-around", width: "85vh" }}>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Like} alt="Like" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={58} duration={4} /><PercentageOutlined /></h2>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Clap} alt="Clap" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={17} duration={2} /><PercentageOutlined /></h2>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Heart} alt="Heart" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={19} duration={2} /><PercentageOutlined /></h2>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Bulb} alt="Bulb" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={4} duration={1} /><PercentageOutlined /></h2>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Curious} alt="Curious" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={2} duration={1} /><PercentageOutlined /></h2>
+                                </div>
+                            </div>
+                        </Card>
                     </Col>
                     <Col xs={4} style={{
                         backgroundColor: "aqua",
@@ -275,7 +254,7 @@ class Insight extends React.Component {
                         <Divider />
                     </Col>
                 </Row>
-                <Row style={{ display: "block" }}>
+                {/* <Row style={{ display: "block" }}>
                     <h1 style={{ margin: "10px", letterSpacing: "5px", fontSize: "large", textAlign: "center" }}>Comments</h1>
                     <Comments style={{ display: "flex", justifyContent: "space-between" }}>
                         <Card title="Total Comments" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
@@ -348,8 +327,8 @@ class Insight extends React.Component {
                                     color: "green"
                                 }}><CountUp start={0} end={483} duration={4} /><ArrowUpOutlined /></h2>
                             </div>
-                        </Card>
-                        <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
+                        </Card> */}
+                {/* <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", width: "500px", paddingTop: "2px" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Like} alt="Like" style={{ height: "50px" }} />
@@ -372,30 +351,14 @@ class Insight extends React.Component {
                                     <h2><CountUp start={0} end={2} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                             </div>
-                        </Card>
-                    </Comments>
-                </Row>
-            </Fragment>
+                        </Card> */}
+                {/* </Comments> */}
+                {/* </Row > */}
+                <Link to="/insight">Back</Link>
+            </Fragment >
         )
     }
 }
-const mapStateToProps = ({ insight, error }) => {
-    // console.log("state on page", state);
-    return {
-        insight,
-        error,
-    };
-};
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        loadInsight: () => {
-            // dispatch(loadInsight());
-        },
-        postAnalyse: (posturl) => {
-            // dispatch(postAnalyse(posturl));
-        },
-    };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Insight)
+export default PostInsight
