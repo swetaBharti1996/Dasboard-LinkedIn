@@ -45,3 +45,13 @@ export const EMAILS_UNLOADED = "EMAILS_UNLOADED";
 export const SENDING_EMAIL = "SENDING_EMAIL";
 export const EMAIL_SENT = "EMAIL_SENT";
 export const COLLECT_EMAILS = "COLLECT_EMAILS";
+
+//insight 
+
+export const INSIGHT_LOADING = "INSIGHT_LOADING";
+export const INSIGHT_LOADED = "INSIGHT_LOADED";
+
+//insightPostAnalyze
+
+export const ANALYZEPOST_LOADING = "ANALYZEPOST_LOADING";
+export const ANALYZEPOST_LOADED = "ANALYZEPOST_LOADED"
