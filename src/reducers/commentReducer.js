@@ -22,12 +22,12 @@ export default function (state = initialState, action) {
                 isLoading: true,
             };
         case COMMENT_LOADED:
-            console.log(
-                "this is state",
-                state.comments,
-                "this is action",
-                action.payload
-            );
+            // console.log(
+            //     "this is state",
+            //     state.comments,
+            //     "this is action",
+            //     action.payload
+            // );
             return {
                 ...state,
                 isLoading: false,

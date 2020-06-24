@@ -21,7 +21,7 @@ export const loadComments = () => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log(res.data, "getting data");
+      // console.log(res.data, "getting data");
       dispatch({
         type: COMMENT_LOADED,
         payload: res.data.data.splice(1),
@@ -88,7 +88,7 @@ export const loadEmails = (posturl) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then((res) => {
-      console.log(res.data, 'got emails')
+      // console.log(res.data, 'got emails')
       dispatch({
         type: EMAILS_LOADED,
         payload: res.data

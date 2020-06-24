@@ -128,10 +128,11 @@ class Insight extends React.Component {
 
     componentDidMount() {
         this.props.loadInsight()
-        // this.props.postAnalyse()
+
     }
 
     componentDidUpdate(prevProps) {
+        this.props.postAnalyse()
         const { error, isLoading } = this.props;
         if (error !== prevProps.error) {
             if (error.id === 'INSIGHT_ERROR') {
@@ -148,7 +149,8 @@ class Insight extends React.Component {
 
 
     handleAnalyseClick = (posturl) => {
-        // this.props.postAnalyse(posturl)
+        this.props.postAnalyse(posturl)
+        this.props.history.push("/postInsight")
     }
     handelSearch = (e) => {
         this.state.url = e.target.value
@@ -156,8 +158,8 @@ class Insight extends React.Component {
 
     render() {
         const { errorMessage, loading } = this.state;
-        const { posturl, totalPosts, insight } = this.props;
-        console.log(insight, 't')
+        const { posturl, insight } = this.props;
+        // console.log(insight, 't')
 
         return (
             <Fragment>
@@ -386,10 +388,11 @@ class Insight extends React.Component {
         )
     }
 }
-const mapStateToProps = ({ insight, error }) => {
-    // console.log("state on page", insight);
+const mapStateToProps = ({ insight, error, InsightData }) => {
+    console.log("state on page", InsightData);
     return {
-        insight: insight,     // insight,
+        insight,
+        InsightData,
         error
     };
 };
@@ -399,9 +402,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         loadInsight: () => {
             dispatch(loadInsight());
         },
-        // postAnalyse: (posturl) => {
-        //     dispatch(postAnalyse(posturl));
-        // },
+        postAnalyse: (posturl) => {
+            dispatch(postAnalyse(posturl));
+        },
     };
 };
 

@@ -37,8 +37,9 @@ export const loadInsight = () => (dispatch, getState) => {
 export const postAnalyse = (posturl) => (dispatch, getState) => {
 
     dispatch({ type: ANALYZEPOST_LOADING });
-    const body = JSON.stringify({ posturl });
 
+    const body = JSON.stringify({ posturl });
+    console.log(body)
     axios
         .post(
             `https://backend.customfb.com/scb/website/scrapper/insight/postAnalysis`,

@@ -95,7 +95,6 @@ const AnalyseButton = styled(Button)`
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 class PostInsight extends React.Component {
-
     state = {
         message: null,
         visible: false,
@@ -113,7 +112,8 @@ class PostInsight extends React.Component {
 
 
     componentDidUpdate(prevProps) {
-        const { error, isLoading } = this.props;
+        const { error, isLoading, InsightData } = this.props;
+
         if (error !== prevProps.error) {
             if (error.id === 'POST_ERROR') {
                 this.setState({ errorMessage: error.message })
@@ -121,7 +121,6 @@ class PostInsight extends React.Component {
                 this.setState({ errorMessage: null })
             }
         }
-
         if (isLoading !== prevProps.isLoading) {
             this.setState({ loading: isLoading })
         }
@@ -131,6 +130,8 @@ class PostInsight extends React.Component {
 
     render() {
         const { errorMessage, loading } = this.state;
+        const { InsightData } = this.props
+        console.log(InsightData, 'one user loaded')
 
         return (
             <Fragment>
@@ -148,6 +149,7 @@ class PostInsight extends React.Component {
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts</h1>
                             <h2><CountUp start={0} end={34} duration={4} /></h2>
+                            {/* this.props.InsightData.totalComments */}
                         </LeftData>
                         <Divider />
                         <LeftData >

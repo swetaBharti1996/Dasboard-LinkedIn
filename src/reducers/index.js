@@ -3,6 +3,7 @@ import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import postReducer from "./postReducer";
 import insightReducer from "./insightReducer";
+import insightPostReducer from "./insightPostReducer"
 import commentReducer from "./commentReducer";
 import { DESTROY_SESSION } from "../actions/types";
 // import { history } from '../routes/AppRouter'
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   error: errorReducer,
   post: postReducer,
   insight: insightReducer,
+  insightData: insightPostReducer,
   comment: commentReducer,
   profile: profileReducers,
   profileDetail: profileDetailReducers

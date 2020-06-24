@@ -8,7 +8,7 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
     dispatch({ type: PROFILEDETAIL_LOADING });
 
     const body = JSON.stringify({ profileurl });
-    console.log(dispatch, getState);
+    // console.log(dispatch, getState);
     axios
         .post(
             `https://backend.customfb.com/scb/website/scrapper/profile/getprofiledata`,
@@ -16,14 +16,14 @@ export const loadComment = (profileurl) => (dispatch, getState) => {
             tokenConfig(getState)
         )
         .then((res) => {
-            console.log("response deatil", res.data);
+            // console.log("response deatil", res.data);
             dispatch({
                 type: PROFILEDETAIL_LOADED,
                 payload: res.data,
             });
         })
         .catch((err) => {
-            console.log(" load  profile detail  erorr in", err);
+            // console.log(" load  profile detail  erorr in", err);
             if (err.data) {
                 dispatch(
                     returnErrors(

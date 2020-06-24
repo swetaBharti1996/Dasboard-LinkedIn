@@ -31,7 +31,7 @@ const CommentData = (props) => {
   const mounted = useRef();
 
   useEffect(() => {
-    console.log("useref", comments);
+    // console.log("useref", comments);
     if (!mounted.current) {
       mounted.current = true;
       loadComments();
@@ -181,12 +181,13 @@ const CommentData = (props) => {
       render: (text, rec) => (
         <Popconfirm
           title="Sure to delete?"
+
           onConfirm={() => handleDelete(rec.url)}
         >
           <a>
             <FontAwesomeIcon
               icon={faTrashAlt}
-              style={{ marginLeft: "30px", fontSize: "20px" }}
+              style={{ marginLeft: "30px", fontSize: "20px", color: '#FF0000' }}
             />
           </a>
         </Popconfirm>
@@ -210,7 +211,7 @@ const CommentData = (props) => {
     };
   });
 
-  console.log("component comments", comments);
+  // console.log("component comments", comments);
 
   return (
     <div>

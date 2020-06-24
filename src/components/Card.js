@@ -142,8 +142,8 @@ class ShowCards extends React.Component {
 
   render() {
     const { profile, deleteProfile, experience } = this.props;
-    console.log("emailllllll", profile);
-    console.log("profil experianceeeeeeeeeeeeeeeeeeeeeeee", profile.experience);
+    // console.log("emailllllll", profile);
+    // console.log("profil experianceeeeeeeeeeeeeeeeeeeeeeee", profile.experience);
 
     return (
       <div style={{ width: "1100px" }}>
@@ -232,8 +232,8 @@ class ShowCards extends React.Component {
             <Company>
               <b style={{ color: "#1890ff" }}>Education</b>
               <MailConatiner>
-                {console.log("collegename")}
-                {console.log(profile)}
+                {/* {console.log("collegename")} */}
+                {/* {console.log(profile)} */}
                 <div style={{ maxHeight: "250px", overflowY: "auto" }}>
                   {profile.education != null ? profile.education.map(edu => <p style={{ fontFamily: "sans-serif" }}><FireTwoTone />{` ${edu.collegename} | ${edu.date} | ${edu.course}`}</p>) : null}
                 </div>
@@ -242,14 +242,14 @@ class ShowCards extends React.Component {
             <Company>
               <b style={{ color: "#1890ff" }}>Experience</b>
               <MailConatiner>
-                {console.log("collegename")}
-                {console.log(profile)}
+                {/* {console.log("collegename")} */}
+                {/* {console.log(profile)} */}
                 <div style={{ maxHeight: "250px", overflowY: "auto" }}>
                   {profile.experience != null ? profile.experience.map(exp => <p style={{ fontFamily: "sans-serif" }}><FireTwoTone />{` ${exp.companyname} | ${exp.date} | ${exp.position}`}</p>) : null}
                 </div>
               </MailConatiner>
             </Company>
-            <DeleteTwoTone onClick={(e) => this.handleDelete(e, profile.profileurl)} style={{ marginTop: "5px", marginRight: "5px", fontSize: "25px" }} />
+            <DeleteTwoTone onClick={(e) => this.handleDelete(e, profile.profileurl)} style={{ marginTop: "5px", marginRight: "5px", fontSize: "25px", color: '#FF0000' }} />
           </form>
         </Card>
       </div>

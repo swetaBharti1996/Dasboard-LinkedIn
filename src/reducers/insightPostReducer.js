@@ -1,24 +1,24 @@
-import { INSIGHT_LOADED, INSIGHT_LOADING } from '../actions/types'
+import { ANALYZEPOST_LOADING, ANALYZEPOST_LOADED } from '../actions/types'
 
 const initialState = {
-    isLoading: false,
-    // insightData: {}
+    isLoading: false
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case INSIGHT_LOADING:
+        case ANALYZEPOST_LOADING:
             return {
                 ...state,
                 isLoading: true,
             };
-        case INSIGHT_LOADED:
-            // console.log(action.payload, 'data load')
+        case ANALYZEPOST_LOADED:
+            console.log(action.payload, 'post load')
             return {
-                ...state,
+                // ...state,
                 isLoading: false,
+                // InsightData: { ...action.payload }
                 ...action.payload
-            }
+            };
         default:
             return state;
     }

@@ -16,7 +16,7 @@ export const loadPosts = (posturl) => (dispatch, getState) => {
   // console.log(dispatch, getState)
 
   const body = JSON.stringify({ posturl });
-  console.log(body)
+  // console.log(body)
 
   axios
     .post(
