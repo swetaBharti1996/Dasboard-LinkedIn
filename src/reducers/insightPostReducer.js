@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
                 isLoading: true,
             };
         case ANALYZEPOST_LOADED:
-            console.log(action.payload, "post load");
+            // console.log(action.payload, "post load");
             return {
                 ...state,
                 isLoading: false,

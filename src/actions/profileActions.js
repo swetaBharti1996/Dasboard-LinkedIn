@@ -43,7 +43,8 @@ export const deleteProfile = (profileurl) => (dispatch, getState) => {
 
   axios.post(`https://backend.customfb.com/scb/website/scrapper/profile/delprofile`, body, tokenConfig(getState))
     .then(res => {
-      console.log(res.data, 'show data')
+      // console.log(res.data, 'showdata')
+
       dispatch({
         type: PROFILE_REMOVE,
         payload: getState().profile.info.filter(data => data.profileurl !== profileurl)

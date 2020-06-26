@@ -135,7 +135,7 @@ class PostInsight extends React.Component {
     render() {
         const { errorMessage, loading } = this.state;
         const { insightData } = this.props
-        console.log(insightData, 'one usersssss loaded')
+        // console.log(insightData, 'one usersssss loaded')
 
         return (
             <Fragment>

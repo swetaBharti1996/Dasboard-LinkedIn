@@ -16,7 +16,7 @@ export const loadInsight = () => (dispatch, getState) => {
             tokenConfig(getState)
         )
         .then((res) => {
-            console.log("data received from insight", res.data);
+            // console.log("data received from insight", res.data);
             dispatch({
                 type: INSIGHT_LOADED,
                 payload: { ...res.data },
@@ -39,7 +39,7 @@ export const postAnalyse = (posturl) => (dispatch, getState) => {
     dispatch({ type: ANALYZEPOST_LOADING });
 
     const body = JSON.stringify({ posturl });
-    console.log(body, "body functions");
+    // console.log(body, "body functions");
     axios
         .post(
             `https://backend.customfb.com/scb/website/scrapper/insight/postAnalysis`,
@@ -47,7 +47,7 @@ export const postAnalyse = (posturl) => (dispatch, getState) => {
             tokenConfig(getState)
         )
         .then((res) => {
-            console.log(res.data, "post Analyse");
+            // console.log(res.data, "post Analyse");
             dispatch({
                 type: ANALYZEPOST_LOADED,
                 payload: res.data,
