@@ -1,8 +1,7 @@
 import { INSIGHT_LOADED, INSIGHT_LOADING } from '../actions/types'
 
 const initialState = {
-    isLoading: false,
-    // insightData: {}
+    isLoading: false
 };
 
 export default function (state = initialState, action) {
@@ -13,7 +12,7 @@ export default function (state = initialState, action) {
                 isLoading: true,
             };
         case INSIGHT_LOADED:
-            // console.log(action.payload, 'data load')
+            console.log(action.payload, 'data load')
             return {
                 ...state,
                 isLoading: false,

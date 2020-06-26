@@ -104,9 +104,8 @@ class PostInsight extends React.Component {
         message: null,
         visible: false,
         loading: false,
-        errorMessage: '',
-        InsightData:{}
-        
+        errorMessage: ''
+
     }
     static propTypes = {
         isAuthenticated: PropTypes.bool,
@@ -118,8 +117,7 @@ class PostInsight extends React.Component {
 
 
     componentDidUpdate(prevProps) {
-        const { error, isLoading, InsightData } = this.props;
-
+        const { error, isLoading, insightData } = this.props;
         if (error !== prevProps.error) {
             if (error.id === 'POST_ERROR') {
                 this.setState({ errorMessage: error.message })
@@ -136,8 +134,8 @@ class PostInsight extends React.Component {
 
     render() {
         const { errorMessage, loading } = this.state;
-        const { InsightData,insight } = this.props
-        console.log(InsightData, 'one usersssss loaded')
+        const { insightData } = this.props
+        console.log(insightData, 'one usersssss loaded')
 
         return (
             <Fragment>
@@ -154,23 +152,23 @@ class PostInsight extends React.Component {
                     }}>
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts</h1>
-        
-                            <h2><CountUp start={0} end={InsightData.totalPosts} duration={4} /></h2>
+
+                            <h2><CountUp start={0} end={this.props.insightData.totalPosts} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Profiles</h1>
-                            <h2><CountUp start={0} end={InsightData.totalProfiles} duration={4} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalProfiles} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Comments</h1>
-                            <h2><CountUp start={0} end={InsightData.totalComments} duration={5} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalComments} duration={5} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Likes</h1>
-                            <h2><CountUp start={0} end={InsightData.totalLikes} duration={5} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalLikes} duration={5} /></h2>
                         </LeftData>
                     </Col>
                     <Col xs={14} style={{
@@ -179,13 +177,13 @@ class PostInsight extends React.Component {
                         <Post style={{ display: "flex", paddingTop: "4px" }}>
                             {/* <Card title="Total Post" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}> */}
                             <div style={{ width: "100%", textAlign: "center" }}>
-                                <label style={{ fontWeight: "600" }}>Post Link :</label><p><a href={"https://www.google.com"}>https://www.linkedin.com/article-838y23y82487294</a></p>
+                                <label style={{ fontWeight: "600" }}>Post Link :</label><p><a href={this.props.insightData.posturl} target="_blank">{this.props.insightData.posturl}</a></p>
                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                                     <div>
-                                        <label style={{ fontWeight: "600" }}>Posted By :</label><p>Rahul TG</p>
+                                        <label style={{ fontWeight: "600" }}>Posted By :</label><p>{this.props.insightData.postedBy}</p>
                                     </div>
                                     <div>
-                                        <label style={{ fontWeight: "600" }}>Scraped Time :</label><p>Jan 28th 2020</p>
+                                        <label style={{ fontWeight: "600" }}>Scraped Time :</label><p>{this.props.insightData.scrapedtime}</p>
                                     </div>
                                 </div>
                             </div>
@@ -368,11 +366,11 @@ class PostInsight extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ insightData }) => {
     return {
-        InsightData: state.insightPostReducer.InsightData
+        insightData
     };
-  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {

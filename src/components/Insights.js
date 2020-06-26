@@ -129,8 +129,6 @@ class Insight extends React.Component {
     componentDidMount() {
         this.props.loadInsight();
         this.props.postAnalyse();
-
-
     }
 
     componentDidUpdate(prevProps) {
@@ -390,11 +388,10 @@ class Insight extends React.Component {
         )
     }
 }
-const mapStateToProps = ({ insight, error, InsightData }) => {
-    console.log("state on page", InsightData);
+const mapStateToProps = ({ insight, error }) => {
+    // console.log("state on page", insightData);
     return {
         insight,
-        InsightData,
         error
     };
 };
