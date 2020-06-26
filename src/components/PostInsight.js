@@ -12,6 +12,11 @@ import Clap from "../images/clap.jpg";
 import CountUp from 'react-countup';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { loadInsight, postAnalyse } from "../actions/InsightAction";
+import { connect } from "react-redux";
+
+
+
 
 
 const Post = styled.div`
@@ -99,9 +104,10 @@ class PostInsight extends React.Component {
         message: null,
         visible: false,
         loading: false,
-        errorMessage: ''
+        errorMessage: '',
+        InsightData:{}
+        
     }
-
     static propTypes = {
         isAuthenticated: PropTypes.bool,
         loading: PropTypes.bool,
@@ -130,8 +136,8 @@ class PostInsight extends React.Component {
 
     render() {
         const { errorMessage, loading } = this.state;
-        const { InsightData } = this.props
-        console.log(InsightData, 'one user loaded')
+        const { InsightData,insight } = this.props
+        console.log(InsightData, 'one usersssss loaded')
 
         return (
             <Fragment>
@@ -148,23 +154,23 @@ class PostInsight extends React.Component {
                     }}>
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts</h1>
-                            <h2><CountUp start={0} end={34} duration={4} /></h2>
-                            {/* this.props.InsightData.totalComments */}
+        
+                            <h2><CountUp start={0} end={InsightData.totalPosts} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Profiles</h1>
-                            <h2><CountUp start={0} end={254} duration={4} /></h2>
+                            <h2><CountUp start={0} end={InsightData.totalProfiles} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Comments</h1>
-                            <h2><CountUp start={0} end={11082} duration={5} /></h2>
+                            <h2><CountUp start={0} end={InsightData.totalComments} duration={5} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Likes</h1>
-                            <h2><CountUp start={0} end={15733} duration={5} /></h2>
+                            <h2><CountUp start={0} end={InsightData.totalLikes} duration={5} /></h2>
                         </LeftData>
                     </Col>
                     <Col xs={14} style={{
@@ -357,10 +363,25 @@ class PostInsight extends React.Component {
                 {/* </Comments> */}
                 {/* </Row > */}
                 <Link to="/insight">Back</Link>
-            </Fragment >
+            </Fragment>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        InsightData: state.insightPostReducer.InsightData
+    };
+  };
 
-export default PostInsight
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        postAnalyse: (posturl) => {
+            dispatch(postAnalyse(posturl));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostInsight)
+
+

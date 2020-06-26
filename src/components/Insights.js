@@ -127,7 +127,9 @@ class Insight extends React.Component {
     }
 
     componentDidMount() {
-        this.props.loadInsight()
+        this.props.loadInsight();
+        this.props.postAnalyse();
+
 
     }
 
@@ -407,5 +409,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
     };
 };
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Insight)
