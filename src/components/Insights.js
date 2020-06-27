@@ -109,15 +109,18 @@ const AnalyseButton = styled(Button)`
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 class Insight extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            message: null,
+            visible: false,
+            loading: false,
+            errorMessage: ''
+        }
 
-    state = {
-        url: null,
-        message: null,
-        visible: false,
-        loading: false,
-        errorMessage: '',
-        insight: null
     }
+
+
 
     static propTypes = {
         isAuthenticated: PropTypes.bool,
@@ -128,24 +131,23 @@ class Insight extends React.Component {
 
     componentDidMount() {
         this.props.loadInsight();
-        this.props.postAnalyse();
     }
 
-    componentDidUpdate(prevProps) {
-        this.props.postAnalyse()
-        const { error, isLoading } = this.props;
-        if (error !== prevProps.error) {
-            if (error.id === 'INSIGHT_ERROR') {
-                this.setState({ errorMessage: error.message })
-            } else {
-                this.setState({ errorMessage: null })
-            }
-        }
+    // componentDidUpdate(prevProps) {
+    // this.props.postAnalyse()
+    // const { error, isLoading } = this.props;
+    // if (error !== prevProps.error) {
+    //     if (error.id === 'INSIGHT_ERROR') {
+    //         this.setState({ errorMessage: error.message })
+    //     } else {
+    //         this.setState({ errorMessage: null })
+    //     }
+    // }
 
-        if (isLoading !== prevProps.isLoading) {
-            this.setState({ loading: isLoading })
-        }
-    }
+    // if (isLoading !== prevProps.isLoading) {
+    // this.setState({ loading: isLoading })
+    //     }
+    // }
 
 
     handleAnalyseClick = (posturl) => {

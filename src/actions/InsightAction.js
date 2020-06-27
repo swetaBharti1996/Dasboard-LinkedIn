@@ -19,7 +19,7 @@ export const loadInsight = () => (dispatch, getState) => {
             // console.log("data received from insight", res.data);
             dispatch({
                 type: INSIGHT_LOADED,
-                payload: { ...res.data },
+                payload: { ...res.data }
             });
         })
         .catch((err) => {

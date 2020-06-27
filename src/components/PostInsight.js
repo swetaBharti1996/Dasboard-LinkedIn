@@ -153,22 +153,22 @@ class PostInsight extends React.Component {
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts</h1>
 
-                            <h2><CountUp start={0} end={this.props.insightData.totalPosts} duration={4} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalPosts ? this.props.insightData.totalPosts : '0'} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Profiles</h1>
-                            <h2><CountUp start={0} end={this.props.insightData.totalProfiles} duration={4} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalProfiles ? this.props.insightData.totalProfiles : '0'} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Comments</h1>
-                            <h2><CountUp start={0} end={this.props.insightData.totalComments} duration={5} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalComments ? this.props.insightData.totalComments : '0'} duration={5} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Likes</h1>
-                            <h2><CountUp start={0} end={this.props.insightData.totalLikes} duration={5} /></h2>
+                            <h2><CountUp start={0} end={this.props.insightData.totalLikes ? this.props.insightData.totalLikes : '0'} duration={5} /></h2>
                         </LeftData>
                     </Col>
                     <Col xs={14} style={{
@@ -198,7 +198,7 @@ class PostInsight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={1300} duration={5} /></h2>
+                                    }}><CountUp start={0} end={this.props.insightData.totalComments ? this.props.insightData.totalComments : '0'} duration={5} /></h2>
                                 </div>
                             </Card>
                             <Card title="Post Likes" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
@@ -209,7 +209,7 @@ class PostInsight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={978} duration={4} /></h2>
+                                    }}><CountUp start={0} end={this.props.insightData.totalLikes ? this.props.insightData.totalLikes : '-'} duration={4} /></h2>
                                 </div>
                             </Card>
                             <Card title="Emails Found" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
@@ -220,7 +220,7 @@ class PostInsight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={453} duration={4} /></h2>
+                                    }}><CountUp start={0} end={this.props.insightData.totalEmails ? this.props.insightData.totalEmails : ''} duration={4} /></h2>
                                 </div>
                             </Card>
                         </Profiles>
