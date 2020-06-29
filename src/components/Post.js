@@ -124,6 +124,13 @@ const PostData = (props) => {
     setEditingKey("");
   };
 
+  // const myFunction = () => {
+
+  //   props.history.push('/sendBulkEmails')
+
+  // }
+
+
   const extractEmails = (text) => {
     text = text.toLowerCase();
     let temp = { value: null };
@@ -137,7 +144,7 @@ const PostData = (props) => {
       return <h4 style={{ color: "red" }}>{display}</h4>;
     }
     temp["value"] = formattedEmail;
-    return <p>{formattedEmail}<input type="checkbox" style={{ marginLeft: "5px" }} /></p>;
+    return <p>{formattedEmail}<input type="checkbox" style={{ marginLeft: "5px" }} onClick="myFunction()" /></p>;
   };
 
   const handleEditorChange = (editorState) => {

@@ -228,7 +228,7 @@ class PostInsight extends React.Component {
                             <div style={{ display: "flex", justifyContent: "space-around", width: "85vh" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Like} alt="Like" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={58} duration={4} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props} duration={4} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Clap} alt="Clap" style={{ height: "50px" }} />

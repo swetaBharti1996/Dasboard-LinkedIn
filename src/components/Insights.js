@@ -364,23 +364,23 @@ class Insight extends React.Component {
                             <div style={{ display: "flex", justifyContent: "space-between", width: "500px", paddingTop: "2px" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Like} alt="Like" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.likePercentage} duration={4} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insight.likesPercentage ? this.props.insight.likesPercentage : '0%'} duration={4} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Clap} alt="Clap" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.praisePercentage} duration={2} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insight.praisePercentage ? this.props.insight.praisePercentage : '0%'} duration={2} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Heart} alt="Heart" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.empathyPercentage} duration={2} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insight.empathyPercentage ? this.props.insight.empathyPercentage : '0%'} duration={2} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Bulb} alt="Bulb" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.interestPercentage} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insight.interestPercentage ? this.props.insight.interestPercentage : '0%'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Curious} alt="Curious" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.maybePercentage} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insight.maybePercentage ? this.props.insight.maybePercentage : '0%'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                             </div>
                         </Card>
