@@ -14,6 +14,7 @@ import Piecharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { PieChart } from 'react-minimal-pie-chart';
 import { loadInsight, postAnalyse } from "../actions/InsightAction";
+// import ReactSvgPieChart from "react-svg-piechart";
 
 const { Search } = Input;
 
