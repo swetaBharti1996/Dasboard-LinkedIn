@@ -166,6 +166,7 @@ class LoginPage extends React.Component {
         password
       }
       this.props.login(user);
+      this.props.history.push("/insight")
     }
   }
 
