@@ -152,6 +152,9 @@ class Insight extends React.Component {
         const { posturl, insight } = this.props;
         // console.log(insight, 't')
         console.log(insight.totalPosts, 'post')
+        console.log(insight.totalComments, 'comment')
+        console.log(insight.totalEmails, 'emails')
+        console.log(insight.totalProfiles, 'profile')
 
         return (
             <Fragment>

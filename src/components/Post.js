@@ -176,6 +176,11 @@ const PostData = (props) => {
     setVisible(modalVisible);
   };
 
+
+  // const goBack = () => {
+
+  //   props.history.goBack()
+  // }
   const columns = [
     {
       title: "Profile Link",
@@ -287,7 +292,8 @@ const PostData = (props) => {
           />
         </Spin>
       </Form>
-      <Link to="/post">Back</Link>
+      <Link to="/post" onclick="window.history.go(-1); return false;">Back</Link>
+      {/* <Link onClick={() => goBack()}>Back</Link> */}
       <Email
         setModal1Visible={setModal1Visible}
         modal1Visible={modal1Visible}

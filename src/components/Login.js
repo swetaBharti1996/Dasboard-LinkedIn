@@ -156,6 +156,8 @@ class LoginPage extends React.Component {
 
 
   handleLoginClick = () => {
+
+
     const { email, password, loading } = this.state;
 
     if (!email || !password) {
@@ -166,6 +168,7 @@ class LoginPage extends React.Component {
         password
       }
       this.props.login(user);
+      this.props.history.push("/insight")
     }
   }
 
