@@ -10,6 +10,7 @@ import Curious from "../images/curious.jpg";
 import Bulb from "../images/bulb.jpg";
 import Clap from "../images/clap.jpg";
 import CountUp from 'react-countup';
+import { PieChart } from 'react-minimal-pie-chart';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { loadInsight, postAnalyse } from "../actions/InsightAction";
@@ -135,7 +136,12 @@ class PostInsight extends React.Component {
     render() {
         const { errorMessage, loading } = this.state;
         const { insightData } = this.props
-        // console.log(insightData, 'one usersssss loaded')
+        console.log(insightData, 'one usersssss loaded');
+        const { like, praise, interest, empathy, maybe } = this.props.insightData;
+        const peoplesChoice = Math.max(like, praise, interest, empathy, maybe);
+
+        // console.log(insightData)
+
 
         return (
             <Fragment>
@@ -143,35 +149,34 @@ class PostInsight extends React.Component {
                     marginTop: "18px",
                     paddingTop: "5px",
                     paddingLeft: "1rm",
-                    height: "77vh",
+                    height: "78vh",
                     justifyContent: "space-around",
                 }}>
                     <Col xs={4} style={{
-                        backgroundColor: "aqua",
+                        backgroundColor: "#A0D9FF",
                         paddingTop: "10px"
                     }}>
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts</h1>
-
-                            <h2><CountUp start={0} end={this.props.insightData.totalPosts ? this.props.insightData.totalPosts : '0'} duration={4} /></h2>
+                            <h2><CountUp start={0} end={this.props.insight.totalPosts ? this.props.insight.totalPosts : '0'} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Profiles</h1>
-                            <h2><CountUp start={0} end={this.props.insightData.totalProfiles ? this.props.insightData.totalProfiles : '0'} duration={4} /></h2>
+                            <h2><CountUp start={0} end={this.props.insight.totalProfiles ? this.props.insight.totalProfiles : '0'} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Comments</h1>
-                            <h2><CountUp start={0} end={this.props.insightData.totalComments ? this.props.insightData.totalComments : '0'} duration={5} /></h2>
+                            <h2><CountUp start={0} end={this.props.insight.totalComments ? this.props.insight.totalComments : '0'} duration={5} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Likes</h1>
-                            <h2><CountUp start={0} end={this.props.insightData.totalLikes ? this.props.insightData.totalLikes : '0'} duration={5} /></h2>
+                            <h2><CountUp start={0} end={this.props.insight.totalLikes ? this.props.insight.totalLikes : '0'} duration={5} /></h2>
                         </LeftData>
                     </Col>
-                    <Col xs={14} style={{
+                    <Col xs={9} style={{
                         paddingBottom: "5px",
                     }} >
                         <Post style={{ display: "flex", paddingTop: "4px" }}>
@@ -201,17 +206,6 @@ class PostInsight extends React.Component {
                                     }}><CountUp start={0} end={this.props.insightData.totalComments ? this.props.insightData.totalComments : '0'} duration={5} /></h2>
                                 </div>
                             </Card>
-                            <Card title="Post Likes" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
-                                <div style={{ width: "fit-content" }}>
-                                    <h2 style={{
-                                        fontSize: "50px",
-                                        fontFamily: "Open Sans,sans-serif",
-                                        border: "1px solid #666",
-                                        padding: "0px 10px",
-                                        color: "#666"
-                                    }}><CountUp start={0} end={this.props.insightData.totalLikes ? this.props.insightData.totalLikes : '-'} duration={4} /></h2>
-                                </div>
-                            </Card>
                             <Card title="Emails Found" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <h2 style={{
@@ -220,44 +214,103 @@ class PostInsight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "0px 10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={this.props.insightData.totalEmails ? this.props.insightData.totalEmails : ''} duration={4} /></h2>
+                                    }}><CountUp start={0} end={this.props.insightData.totalEmails ? this.props.insightData.totalEmails : '0'} duration={4} /></h2>
                                 </div>
                             </Card>
                         </Profiles>
-                        <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
+                        <Profiles style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Card title="Post Likes" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
+                                <div style={{ width: "fit-content" }}>
+                                    <h2 style={{
+                                        fontSize: "50px",
+                                        fontFamily: "Open Sans,sans-serif",
+                                        border: "1px solid #666",
+                                        padding: "0px 10px",
+                                        color: "#666"
+                                    }}><CountUp start={0} end={this.props.insightData.totalLikes ? this.props.insightData.totalLikes : '0'} duration={4} /></h2>
+                                </div>
+                            </Card>
+                            <Card title="Peoples Choice" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
+                                <div style={{ width: "fit-content" }}>
+                                    <h2 style={{
+                                        fontSize: "50px",
+                                        fontFamily: "Open Sans,sans-serif",
+                                        border: "1px solid #666",
+                                        padding: "0px 10px",
+                                        color: "#666"
+                                    }}><CountUp start={0} end={peoplesChoice} duration={4} /></h2>
+                                </div>
+                            </Card>
+                        </Profiles>
+                        {/* <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
                             <div style={{ display: "flex", justifyContent: "space-around", width: "85vh" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Like} alt="Like" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props} duration={4} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insightData.likesPercentage ? this.props.insightData.likesPercentage : '0'} duration={4} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Clap} alt="Clap" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={17} duration={2} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insightData.praisePercentage ? this.props.insightData.praisePercentage : '0'} duration={2} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Heart} alt="Heart" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={19} duration={2} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insightData.empathyPercentage ? this.props.insightData.empathyPercentage : '0'} duration={2} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Bulb} alt="Bulb" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={4} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insightData.interestPercentage ? this.props.insightData.interestPercentage : '0'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Curious} alt="Curious" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={2} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insightData.maybePercentage ? this.props.insightData.maybePercentage : '0'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                             </div>
-                        </Card>
+                        </Card> */}
                     </Col>
-                    <Col xs={4} style={{
-                        backgroundColor: "aqua",
+                    <Col xs={10} style={{
+                        backgroundColor: "white",
                         paddingTop: "10px"
                     }}>
                         <LeftData >
-                            <h1>Total Connections</h1>
-                            <h2><CountUp start={0} end={104} duration={4} /></h2>
+                            <h2>Reaction Chart</h2>
+                            <PieChart style={{ height: "300px", marginTop: "20px" }}
+                                data={[
+                                    { title: 'Like', value: like, color: '#0F487F' },
+                                    { title: 'Praise', value: praise, color: '#346DA4' },
+                                    { title: 'Empathy', value: empathy, color: '#5891C8' },
+                                    { title: 'Interest', value: interest, color: '#7CB5EC' },
+                                    { title: 'maybe', value: maybe, color: '#A0D9FF' }
+                                ]}
+                            />
+                            <div style={{ display: "flex", justifyContent: "space-between", width: "auto", padding: "10px 30px" }}>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Like} alt="Like" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={this.props.insightData.like ? this.props.insightData.like : '0'} duration={4} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#0F487F", display: "inline-block" }}></div>
+                                </div>
+                                < div style={{ width: "fit-content" }}>
+                                    <img src={Clap} alt="Clap" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={this.props.insightData.praise ? this.props.insightData.praise : '0'} duration={2} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#346DA4", display: "inline-block" }}></div>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Heart} alt="Heart" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={this.props.insightData.empathy ? this.props.insightData.empathy : '0'} duration={2} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#5891C8", display: "inline-block" }}></div>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Bulb} alt="Bulb" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={this.props.insightData.interest ? this.props.insightData.interest : '0'} duration={1} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#7CB5EC", display: "inline-block" }}></div>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Curious} alt="Curious" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={this.props.insightData.maybe ? this.props.insightData.maybe : '0'} duration={1} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#A0D9FF", display: "inline-block" }}></div>
+                                </div>
+                            </div>
+
                         </LeftData>
-                        <Divider />
                     </Col>
                 </Row>
                 {/* <Row style={{ display: "block" }}>
@@ -360,15 +413,16 @@ class PostInsight extends React.Component {
                         </Card> */}
                 {/* </Comments> */}
                 {/* </Row > */}
-                <Link to="/insight">Back</Link>
+                <Link to="/insight" style={{ margin: "20px" }}>Back</Link>
             </Fragment>
         )
     }
 }
 
-const mapStateToProps = ({ insightData }) => {
+const mapStateToProps = ({ insightData, insight }) => {
     return {
-        insightData
+        insightData,
+        insight
     };
 };
 
