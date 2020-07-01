@@ -107,6 +107,7 @@ const PostData = (props) => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [dataSource, setDataSource] = React.useState([]);
+  const [selectedEmails, setSelectedEmails] = useState([])
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -124,27 +125,25 @@ const PostData = (props) => {
     setEditingKey("");
   };
 
-  // const myFunction = () => {
-
-  //   props.history.push('/sendBulkEmails')
-
-  // }
+  const onEmailCheck = (val, e) => {
+    setSelectedEmails(e.target.checked ? [...selectedEmails, val] : selectedEmails.filter(c => c.value !== val.value))
+  }
 
 
-  const extractEmails = (text) => {
+  const extractEmails = (text, onEmailCheck, selectedEmails) => {
+
     text = text.toLowerCase();
     let temp = { value: null };
     let formattedEmail = text.match(
       /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
     );
-
     if (formattedEmail == null) {
       const display = "Can't Find Email...!!!";
-
       return <h4 style={{ color: "red" }}>{display}</h4>;
     }
-    temp["value"] = formattedEmail;
-    return <p>{formattedEmail}<input type="checkbox" style={{ marginLeft: "5px" }} onClick="myFunction()" /></p>;
+    // console.log(selectedEmails, 'selectEmails', formattedEmail)
+    temp["value"] = formattedEmail[0] ? formattedEmail[0] : null;
+    return <p>{formattedEmail}<input type="checkbox" checked={selectedEmails.map(c => c.value).includes(temp.value)} onChange={(e) => onEmailCheck(temp, e)} style={{ marginLeft: "5px" }} /></p>;
   };
 
   const handleEditorChange = (editorState) => {
@@ -177,11 +176,6 @@ const PostData = (props) => {
     setVisible(modalVisible);
   };
 
-
-  // const goBack = () => {
-
-  //   props.history.goBack()
-  // }
   const columns = [
     {
       title: "Profile Link",
@@ -206,7 +200,7 @@ const PostData = (props) => {
       dataIndex: "comment",
       width: "25%",
       render: (_, rec) => {
-        return <p>{extractEmails(rec.comment)}</p>;
+        return <p>{extractEmails(rec.comment, onEmailCheck, selectedEmails)}</p>;
       },
     },
     {
@@ -293,11 +287,11 @@ const PostData = (props) => {
           />
         </Spin>
       </Form>
-      <Link to="/post" onclick="window.history.go(-1); return false;">Back</Link>
-      {/* <Link onClick={() => goBack()}>Back</Link> */}
+      <Link to="/post">Back</Link>
       <Email
         setModal1Visible={setModal1Visible}
         modal1Visible={modal1Visible}
+        selectedEmails={selectedEmails}
         posturl={postUrlS}
       />
     </div>
