@@ -9,12 +9,11 @@ import Curious from "../images/curious.jpg";
 import Bulb from "../images/bulb.jpg";
 import Clap from "../images/clap.jpg";
 import CountUp from 'react-countup';
-import { isEqual } from 'lodash'
 import { connect } from "react-redux";
-import Highcharts from 'highcharts';
+import Piecharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { loadInsight, postAnalyse } from "../actions/InsightAction"
-// import ReactSvgPieChart from "react-svg-piechart";
+import { PieChart } from 'react-minimal-pie-chart';
+import { loadInsight, postAnalyse } from "../actions/InsightAction";
 
 const { Search } = Input;
 
@@ -106,6 +105,14 @@ const AnalyseButton = styled(Button)`
       outline:none;
     }
 `;
+// const options = {
+//     title: {
+//         text: 'My stock chart'
+//     },
+//     series: [{
+//         data: [1, 2, 3]
+//     }]
+// }
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -116,10 +123,20 @@ class Insight extends React.Component {
             message: null,
             visible: false,
             loading: false,
-            errorMessage: ''
+            errorMessage: '',
+            options: {
+                title: {
+                    text: 'My stock chart'
+                },
+                series: [{
+                    data: [1, 2, 3]
+                }]
+            }
         }
 
     }
+
+
 
     static propTypes = {
         isAuthenticated: PropTypes.bool,
@@ -132,11 +149,21 @@ class Insight extends React.Component {
         this.props.loadInsight();
     }
 
-    componentDidUpdate(prevProps) {
-        // if (!isEqual(prevProps.insight, this.props.insight)) {
-        //     this.props.loadInsight();
-        // }
-    }
+    // componentDidUpdate(prevProps) {
+    // this.props.postAnalyse()
+    // const { error, isLoading } = this.props;
+    // if (error !== prevProps.error) {
+    //     if (error.id === 'INSIGHT_ERROR') {
+    //         this.setState({ errorMessage: error.message })
+    //     } else {
+    //         this.setState({ errorMessage: null })
+    //     }
+    // }
+
+    // if (isLoading !== prevProps.isLoading) {
+    // this.setState({ loading: isLoading })
+    //     }
+    // }
 
 
     handleAnalyseClick = (posturl) => {
@@ -150,15 +177,12 @@ class Insight extends React.Component {
     render() {
         const { errorMessage, loading } = this.state;
         const { posturl, insight } = this.props;
-        // console.log(insight, 't')
         const { like, praise, interest, empathy, maybe } = this.props.insight;
         console.log(like)
         console.log(praise)
         console.log(interest)
         console.log(empathy)
         console.log(maybe)
-
-        console.log(insight.totalPosts, 'post')
 
         return (
             <Fragment>
@@ -183,31 +207,31 @@ class Insight extends React.Component {
                 }}>
                     <Spin indicator={antIcon} spinning={loading} style={{ color: '#1890ff', background: 'none' }} ></Spin>
                     <Col xs={4} style={{
-                        backgroundColor: "aqua",
+                        backgroundColor: "#A0D9FF",
                         paddingTop: "10px"
                     }}>
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts </h1>
-                            <h2><CountUp start={0} end={insight.totalPosts}
+                            <h2><CountUp start={0} end={insight.totalPosts ? insight.totalPosts : '0'}
                                 duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Profiles</h1>
-                            <h2><CountUp start={0} end={insight.totalProfiles} duration={4} /></h2>
+                            <h2><CountUp start={0} end={insight.totalProfiles ? insight.totalProfiles : '0'} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Comments</h1>
-                            <h2><CountUp start={0} end={insight.totalComments} duration={5} /></h2>
+                            <h2><CountUp start={0} end={insight.totalComments ? insight.totalComments : '0'} duration={5} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Likes</h1>
-                            <h2><CountUp start={0} end={insight.totalLikes} duration={5} /></h2>
+                            <h2><CountUp start={0} end={insight.totalLikes ? insight.totalLikes : '0'} duration={5} /></h2>
                         </LeftData>
                     </Col>
-                    <Col xs={14} style={{
+                    <Col xs={9} style={{
                         paddingBottom: "5px",
                     }} >
                         <h1 style={{ margin: "10px", fontSize: "17px", letterSpacing: "5px", textAlign: "center" }}>Posts</h1>
@@ -220,18 +244,7 @@ class Insight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "10px 37px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={insight.totalPosts} duration={4} /></h2>
-                                </div>
-                            </Card>
-                            <Card title="Post per/day" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
-                                <div style={{ width: "fit-content" }}>
-                                    <h2 style={{
-                                        fontSize: "50px",
-                                        fontFamily: "Open Sans,sans-serif",
-                                        border: "1px solid #666",
-                                        padding: "10px 37px",
-                                        color: "green"
-                                    }}><CountUp start={0} end={3.1} duration={3} /> <ArrowUpOutlined /></h2>
+                                    }}><CountUp start={0} end={insight.totalPosts ? insight.totalPosts : '0'} duration={4} /></h2>
                                 </div>
                             </Card>
                         </Post>
@@ -240,47 +253,75 @@ class Insight extends React.Component {
                             <Card title="Total Profile" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <h2 style={{
-                                        fontSize: "50px",
+                                        fontSize: "30px",
                                         fontFamily: "Open Sans,sans-serif",
                                         border: "1px solid #666",
-                                        padding: "10px 37px",
+                                        padding: "10px 25px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={insight.totalProfiles} duration={4} /></h2>
-                                </div>
-                            </Card>
-                            <Card title="Profile per/day" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
-                                <div style={{ width: "fit-content" }}>
-                                    <h2 style={{
-                                        fontSize: "50px",
-                                        fontFamily: "Open Sans,sans-serif",
-                                        border: "1px solid #666",
-                                        padding: "10px 37px",
-                                        color: "#666"
-                                    }}><CountUp start={0} end={22} duration={4} /></h2>
+                                    }}><CountUp start={0} end={insight.totalProfiles ? insight.totalProfiles : '0'} duration={4} /></h2>
                                 </div>
                             </Card>
                             <Card title="Connected Profiles" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
-                                <div style={{ width: "fit-content" }}>
+                                <div style={{ width: "fit-content", display: "inline-block" }}>
                                     <h2 style={{
-                                        fontSize: "50px",
+                                        fontSize: "30px",
                                         fontFamily: "Open Sans,sans-serif",
                                         border: "1px solid #666",
-                                        padding: "10px",
+                                        padding: "10px 25px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={insight.connectedProfiles} duration={4} /><PercentageOutlined /></h2>
+                                    }}><CountUp start={0} end={insight.connectedProfiles ? insight.connectedProfiles : '0'} duration={4} /></h2>
                                 </div>
                             </Card>
                         </Profiles>
                     </Col>
-                    <Col xs={4} style={{
-                        backgroundColor: "aqua",
+                    <Col xs={10} style={{
+                        backgroundColor: "white",
                         paddingTop: "10px"
                     }}>
                         <LeftData >
-                            <h1>Total Connections</h1>
-                            <h2><CountUp start={0} end={104} duration={4} /></h2>
+                            {/* <HighchartsReact
+                                piecharts={Piecharts}
+                                options={this.state.options}
+                            /> */}
+                            <h2>Reaction Chart</h2>
+                            <PieChart style={{ height: "300px", marginTop: "20px" }}
+                                data={[
+                                    { title: 'Like', value: like, color: '#0F487F' },
+                                    { title: 'Praise', value: praise, color: '#346DA4' },
+                                    { title: 'Empathy', value: empathy, color: '#5891C8' },
+                                    { title: 'Interest', value: interest, color: '#7CB5EC' },
+                                    { title: 'maybe', value: maybe, color: '#A0D9FF' }
+                                ]}
+                            />
+                            <div style={{ display: "flex", justifyContent: "space-between", width: "auto", padding: "10px 30px" }}>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Like} alt="Like" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={insight.like ? insight.like : '0'} duration={4} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#0F487F", display: "inline-block" }}></div>
+                                </div>
+                                < div style={{ width: "fit-content" }}>
+                                    <img src={Clap} alt="Clap" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={insight.praise ? insight.praise : '0'} duration={2} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#346DA4", display: "inline-block" }}></div>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Heart} alt="Heart" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={insight.empathy ? insight.empathy : '0'} duration={2} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#5891C8", display: "inline-block" }}></div>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Bulb} alt="Bulb" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={insight.interest ? insight.interest : '0'} duration={1} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#7CB5EC", display: "inline-block" }}></div>
+                                </div>
+                                <div style={{ width: "fit-content" }}>
+                                    <img src={Curious} alt="Curious" style={{ height: "50px" }} />
+                                    <h2><CountUp start={0} end={insight.maybe ? insight.maybe : '0'} duration={1} /></h2>
+                                    <div style={{ height: "10px", width: "10px", backgroundColor: "#A0D9FF", display: "inline-block" }}></div>
+                                </div>
+                            </div>
+
                         </LeftData>
-                        <Divider />
                     </Col>
                 </Row>
                 <Row style={{ display: "block" }}>
@@ -294,7 +335,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "#666"
-                                }}><CommentOutlined /> <CountUp start={0} end={insight.totalComments} duration={5} /></h2>
+                                }}><CommentOutlined /> <CountUp start={0} end={insight.totalComments ? insight.totalComments : '0'} duration={5} /></h2>
                             </div>
                         </Card>
                         <Card title="Avg Comments" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
@@ -305,7 +346,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "green"
-                                }}><CountUp start={0} end={insight.avgCommentsPerPost} duration={3} /><ArrowUpOutlined /></h2>
+                                }}><CountUp start={0} end={insight.avgCommentsPerPost ? insight.avgCommentsPerPost : '0'} duration={3} /><ArrowUpOutlined /></h2>
                             </div>
                         </Card>
                         <Card title="Total Emails Found" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
@@ -316,10 +357,21 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "green"
-                                }}><CountUp start={0} end={insight.totalEmails} duration={4} /><ArrowUpOutlined /></h2>
+                                }}><CountUp start={0} end={insight.totalEmails ? insight.totalEmails : '0'} duration={4} /></h2>
                             </div>
                         </Card>
-                        <Card title="% of Emails from Comments" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
+                        {/* <Card title="Comments with emails" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
+                            <div style={{ width: "fit-content" }}>
+                                <h2 style={{
+                                    fontSize: "28px",
+                                    fontFamily: "Open Sans,sans-serif",
+                                    border: "1px solid #666",
+                                    padding: "10px 37px",
+                                    color: "green"
+                                }}><CountUp start={0} end={insight.totalEmails * insight.emailPercentage / 100} duration={4} /></h2>
+                            </div>
+                        </Card> */}
+                        <Card title="% Emails Percentage" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
                             <div style={{ width: "fit-content" }}>
                                 <h2 style={{
                                     fontSize: "28px",
@@ -327,7 +379,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "blue"
-                                }}><CountUp start={0} end={insight.emailPercentage} duration={2} /><PercentageOutlined /></h2>
+                                }}><CountUp start={0} end={insight.emailPercentage ? insight.emailPercentage : '0'} duration={2} /><PercentageOutlined /></h2>
                             </div>
                         </Card>
                     </Comments>
@@ -343,7 +395,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "#666"
-                                }}><LikeOutlined /> <CountUp start={0} end={insight.totalLikes} duration={5} /></h2>
+                                }}><LikeOutlined /> <CountUp start={0} end={insight.totalLikes ? insight.totalLikes : '0'} duration={5} /></h2>
                             </div>
                         </Card>
                         <Card title="Avg Likes/Post" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
@@ -354,14 +406,14 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "green"
-                                }}><CountUp start={0} end={insight.avgLikesPerPost} duration={4} /><ArrowUpOutlined /></h2>
+                                }}><CountUp start={0} end={insight.avgLikesPerPost ? insight.avgLikesPerPost : '0'} duration={4} /><ArrowUpOutlined /></h2>
                             </div>
                         </Card>
                         <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", width: "500px", paddingTop: "2px" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Like} alt="Like" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={insight.likesPercentage ? insight.likesPercentage : '0%'} duration={4} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={this.props.insight.likesPercentage ? this.props.insight.likesPercentage : '0%'} duration={4} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Clap} alt="Clap" style={{ height: "50px" }} />
@@ -377,7 +429,7 @@ class Insight extends React.Component {
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Curious} alt="Curious" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={insight.maybePercentage ? insight.maybePercentage : '00%'} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={insight.maybePercentage ? insight.maybePercentage : '0%'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                             </div>
                         </Card>
