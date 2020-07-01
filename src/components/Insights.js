@@ -151,10 +151,14 @@ class Insight extends React.Component {
         const { errorMessage, loading } = this.state;
         const { posturl, insight } = this.props;
         // console.log(insight, 't')
+        const { like, praise, interest, empathy, maybe } = this.props.insight;
+        console.log(like)
+        console.log(praise)
+        console.log(interest)
+        console.log(empathy)
+        console.log(maybe)
+
         console.log(insight.totalPosts, 'post')
-        console.log(insight.totalComments, 'comment')
-        console.log(insight.totalEmails, 'emails')
-        console.log(insight.totalProfiles, 'profile')
 
         return (
             <Fragment>

@@ -32,7 +32,6 @@ const Email = (props) => {
     bulkEmailSend,
     isEmailSending,
     emails,
-    selectedEmails
   } = props;
 
   const [editorState, setEditorState] = useState(tempeditorState);
@@ -52,7 +51,7 @@ const Email = (props) => {
   const handleSelectChange = (value) => {
     collectEmails(value);
   };
-  console.log('emails', emails, 'selected', selectedEmails)
+
   return (
     <div>
       <Modal
@@ -73,7 +72,7 @@ const Email = (props) => {
           style={{ width: "100%" }}
           placeholder="Please select email(s) to send"
           onChange={handleSelectChange}
-          options={selectedEmails.length ? selectedEmails : emails}
+          options={emails}
         />
 
         <Divider />

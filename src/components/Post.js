@@ -107,7 +107,6 @@ const PostData = (props) => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [dataSource, setDataSource] = React.useState([]);
-  const [selectedEmails, setSelectedEmails] = useState([])
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -125,25 +124,27 @@ const PostData = (props) => {
     setEditingKey("");
   };
 
-  const onEmailCheck = (val, e) => {
-    setSelectedEmails(e.target.checked ? [...selectedEmails, val] : selectedEmails.filter(c => c.value !== val.value))
-  }
+  // const myFunction = () => {
+
+  //   props.history.push('/sendBulkEmails')
+
+  // }
 
 
-  const extractEmails = (text, onEmailCheck, selectedEmails) => {
-
+  const extractEmails = (text) => {
     text = text.toLowerCase();
     let temp = { value: null };
     let formattedEmail = text.match(
       /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
     );
+
     if (formattedEmail == null) {
       const display = "Can't Find Email...!!!";
+
       return <h4 style={{ color: "red" }}>{display}</h4>;
     }
-    // console.log(selectedEmails, 'selectEmails', formattedEmail)
-    temp["value"] = formattedEmail[0] ? formattedEmail[0] : null;
-    return <p>{formattedEmail}<input type="checkbox" checked={selectedEmails.map(c => c.value).includes(temp.value)} onChange={(e) => onEmailCheck(temp, e)} style={{ marginLeft: "5px" }} /></p>;
+    temp["value"] = formattedEmail;
+    return <p>{formattedEmail}<input type="checkbox" style={{ marginLeft: "5px" }} onClick="myFunction()" /></p>;
   };
 
   const handleEditorChange = (editorState) => {
@@ -205,7 +206,7 @@ const PostData = (props) => {
       dataIndex: "comment",
       width: "25%",
       render: (_, rec) => {
-        return <p>{extractEmails(rec.comment, onEmailCheck, selectedEmails)}</p>;
+        return <p>{extractEmails(rec.comment)}</p>;
       },
     },
     {
@@ -297,7 +298,6 @@ const PostData = (props) => {
       <Email
         setModal1Visible={setModal1Visible}
         modal1Visible={modal1Visible}
-        selectedEmails={selectedEmails}
         posturl={postUrlS}
       />
     </div>
