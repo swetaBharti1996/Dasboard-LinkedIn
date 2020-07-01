@@ -9,6 +9,7 @@ import Curious from "../images/curious.jpg";
 import Bulb from "../images/bulb.jpg";
 import Clap from "../images/clap.jpg";
 import CountUp from 'react-countup';
+import { isEqual } from 'lodash'
 import { connect } from "react-redux";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -120,8 +121,6 @@ class Insight extends React.Component {
 
     }
 
-
-
     static propTypes = {
         isAuthenticated: PropTypes.bool,
         loading: PropTypes.bool,
@@ -133,21 +132,11 @@ class Insight extends React.Component {
         this.props.loadInsight();
     }
 
-    // componentDidUpdate(prevProps) {
-    // this.props.postAnalyse()
-    // const { error, isLoading } = this.props;
-    // if (error !== prevProps.error) {
-    //     if (error.id === 'INSIGHT_ERROR') {
-    //         this.setState({ errorMessage: error.message })
-    //     } else {
-    //         this.setState({ errorMessage: null })
-    //     }
-    // }
-
-    // if (isLoading !== prevProps.isLoading) {
-    // this.setState({ loading: isLoading })
-    //     }
-    // }
+    componentDidUpdate(prevProps) {
+        // if (!isEqual(prevProps.insight, this.props.insight)) {
+        //     this.props.loadInsight();
+        // }
+    }
 
 
     handleAnalyseClick = (posturl) => {
@@ -162,6 +151,7 @@ class Insight extends React.Component {
         const { errorMessage, loading } = this.state;
         const { posturl, insight } = this.props;
         // console.log(insight, 't')
+        console.log(insight.totalPosts, 'post')
 
         return (
             <Fragment>
@@ -191,23 +181,23 @@ class Insight extends React.Component {
                     }}>
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Posts </h1>
-                            <h2><CountUp start={0} end={this.props.insight.totalPosts}
+                            <h2><CountUp start={0} end={insight.totalPosts}
                                 duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Profiles</h1>
-                            <h2><CountUp start={0} end={this.props.insight.totalProfiles} duration={4} /></h2>
+                            <h2><CountUp start={0} end={insight.totalProfiles} duration={4} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Comments</h1>
-                            <h2><CountUp start={0} end={this.props.insight.totalComments} duration={5} /></h2>
+                            <h2><CountUp start={0} end={insight.totalComments} duration={5} /></h2>
                         </LeftData>
                         <Divider />
                         <LeftData >
                             <h1 style={{ fontWeight: 300 }}>Total Likes</h1>
-                            <h2><CountUp start={0} end={this.props.insight.totalLikes} duration={5} /></h2>
+                            <h2><CountUp start={0} end={insight.totalLikes} duration={5} /></h2>
                         </LeftData>
                     </Col>
                     <Col xs={14} style={{
@@ -223,7 +213,7 @@ class Insight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "10px 37px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={this.props.insight.totalPosts} duration={4} /></h2>
+                                    }}><CountUp start={0} end={insight.totalPosts} duration={4} /></h2>
                                 </div>
                             </Card>
                             <Card title="Post per/day" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
@@ -248,7 +238,7 @@ class Insight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "10px 37px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={this.props.insight.totalProfiles} duration={4} /></h2>
+                                    }}><CountUp start={0} end={insight.totalProfiles} duration={4} /></h2>
                                 </div>
                             </Card>
                             <Card title="Profile per/day" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
@@ -270,7 +260,7 @@ class Insight extends React.Component {
                                         border: "1px solid #666",
                                         padding: "10px",
                                         color: "#666"
-                                    }}><CountUp start={0} end={this.props.insight.connectedProfiles} duration={4} /><PercentageOutlined /></h2>
+                                    }}><CountUp start={0} end={insight.connectedProfiles} duration={4} /><PercentageOutlined /></h2>
                                 </div>
                             </Card>
                         </Profiles>
@@ -297,7 +287,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "#666"
-                                }}><CommentOutlined /> <CountUp start={0} end={this.props.insight.totalComments} duration={5} /></h2>
+                                }}><CommentOutlined /> <CountUp start={0} end={insight.totalComments} duration={5} /></h2>
                             </div>
                         </Card>
                         <Card title="Avg Comments" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
@@ -308,7 +298,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "green"
-                                }}><CountUp start={0} end={this.props.insight.avgCommentsPerPost} duration={3} /><ArrowUpOutlined /></h2>
+                                }}><CountUp start={0} end={insight.avgCommentsPerPost} duration={3} /><ArrowUpOutlined /></h2>
                             </div>
                         </Card>
                         <Card title="Total Emails Found" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
@@ -319,7 +309,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "green"
-                                }}><CountUp start={0} end={this.props.insight.totalEmails} duration={4} /><ArrowUpOutlined /></h2>
+                                }}><CountUp start={0} end={insight.totalEmails} duration={4} /><ArrowUpOutlined /></h2>
                             </div>
                         </Card>
                         <Card title="% of Emails from Comments" bordered={false} style={{ width: 150, textAlign: "center", height: "25vh", width: "fit-content" }}>
@@ -330,7 +320,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "blue"
-                                }}><CountUp start={0} end={this.props.insight.emailPercentage} duration={2} /><PercentageOutlined /></h2>
+                                }}><CountUp start={0} end={insight.emailPercentage} duration={2} /><PercentageOutlined /></h2>
                             </div>
                         </Card>
                     </Comments>
@@ -346,7 +336,7 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "#666"
-                                }}><LikeOutlined /> <CountUp start={0} end={this.props.insight.totalLikes} duration={5} /></h2>
+                                }}><LikeOutlined /> <CountUp start={0} end={insight.totalLikes} duration={5} /></h2>
                             </div>
                         </Card>
                         <Card title="Avg Likes/Post" bordered={false} style={{ width: 150, textAlign: "center", height: "28vh", width: "fit-content" }}>
@@ -357,30 +347,30 @@ class Insight extends React.Component {
                                     border: "1px solid #666",
                                     padding: "10px 37px",
                                     color: "green"
-                                }}><CountUp start={0} end={this.props.insight.avgLikesPerPost} duration={4} /><ArrowUpOutlined /></h2>
+                                }}><CountUp start={0} end={insight.avgLikesPerPost} duration={4} /><ArrowUpOutlined /></h2>
                             </div>
                         </Card>
                         <Card title="Reactions" bordered={false} style={{ width: 500, textAlign: "center", paddingTop: "2px", height: "28vh", width: "fit-content", justifyContent: "space-between" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", width: "500px", paddingTop: "2px" }}>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Like} alt="Like" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.likesPercentage ? this.props.insight.likesPercentage : '0%'} duration={4} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={insight.likesPercentage ? insight.likesPercentage : '0%'} duration={4} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Clap} alt="Clap" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.praisePercentage ? this.props.insight.praisePercentage : '0%'} duration={2} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={insight.praisePercentage ? insight.praisePercentage : '0%'} duration={2} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Heart} alt="Heart" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.empathyPercentage ? this.props.insight.empathyPercentage : '0%'} duration={2} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={insight.empathyPercentage ? insight.emailPercentage : '0%'} duration={2} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Bulb} alt="Bulb" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.interestPercentage ? this.props.insight.interestPercentage : '0%'} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={insight.interestPercentage ? insight.interestPercentage : '0%'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                                 <div style={{ width: "fit-content" }}>
                                     <img src={Curious} alt="Curious" style={{ height: "50px" }} />
-                                    <h2><CountUp start={0} end={this.props.insight.maybePercentage ? this.props.insight.maybePercentage : '0%'} duration={1} /><PercentageOutlined /></h2>
+                                    <h2><CountUp start={0} end={insight.maybePercentage ? insight.maybePercentage : '00%'} duration={1} /><PercentageOutlined /></h2>
                                 </div>
                             </div>
                         </Card>
