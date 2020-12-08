@@ -40,7 +40,7 @@ class Profile extends Component {
         ))}
 
         <Pagination
-          style={{ marginLeft: "60%", marginTop: "5%" }}
+          // style={{ marginLeft: "60%", marginTop: "5%" }}
           total={60}
           current={this.state.page}
           defaultCurrent={1}
